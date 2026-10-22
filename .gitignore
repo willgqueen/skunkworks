@@ -1,0 +1,5 @@
+# Local planning workspace — never committed (see docs/workspace.md)
+/workspace/
+
+.DS_Store
+/.claude/settings.local.json
