@@ -6,7 +6,7 @@ The workspace is the local, gitignored planning area at `workspace/`. Every skil
 
 **Nothing from the workspace is ever written into another repo.** When working on `~/repos/foo`, skills read foo's code and may change foo's code, but specs, plans, notes, findings and logs go to `workspace/projects/foo/`. Target repos only receive the deliverable itself: code, tests, and the docs that belong to that codebase.
 
-Claude Code always runs from the sandbox root, so skills refer to the workspace by the relative path `workspace/`. Target repos are reached as additional directories.
+Claude Code always runs from the skunkworks root, so skills refer to the workspace by the relative path `workspace/`. Target repos are reached as additional directories.
 
 ## Layout
 

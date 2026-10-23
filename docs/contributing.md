@@ -1,10 +1,10 @@
 # Contributing
 
-How to change this repo: its skills, agents, templates, rules, scripts and docs. Changes go through the same process as any other work: they're tracked as items in the `sandbox` project, built through the phases, and reviewed before they're committed.
+How to change this repo: its skills, agents, templates, rules, scripts and docs. Changes go through the same process as any other work: they're tracked as items in the `skunkworks` project, built through the phases, and reviewed before they're committed.
 
 ## The ground rules
 
-1. **Track it.** Every change starts as an item (`/new-item sandbox <description>`), sized by [criteria.md](criteria.md#size), and goes through its phases and gates.
+1. **Track it.** Every change starts as an item (`/new-item skunkworks <description>`), sized by [criteria.md](criteria.md#size), and goes through its phases and gates.
 2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing lives in [process.md](process.md). Skills, agents and docs link to them and never restate them.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.
 4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the docs check.

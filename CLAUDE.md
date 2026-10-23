@@ -1,4 +1,4 @@
-# Sandbox
+# Skunkworks
 
 The control center for orchestrating software work (ideation → planning → architecture → delivery). Claude Code always runs from here; target repos in `~/repos` (and elsewhere, via `/add-dir`) are worked on as additional directories.
 

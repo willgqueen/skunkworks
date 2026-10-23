@@ -50,7 +50,7 @@ Investigations go to [step 8](#8-investigations), and initiatives to [step 9](#9
 - Record `git -C <repo> status --porcelain` for the user's checkout in the Plan, as the *checkout baseline*, so resumed runs can compare against it too. Record it only once, on the first run.
 - If there's a remote, `git -C <repo> fetch`. The base is the latest default branch (`origin/<default>` when there's a remote).
 - Create the worktree, depending on what already exists:
-  - **Neither exists:** `git -C <repo> worktree add <sandbox>/workspace/worktrees/<repo>/<branch> -b <branch> <base>`, then record the base sha in the Plan.
+  - **Neither exists:** `git -C <repo> worktree add <skunkworks>/workspace/worktrees/<repo>/<branch> -b <branch> <base>`, then record the base sha in the Plan.
   - **Worktree exists** (an earlier run): reuse it.
   - **Branch exists without its worktree:** `git -C <repo> worktree add <path> <branch>`.
 

@@ -76,4 +76,4 @@ When the board (or new-item) says calibration is due, ask Claude to calibrate. I
 `python3 -I scripts/check_docs.py`. It checks every link and anchor, and that every skill, agent and template is documented.
 
 ### Change a skill, agent, template or rule
-Follow [contributing.md](contributing.md). It starts with `/new-item sandbox <description>`, like any other work.
+Follow [contributing.md](contributing.md). It starts with `/new-item skunkworks <description>`, like any other work.

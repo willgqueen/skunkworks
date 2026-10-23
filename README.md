@@ -1,11 +1,13 @@
-# sandbox
+# skunkworks
+
+Named for Lockheed's Skunk Works, which was famous for keeping paperwork to a minimum. This one writes everything down.
 
 A control center for software work. Claude Code runs from this repo and takes ideas through discovery, specs, design and delivery in any repo under `~/repos`, the same way every time: tracked as items, decided at gates you approve, and documented as it goes.
 
 ## Quick start
 
 ```sh
-cd ~/repos/sandbox && claude
+cd ~/repos/skunkworks && claude
 ```
 
 Then:
@@ -46,7 +48,7 @@ Details for each: [docs/skills.md](docs/skills.md).
 
 ## Setup
 
-1. Start Claude Code from this folder: `cd ~/repos/sandbox && claude`. Skills, agents and hooks in `.claude/` load automatically.
+1. Start Claude Code from this folder: `cd ~/repos/skunkworks && claude`. Skills, agents and hooks in `.claude/` load automatically.
 2. Repos under `~/repos` are reachable through `.claude/settings.json`. For a repo elsewhere, run `/add-dir <path>` in the session.
 3. On a fresh clone, create the workspace:
 

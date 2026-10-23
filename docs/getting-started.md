@@ -2,10 +2,10 @@
 
 A walkthrough of one piece of work, from opening a session to merged code. It takes about ten minutes to read. For quick answers to specific questions, see [how-to.md](how-to.md).
 
-## 1. Open a session in the sandbox
+## 1. Open a session in skunkworks
 
 ```sh
-cd ~/repos/sandbox
+cd ~/repos/skunkworks
 claude
 ```
 
