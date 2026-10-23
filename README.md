@@ -1,17 +1,57 @@
 # sandbox
 
-A control center for taking software work from idea to merged code in a standard way. Claude Code runs from this repo and works on other repos from here.
+A control center for software work. Claude Code runs from this repo and takes ideas through discovery, specs, design and delivery in any repo under `~/repos`, the same way every time: tracked as items, decided at gates you approve, and documented as it goes.
 
-- Vision: [docs/vision.md](docs/vision.md)
-- Method: [docs/process.md](docs/process.md)
-- Local planning workspace: [docs/workspace.md](docs/workspace.md)
+## Quick start
+
+```sh
+cd ~/repos/sandbox && claude
+```
+
+Then:
+- `/hq` shows every open item and what's next
+- `/repo-context <repo>` maps a repo you'll work on
+- `/hq <description>` starts new work and walks it through its phases
+
+The full walkthrough is in [docs/getting-started.md](docs/getting-started.md).
+
+## Skills
+
+| Skill | What it does |
+|---|---|
+| `/hq` | The front door: the board, routing, carrying items through their phases, inbox triage, waivers |
+| `/new-item` | Turns a description into a numbered item with kind, size and first phase |
+| `/repo-context` | Maps a target repo into its project.md, read-only |
+| `/discover` | Maps the problem: context, options, open questions |
+| `/define` | Writes the spec: goal, scope, acceptance criteria |
+| `/develop` | Designs L items with you: decisions, ordered tasks, risks |
+| `/deliver` | Builds in a worktree, verifies, opens the PR, reviews, merges per the rules, closes |
+
+Details for each: [docs/skills.md](docs/skills.md).
+
+## Docs
+
+| Doc | For |
+|---|---|
+| [getting-started.md](docs/getting-started.md) | A walkthrough of one item, start to finish |
+| [how-to.md](docs/how-to.md) | Recipes for everyday tasks |
+| [skills.md](docs/skills.md) | Reference for every skill |
+| [agents.md](docs/agents.md) | The agent roster, parallelism, and the push/merge guard |
+| [templates.md](docs/templates.md) | Every template and who uses it |
+| [process.md](docs/process.md) | The method: phases, gates, sizing, next actions |
+| [criteria.md](docs/criteria.md) | Every rule and threshold, and how they're calibrated |
+| [workspace.md](docs/workspace.md) | The local planning workspace and the log vocabulary |
+| [contributing.md](docs/contributing.md) | How to change this repo |
+| [vision.md](docs/vision.md) | What this repo is for, in the owner's words |
 
 ## Setup
 
-1. Start Claude Code from this folder: `cd ~/repos/sandbox && claude`. Skills and agents in `.claude/` load automatically.
+1. Start Claude Code from this folder: `cd ~/repos/sandbox && claude`. Skills, agents and hooks in `.claude/` load automatically.
 2. Repos under `~/repos` are reachable through `.claude/settings.json`. For a repo elsewhere, run `/add-dir <path>` in the session.
 3. On a fresh clone, create the workspace:
 
    ```sh
    mkdir -p workspace/projects workspace/archive workspace/worktrees && touch workspace/inbox.md
    ```
+
+4. Requirements: `git`, `python3`, and `gh` (authenticated) for repos with a GitHub remote.

@@ -56,6 +56,6 @@ In `item.md`, set `phase: define`, `status: active` and `updated`, then add a lo
 Report the path to define.md, the goal, how many acceptance criteria there are, the main scope decisions, and every assumption. Ask the user to approve the spec or request changes. **Stop here.**
 
 When the user approves:
-- Add the log line `- <date>: define approved` and set `phase` to the next phase: **develop** for L, **deliver** for M and investigations.
+- Add the log line `- <date>: define approved` and set `phase` to the next phase: **develop** for L features and tasks, **deliver** for M items, investigations and initiatives.
 - **initiative:** offer to create each child in the Breakdown with the **new-item** skill, setting this item as their `parent`.
 - Ask whether to start the next phase.

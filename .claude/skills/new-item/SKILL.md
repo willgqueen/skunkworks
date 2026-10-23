@@ -46,4 +46,4 @@ Apply the rules in [docs/criteria.md](../../../docs/criteria.md) exactly. Don't 
 
 Give the item path, kind, size and starting phase, and the criteria condition that decided the size. Then ask whether to start the first phase. Don't start it unprompted.
 
-If [calibration is due](../../../docs/criteria.md#calibration) (10 items `done` since the last date in the calibration history, or the same re-size trigger logged 3 times), say so in one line.
+If [calibration is due](../../../docs/criteria.md#calibration) (the board's last line says so: `python3 -I scripts/board.py`), say so in one line.

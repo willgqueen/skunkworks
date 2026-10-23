@@ -80,6 +80,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `created` | new-item |
 | `<phase> drafted` / `<phase> revised` | discover, define, develop |
 | `<phase> reopened` | the phase skill, when revising an approved phase |
+| `<phase> waived: <reason>` | hq, only when the user explicitly waives a gate |
 | `discover answers: <summary>` | discover, whenever the user answers open questions |
 | `<phase> approved` | the phase skill, on the user's approval |
 | `re-sized <old>→<new>: <condition>` | any skill, on the user's agreement |
@@ -91,6 +92,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `review: <result>` | deliver |
 | `merged <sha>` | deliver |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
+| `waiting on you: <what>` / `waiting on items: <ids>` | deliver, at any stop where the next step isn't Claude's |
 | `done` | deliver |
 
 Free-form lines are fine for anything else worth recording.

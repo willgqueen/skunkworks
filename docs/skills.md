@@ -1,0 +1,105 @@
+# Skills
+
+A reference for every skill in [`.claude/skills/`](../.claude/skills/). Each one is invoked as `/<name>`, and Claude also picks one up on its own when a request matches its description. For task-based recipes, see [how-to.md](how-to.md). For the rules skills apply, see [process.md](process.md) and [criteria.md](criteria.md).
+
+Every phase skill follows the same shape: **load → ground → work → write → update item → gate.** It stops at its gate until you approve.
+
+## hq
+
+The front door: shows the board and routes work to the other skills.
+
+| | |
+|---|---|
+| **Use when** | You want status, to know what's next, to continue an item, to start new work without naming a skill, or to triage the inbox |
+| **Arguments** | none (board), `<project> <item>`, `<description of new work>`, or `inbox` |
+| **Reads** | `scripts/board.py` output, which reads every item.md |
+| **Writes** | Only waiver lines (`<phase> waived: <reason>`), and the inbox during triage. Everything else goes through the skills it calls |
+| **Calls** | new-item, discover, define, develop, deliver |
+| **Agents** | researcher and Explore, in parallel, when advancing several items |
+| **Gate** | None of its own. It stops at every gate of the skills it runs, and carries on after you approve |
+
+## new-item
+
+Turns a description of work into a numbered item.
+
+| | |
+|---|---|
+| **Use when** | New work comes up: a feature, bug, idea, question, or an inbox entry to triage |
+| **Arguments** | `<project> <description>` |
+| **Reads** | `project.md`; criteria.md for kind and size |
+| **Writes** | `items/<NNN>-<slug>/item.md` and the starting phase's doc; the parent's log; the inbox |
+| **Calls** | repo-context, when the project doesn't exist yet |
+| **Gate** | None. It reports the kind, size and starting phase, then asks before starting |
+| **Log lines** | `created`; in the parent, `child <NNN> added: <title>` |
+
+## repo-context
+
+Builds or refreshes a project's `project.md` from a target repo, read-only.
+
+| | |
+|---|---|
+| **Use when** | Starting on a repo, or when project.md is [stale](criteria.md#context) |
+| **Arguments** | `<repo folder name or path> [project slug]` |
+| **Reads** | The repo's README, CLAUDE.md, manifests, CI, file tree, git info |
+| **Writes** | `workspace/projects/<project>/project.md`, keeping *Conventions learned* and *Merge policy* |
+| **Agents** | Explore, for large repos |
+| **Gate** | None |
+
+## discover
+
+The Discover phase: maps the problem without deciding anything.
+
+| | |
+|---|---|
+| **Use when** | An L item or any investigation is in Discover |
+| **Arguments** | `<project> <item>` |
+| **Reads** | `project.md`, `item.md`, the item's `notes/`, and the target code (read-only) |
+| **Writes** | `discover.md`: Problem, Context, Options seen, Open questions |
+| **Agents** | researcher and Explore, in parallel when the [fan-out rule](criteria.md#agents-and-parallelism) allows |
+| **Gate** | You answer the open questions (answers are written inline as `→ <answer>`) and approve |
+| **Log lines** | `discover drafted` / `revised` / `reopened`, `discover answers: <summary>`, `discover approved` |
+
+## define
+
+The Define phase: the spec. Says what gets done and how we'll know.
+
+| | |
+|---|---|
+| **Use when** | An item is in Define (M items start here) |
+| **Arguments** | `<project> <item>` |
+| **Reads** | `project.md`, `item.md`, `discover.md`, the target code |
+| **Writes** | `define.md`: Goal, scope, numbered acceptance criteria, Assumptions; Approach for M items; Breakdown for initiatives |
+| **Asks** | Scope-changing [gaps](criteria.md#gaps), up to four at a time |
+| **Gate** | Approve the spec. Next: develop (L) or deliver (M, investigations, initiatives) |
+| **Log lines** | `define drafted` / `revised` / `reopened`, `define approved` |
+
+## develop
+
+The Develop phase for L items: the design and the task list.
+
+| | |
+|---|---|
+| **Use when** | An L feature or task has an approved spec |
+| **Arguments** | `<project> <item>` |
+| **Reads** | Everything above plus `define.md` |
+| **Writes** | `develop.md`: Approach, Decisions (each with whether you took the recommendation), ordered Tasks with the ACs they serve, Risks |
+| **Asks** | Every [significant decision](criteria.md#decisions), with options and a recommendation |
+| **Agents** | researcher and Plan |
+| **Gate** | Approve the design. Next: deliver |
+| **Log lines** | `develop drafted` / `revised` / `reopened`, `develop approved` |
+
+## deliver
+
+The Deliver phase: builds, verifies, publishes and closes. Resumable.
+
+| | |
+|---|---|
+| **Use when** | An item is ready (see [readiness](../.claude/skills/deliver/SKILL.md)), or to resume one that's waiting |
+| **Arguments** | `<project> <item>` |
+| **Reads** | The item's phase docs, `project.md`, the target repo |
+| **Writes** | Code in a worktree at `workspace/worktrees/<repo>/<branch>`; commits; a PR; `deliver.md` (Plan, Tasks, Verification, Review, CI, Outcome); then archives the item |
+| **Agents** | implementer (one per task, in sequence), verifier (in parallel groups), reviewer (until the review skill exists) |
+| **Gate** | One approval for the whole item, covering its outward actions. Merging follows the [merge rule](criteria.md#merge-rule) |
+| **Log lines** | `deliver authorized`, `task <n> committed <sha>`, `blocked` / `unblocked`, `check deferred to <NNN>`, `PR opened`, `review`, `merged`, `done` |
+
+The full log vocabulary is in [workspace.md](workspace.md#log-vocabulary).

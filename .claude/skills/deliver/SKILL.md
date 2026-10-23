@@ -40,7 +40,7 @@ Investigations go to [step 8](#8-investigations), and initiatives to [step 9](#9
 2. **Prerequisites:** for a GitHub remote, run `gh auth status`. If it fails, say so and stop before planning, since pushing will need it.
 3. **Fill deliver.md** from [the template](../../../templates/workspace/deliver.md):
    - **Plan:** the definition of done, worktree, branch and authorized actions.
-   - **Tasks:** copied from develop.md (L), from define.md's approach (M), or one task from the Intent (S).
+   - **Tasks:** copied from develop.md (L), from define.md's approach (M), or one task from the Intent (S). If the phase that would supply them was [waived](../../../docs/criteria.md#phase-state), draft the tasks here from what does exist (define.md's criteria, or the Intent), and show them in the plan for approval.
    - **Branch:** follow the repo's convention if its CLAUDE.md or CONTRIBUTING states one; otherwise `<type>/<slug>` (`feat` for features; `fix`, `chore` or `refactor` for tasks).
 4. **Show the plan:** definition of done, worktree path, branch, tasks, and every outward action: commits, push, PR, review, and merge, saying whether the [merge rule](../../../docs/criteria.md#merge-rule) can allow deliver to merge or whether the user will.
 5. **Ask for one approval for the whole item.** When given, log `- <date>: deliver authorized: <actions>` and set `status: active`, `phase: deliver` and `updated`. Don't ask again per commit.
@@ -79,7 +79,7 @@ For each unchecked task, in order:
 
 ## 5. Verify
 
-First run the repo's check commands once yourself in the worktree. Then split the ACs into at most cap-many groups and give each group to a `verifier` agent, along with those check results, in parallel (see the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) and model policy). Check their reports, then record each AC in deliver.md's *Verification*:
+If define was waived there are no ACs: verify against the Intent instead, and say so in *Verification*. Otherwise, first run the repo's check commands once yourself in the worktree. Then split the ACs into at most cap-many groups and give each group to a `verifier` agent, along with those check results, in parallel (see the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) and model policy). Check their reports, then record each AC in deliver.md's *Verification*:
 - `verified: <how>`
 - `pending: <why>`
 - `deferred to <NNN>: <why it can't run here>`, only when the [deferral rule](../../../docs/criteria.md#deferring-a-check) allows it. Log the deferral in both items and add the check to the follow-up item.
@@ -135,5 +135,7 @@ No worktree, branch or PR. Research with read-only reads and commands. A scratch
 - Otherwise, verify the initiative's own ACs (step 5) and close as in step 7, without the worktree or merge.
 
 ## Report
+
+At every stop where the next step isn't yours (a pending check, open child items, a missing prerequisite like `gh` auth or a repo, a PR to merge), log `- <date>: waiting on you: <what's needed>`, or `- <date>: waiting on items: <ids>` for an initiative's open children, so the board and hq know to stop.
 
 At every stop, give the item path, the stage reached, what was done (commits, PR, review, CI), the AC verification summary, and what happens next: who acts, and what running `/deliver` again will do.

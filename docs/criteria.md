@@ -72,7 +72,8 @@ Kind is the type of work, regardless of size.
 
 ## Phase state
 
-- **Phase approved:** `item.md`'s log has a `- <date>: <phase> approved` line with no later `<phase> reopened` line. Approval comes only from the user.
+- **Phase approved:** `item.md`'s log has a `- <date>: <phase> approved` or `- <date>: <phase> waived: <reason>` line with no later `<phase> reopened` line. Approval and waivers come only from the user.
+- **Waived:** the user explicitly skipped a phase's gate. A waived phase counts as approved, and its doc may be left unwritten. Deliver's per-item authorization of outward actions (`deliver authorized`) can never be waived.
 - **Phase drafted:** the log has a `<phase> drafted` line. A phase doc that only holds template text (as new-item creates it) is not drafted.
 - **Revision:** running a phase skill on a phase that's already drafted. If that phase was approved, log `- <date>: <phase> reopened` first, so the old approval no longer counts.
 

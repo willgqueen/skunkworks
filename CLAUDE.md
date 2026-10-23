@@ -9,6 +9,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - `.claude/hooks/`: hooks registered in settings (subagents can't push or merge)
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
+- `scripts/`: python3 scripts (the board, the docs check)
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for
 - `docs/process.md`: the method (phases, gates, sizing)
@@ -23,4 +24,5 @@ The control center for orchestrating software work (ideation → planning → ar
 - When working in a target repo, use absolute paths (`git -C <repo>`, or `cd` in the same command), and follow that repo's own `CLAUDE.md`. Read it explicitly, because files in additional directories may not load automatically.
 - Build bottom-up: a new composite workflow should call existing skills, not duplicate them.
 - Skills that create workspace files start from `templates/workspace/`.
+- Every change updates the docs it affects, in the same change, and passes `python3 -I scripts/check_docs.py`. [docs/contributing.md](docs/contributing.md) is the guide.
 - Skills never define their own thresholds or conditions. They link to [docs/criteria.md](docs/criteria.md), so calibrating it updates every skill.

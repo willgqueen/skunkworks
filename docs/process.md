@@ -23,9 +23,31 @@ Every item is sized when it's created, using the rules in [criteria.md](criteria
 | M | Clear feature or bug with a known approach | Define → Deliver (light Develop inside `define.md`) |
 | L | Ambiguous, cross-cutting or risky work | Discover → Define → Develop → Deliver |
 
+An `initiative` runs Discover → Define (its breakdown into child items) → Deliver, where it closes once its children are done. Its children carry their own design.
+
 An `investigation` runs Discover → Define (the question and what would answer it), then ends with findings in `deliver.md` and no code.
 
 When work turns out bigger than its size, re-size it and back up to the missing phase rather than pushing on.
+
+## Next action
+
+Every open item's next step follows from its `item.md`: the frontmatter, plus the latest [log line](workspace.md#log-vocabulary) for its current phase. [`scripts/board.py`](../scripts/board.py) implements this table, and `/hq` uses it.
+
+| State | Next action | Waiting on |
+|---|---|---|
+| `status: blocked` | Resolve the logged cause, then resume | you |
+| `status: done` or `dropped` | None (not shown on the board) | |
+| Current phase not drafted yet | Run that phase's skill | claude |
+| Latest line for the phase is `reopened` | Revise the phase doc | claude |
+| Latest line is `drafted` or `revised` | Answer and approve the gate | you |
+| Latest line is `approved` or `waived` | Run the next phase for the item's size and kind (see [Sizing](#sizing)) | claude |
+| Phase deliver, latest deliver line is `waiting on you: …` | What that line says | you |
+| Phase deliver, latest deliver line is `waiting on items: …` | Wait for those items | items |
+| Phase deliver, no `deliver authorized` | Run deliver: plan, then one approval | claude |
+| Phase deliver, latest deliver line is `review: …` with no `merged` | Merge, or resume deliver | you |
+| Phase deliver, otherwise | Resume deliver | claude |
+
+The board orders items blocked → waiting on you → active → proposed.
 
 ## Why this combination
 
@@ -42,4 +64,4 @@ The toolkit is built bottom-up:
 1. **Foundation**: project `.claude/` setup, workspace, templates, this process. *(done)*
 2. **Atomic skills**: one job each, e.g. understand a repo, write a spec, plan, implement a task, test, review, open a PR.
 3. **Phase commands**: chain atomic skills for one phase and stop at its gate.
-4. **Orchestrator**: one entry point that creates or resumes an item, sizes it, and routes it.
+4. **Orchestrator**: `/hq`, one entry point that shows the board, creates or resumes an item, and routes it through its phases.
