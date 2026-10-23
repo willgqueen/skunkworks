@@ -78,7 +78,9 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | Line | Written by |
 |---|---|
 | `created` | new-item |
-| `<phase> drafted` / `<phase> revised` | define, develop |
+| `<phase> drafted` / `<phase> revised` | discover, define, develop |
+| `<phase> reopened` | the phase skill, when revising an approved phase |
+| `discover answers: <summary>` | discover, whenever the user answers open questions |
 | `<phase> approved` | the phase skill, on the user's approval |
 | `re-sized <old>→<new>: <condition>` | any skill, on the user's agreement |
 | `deliver authorized: <actions>` | deliver |

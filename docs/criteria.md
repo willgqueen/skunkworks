@@ -39,7 +39,7 @@ Check for L first, then S. Anything else is M.
 
 **Too thin to size:** you can't say what changes or roughly where. Ask one question; don't guess.
 
-**Re-size trigger:** at any phase, an L condition appears on an S or M item, or all S conditions turn out to hold for an M item. Recommend re-sizing; only change the size with the user's agreement, and log it as `- <date>: re-sized <old>→<new>: <condition that triggered it>`.
+**Re-size trigger:** at any phase, an L condition appears on an S or M item, no L condition holds any longer for an L item, or all S conditions turn out to hold for an M item. Recommend re-sizing; only change the size with the user's agreement, and log it as `- <date>: re-sized <old>→<new>: <condition that triggered it>`.
 
 ## Kind
 
@@ -72,7 +72,9 @@ Kind is the type of work, regardless of size.
 
 ## Phase state
 
-- **Phase approved:** `item.md`'s log has a `- <date>: <phase> approved` line. Approval comes only from the user.
+- **Phase approved:** `item.md`'s log has a `- <date>: <phase> approved` line with no later `<phase> reopened` line. Approval comes only from the user.
+- **Phase drafted:** the log has a `<phase> drafted` line. A phase doc that only holds template text (as new-item creates it) is not drafted.
+- **Revision:** running a phase skill on a phase that's already drafted. If that phase was approved, log `- <date>: <phase> reopened` first, so the old approval no longer counts.
 
 ## Definitions of done
 
