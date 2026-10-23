@@ -13,5 +13,5 @@ A control center for taking software work from idea to merged code in a standard
 3. On a fresh clone, create the workspace:
 
    ```sh
-   mkdir -p workspace/projects workspace/archive && touch workspace/inbox.md
+   mkdir -p workspace/projects workspace/archive workspace/worktrees && touch workspace/inbox.md
    ```

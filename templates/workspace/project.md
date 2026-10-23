@@ -15,6 +15,10 @@
 ## Layout
 <!-- Top-level directories and what lives in each. -->
 
+## Merge policy
+manual
+<!-- auto | manual. auto lets deliver merge when docs/criteria.md#merge-rule allows; manual means the user always merges. -->
+
 ## Conventions learned
 <!-- Things discovered while working here that future work should follow. Never dropped on refresh. -->
 

@@ -5,9 +5,10 @@ The control center for orchestrating software work (ideation → planning → ar
 ## Layout
 
 - `.claude/skills/<name>/SKILL.md`: skills, each callable as `/<name>`
-- `.claude/agents/`: subagent definitions
+- `.claude/agents/`: subagent definitions (`implementer` builds one deliver task in a worktree)
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
+- `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for
 - `docs/process.md`: the method (phases, gates, sizing)
 - `docs/criteria.md`: every condition skills branch on, with calibration rules

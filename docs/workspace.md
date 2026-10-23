@@ -26,6 +26,8 @@ workspace/
           notes/              # research, scratch, raw material
   archive/
     <project>/<NNN>-<slug>/   # done or dropped items, moved here intact
+  worktrees/
+    <repo>/<branch>/          # git worktrees deliver creates per item; removed at close
 ```
 
 A project doesn't need a repo yet. An idea can become a project first and gain a repo later.
@@ -68,3 +70,25 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `define.md` | Define | Spec: goal, scope, non-goals, acceptance criteria |
 | `develop.md` | Develop | Approach, design decisions (ADR-style), task breakdown |
 | `deliver.md` | Deliver | Task checklist, progress log, PR links, outcome |
+
+## Log vocabulary
+
+`item.md`'s log is the item's state history. Skills write these lines (newest last) and read them to resume:
+
+| Line | Written by |
+|---|---|
+| `created` | new-item |
+| `<phase> drafted` / `<phase> revised` | define, develop |
+| `<phase> approved` | the phase skill, on the user's approval |
+| `re-sized <old>→<new>: <condition>` | any skill, on the user's agreement |
+| `deliver authorized: <actions>` | deliver |
+| `task <n> committed <sha>` | deliver |
+| `blocked: <cause>` / `unblocked: <how>` | deliver |
+| `check deferred to <NNN>: <check>` | deliver, in both items |
+| `PR opened <url>` | deliver |
+| `review: <result>` | deliver |
+| `merged <sha>` | deliver |
+| `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
+| `done` | deliver |
+
+Free-form lines are fine for anything else worth recording.

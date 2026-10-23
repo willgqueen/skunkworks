@@ -39,7 +39,7 @@ Apply the rules in [docs/criteria.md](../../../docs/criteria.md) exactly. Don't 
 4. Create `items/<NNN>-<slug>/` with:
    - `item.md` from [the template](../../../templates/workspace/item.md). Fill all fields. Use `status: proposed`, today's date, and in `repos` the repo folders this will touch (usually all of the project's repos, if it has only one). Write a one- or two-sentence *Intent* that captures what the user asked for and why. Don't invent requirements.
    - The starting phase's doc from its template, with the title filled in and any details the user already gave placed in the right sections. Leave the rest as template prompts.
-5. If the user named a parent initiative, set `parent` and add a log line to the parent's `item.md`: `- <date>: child <NNN> <title> added`.
+5. If the user named a parent initiative, set `parent` and add a log line to the parent's `item.md`: `- <date>: child <NNN> added: <title>`.
 6. If the item came from `workspace/inbox.md`, remove that line from the inbox.
 
 ## 4. Report

@@ -9,6 +9,13 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
 - **Public interface:** anything used from outside the module or repo that changes it: HTTP/RPC endpoints, CLI commands, flags and output, a library's exported API, config and env var formats, DB schema, event and message formats, on-disk file formats. Internal functions don't count.
 - **Risk area:** stored data (schema, migrations, data backfills), auth, permissions and secrets, payments or money, deletion of user data, deploy and infra config, public interfaces.
 - **Hard to reverse:** undoing it takes more than reverting the commit. Data has been written or migrated, others already depend on a published interface, there are external side effects (a deploy, a release, sent messages), or other code will be built on top of the choice (framework, datastore, core abstraction).
+- **Sensitive content:** never allowed in commit messages, PR text, branch names or code comments in a target repo:
+  - secrets: keys, tokens, passwords, connection strings
+  - personal data about anyone other than the author's own attribution
+  - local machine details: absolute home paths, hostnames
+  - internal URLs
+
+  Item slugs and plain descriptions of the work are fine.
 
 ## Size
 
@@ -66,6 +73,46 @@ Kind is the type of work, regardless of size.
 ## Phase state
 
 - **Phase approved:** `item.md`'s log has a `- <date>: <phase> approved` line. Approval comes only from the user.
+
+## Definitions of done
+
+An item is done when the rule for its **kind** is met, finished the way its **repo setup** requires.
+
+### By kind
+
+- **Code item** (feature, task):
+  - every task committed
+  - every acceptance criterion verified or [deferred](#deferring-a-check)
+  - review passed, or its findings resolved or explicitly accepted by the user
+  - merged into the default branch
+  - worktree removed, item archived
+- **Investigation:** every question in define.md answered in deliver.md's *Outcome*, with evidence that meets define.md's standard, plus a recommendation. Recommended follow-up work is proposed as items.
+- **Initiative:** every child item is done or dropped, and the initiative's own acceptance criteria are verified.
+
+### By repo setup
+
+| Setup | Finish |
+|---|---|
+| Remote + CI | Push, open PR, review, CI green, merge per the [merge rule](#merge-rule) |
+| Remote, no CI | Push, open PR, review, local checks green, merge per the merge rule |
+| Local only | No push or PR; review the branch diff, local checks green, merge locally per the merge rule |
+
+- **CI green:** every required check on the PR passes.
+- **Local checks:** the test, lint and build commands listed in project.md's *Commands*, where they exist.
+
+### Merge rule
+
+Deliver merges only when **all** of these hold. Otherwise it stops and the user merges.
+- project.md's *Merge policy* is `auto` (the default is `manual`)
+- review passed: findings resolved by fixes. Findings the user accepted without a fix mean the user merges.
+- local checks and CI (where there is CI) are green
+- the item touches no [risk area](#building-blocks)
+
+### Deferring a check
+
+- A check may be deferred only when it **can't be run in the current environment**, because it needs a tool, service, session or person that isn't available. A failing or slow check is never deferred.
+- Move it to a named follow-up item: an existing one whose scope covers it, or a new one made with new-item. Log `check deferred to <NNN>: <check>` in the original item, and add the check to the follow-up's define.md (or to its Intent, if it isn't defined yet).
+- Any other pending check keeps the item open.
 
 ## Context
 
