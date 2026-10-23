@@ -121,6 +121,19 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
 
+## Agents and parallelism
+
+The roster of agents, with each one's role, model, effort and tools, is in [agents.md](agents.md). Skills spawn only agents from the roster. The only model a skill ever passes is the upgrade below; otherwise the agent's frontmatter decides.
+
+- **Model policy:** a custom agent's frontmatter sets its default model and effort. When a skill spawns an agent for an **L item** or an item that touches a **[risk area](#building-blocks)**, it passes `model: opus` for that run (a no-op for agents whose default is already opus). Built-in agents (Explore, Plan) keep their own defaults.
+- **Parallel cap:** at most **4** agents running at once per skill *(provisional)*.
+- **Fan out** only when all of these hold. Otherwise, work in sequence.
+  - the pieces of work are independent: no shared files to edit, no ordering between them, and no shared build output, caches, ports or databases
+  - none needs the user's input
+  - the main session merges the results
+- **Always sequential:** deliver's tasks (one commit per task, in dependency order) and every gate.
+- **Outward actions:** subagents never push or merge. A project hook enforces this. Commits are made by the main session.
+
 ## Calibration
 
 The provisional numbers above are guesses until they're tested against sustained use. Calibrate them using completed items as evidence, not intuition.
@@ -133,6 +146,7 @@ The provisional numbers above are guesses until they're tested against sustained
 - Files and lines changed per task and per item (from the PRs or commits linked in `deliver.md`)
 - Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions and the item logs)
 - Explore subagent use, and project.md refreshes that turned out to be needed or not
+- Agent runs per skill, the model used, and, for agents whose default isn't opus, whether upgraded runs found more (review findings, failed verifications) than default runs
 
 **How:** propose each change to a number, citing the items that support it, and let the user approve. Record approved changes below. Definitions without a number can be recalibrated the same way when the evidence shows they misclassify work.
 

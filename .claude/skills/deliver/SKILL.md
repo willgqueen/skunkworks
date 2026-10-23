@@ -59,7 +59,7 @@ Investigations go to [step 8](#8-investigations), and initiatives to [step 9](#9
 ## 4. Build, one task at a time
 
 For each unchecked task, in order:
-1. **Implement:** start the `implementer` agent with:
+1. **Implement:** start the `implementer` agent (applying the [model policy](../../../docs/criteria.md#agents-and-parallelism)) with:
    - the worktree path
    - the task and the ACs it serves
    - the check commands from project.md
@@ -79,12 +79,16 @@ For each unchecked task, in order:
 
 ## 5. Verify
 
-For each AC, run its check and record the result in deliver.md's *Verification*:
+First run the repo's check commands once yourself in the worktree. Then split the ACs into at most cap-many groups and give each group to a `verifier` agent, along with those check results, in parallel (see the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) and model policy). Check their reports, then record each AC in deliver.md's *Verification*:
 - `verified: <how>`
 - `pending: <why>`
 - `deferred to <NNN>: <why it can't run here>`, only when the [deferral rule](../../../docs/criteria.md#deferring-a-check) allows it. Log the deferral in both items and add the check to the follow-up item.
 
-A pending check that isn't deferred keeps the item open. Report it and stop; the next run resumes here.
+ACs that need commands writing build output, caches, ports or databases go to one verifier at a time, never in parallel.
+
+A verifier's `failed` result is a failing check: fix it with an extra task through step 4, or stop as step 4 describes. A pending check that isn't deferred keeps the item open. Report it and stop; the next run resumes here.
+
+If a verifier reports files its commands changed, check them against the baseline before going on.
 
 ## 6. Publish and review
 
@@ -94,7 +98,7 @@ A pending check that isn't deferred keeps the item open. Report it and stop; the
   - log `- <date>: PR opened <url>`
 - **Local only:** no push or PR. The review covers the branch diff.
 - **Review:** run the **review** skill on the PR or the branch diff.
-  - If the review skill doesn't exist, record review as pending in *Review*, never skipped. It can be deferred only under the deferral rule.
+  - If the review skill doesn't exist yet, run the `reviewer` agent on the diff instead (applying the model policy), giving it the ACs and design decisions. If neither can run, record review as pending in *Review*, never skipped. It can be deferred only under the deferral rule.
   - Fix findings as extra tasks through step 4, or record the user's explicit acceptance.
   - After fix commits, push again (remote), then re-run the review on the new changes and wait for CI again. Only the results for the final pushed head count.
   - Log `- <date>: review: <result>`.

@@ -30,7 +30,7 @@ For each repo in `repos`, read that repo's `CLAUDE.md`, then the code the design
 
 Draft the overall approach, then list every decision it depends on. Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
 
-For a broad design, a Plan subagent may draft the options. Its output is input to you, not the decision.
+For a broad design, a Plan subagent may draft the options, and, when research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), independent research questions (how an area works, what a library supports) go to `researcher` agents, in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Their output is input to you, not the decision.
 
 **Spec check:** if the design shows that define.md is wrong or incomplete (an acceptance criterion can't be met as written, something is missing, or the scope is unworkable), stop. Recommend a define revision and say exactly what needs to change. Don't edit define.md, and don't continue designing around the problem.
 
