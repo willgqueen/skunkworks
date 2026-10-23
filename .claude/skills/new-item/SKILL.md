@@ -18,18 +18,10 @@ Turn a description of work into a numbered item under `workspace/projects/<proje
 
 ## 2. Classify
 
-**Kind**
-- `investigation`: the outcome is an answer, not code ("why is X slow?", "should we use Y?").
-- `initiative`: clearly several separable pieces of work. Create only the initiative here, and list candidate children in its Intent.
-- `task`: small, well-understood change, such as a bug fix, chore or refactor.
-- `feature`: anything else that adds or changes behavior.
+Apply the rules in [docs/criteria.md](../../../docs/criteria.md) exactly. Don't restate or loosen them here.
 
-**Size**
-- **S**: the change and where it goes are obvious; roughly one focused commit.
-- **M**: the goal is clear, the approach is known or easy to pick, and it touches a contained area.
-- **L**: the problem or approach is unclear, the work cuts across areas, or it's risky (data, security, public interfaces).
-
-An initiative is always L. If the description is too thin to size, ask one question; don't guess.
+- **Kind:** [criteria.md#kind](../../../docs/criteria.md#kind). For an initiative, create only the initiative, and list candidate children in its Intent.
+- **Size:** [criteria.md#size](../../../docs/criteria.md#size). Check the L conditions first, then S. In the report, name the condition that decided the size. If the description is [too thin to size](../../../docs/criteria.md#size), ask one question.
 
 **Starting phase**
 
@@ -52,4 +44,6 @@ An initiative is always L. If the description is too thin to size, ask one quest
 
 ## 4. Report
 
-Give the item path, kind, size and starting phase, with one line on why you chose that size. Then ask whether to start the first phase. Don't start it unprompted.
+Give the item path, kind, size and starting phase, and the criteria condition that decided the size. Then ask whether to start the first phase. Don't start it unprompted.
+
+If [calibration is due](../../../docs/criteria.md#calibration) (10 items `done` since the last date in the calibration history, or the same re-size trigger logged 3 times), say so in one line.

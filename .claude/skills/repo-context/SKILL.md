@@ -25,14 +25,14 @@ Read, don't execute. Skip anything that doesn't exist.
 - Top-level tree (two levels, ignoring `node_modules`, `.git`, build output)
 - Git: `git -C <repo> remote -v`, the default branch, and `git -C <repo> log --oneline -15`
 
-For a large repo, hand the survey to an Explore subagent and ask for conclusions only.
+When [criteria.md](../../../docs/criteria.md#context) says to use an Explore subagent, hand the survey to one and ask for conclusions only.
 
 Never install dependencies, run builds or tests, or modify anything in the target repo.
 
 ## 3. Write project.md
 
 - **New project:** create `workspace/projects/<project>/` and `items/`, then fill [templates/workspace/project.md](../../../templates/workspace/project.md).
-- **Existing project:** rewrite the factual sections from what you just gathered, but keep every entry under *Conventions learned*. Add new conventions there only when the repo states them (for example, in CLAUDE.md or lint config).
+- **Existing project** (refresh it when it's [stale](../../../docs/criteria.md#context) or the user asks): rewrite the factual sections from what you just gathered, but keep every entry under *Conventions learned*. Add new conventions there only when the repo states them (for example, in CLAUDE.md or lint config).
 
 Guidelines:
 - **Commands** are exact and copied from the repo (scripts, Makefile targets, CI steps). If a command is inferred rather than stated, mark it `(inferred)`.

@@ -15,7 +15,7 @@ Each phase ends at a **gate**: the user approves the phase doc before the next p
 
 ## Sizing
 
-Every item is sized when it's created. The size picks the path:
+Every item is sized when it's created, using the rules in [criteria.md](criteria.md#size). The size picks the path:
 
 | Size | Typical work | Phases |
 |---|---|---|

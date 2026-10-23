@@ -10,6 +10,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - `templates/workspace/`: templates for workspace files
 - `docs/vision.md`: what this repo is for
 - `docs/process.md`: the method (phases, gates, sizing)
+- `docs/criteria.md`: every condition skills branch on, with calibration rules
 - `docs/workspace.md`: the workspace layout and item schema
 - `workspace/`: **gitignored** local planning data
 
@@ -19,3 +20,4 @@ The control center for orchestrating software work (ideation → planning → ar
 - When working in a target repo, use absolute paths (`git -C <repo>`, or `cd` in the same command), and follow that repo's own `CLAUDE.md`. Read it explicitly, because files in additional directories may not load automatically.
 - Build bottom-up: a new composite workflow should call existing skills, not duplicate them.
 - Skills that create workspace files start from `templates/workspace/`.
+- Skills never define their own thresholds or conditions. They link to [docs/criteria.md](docs/criteria.md), so calibrating it updates every skill.

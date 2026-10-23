@@ -32,13 +32,13 @@ A project doesn't need a repo yet. An idea can become a project first and gain a
 
 ## Items
 
-Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` replaces the corporate epic/feature/ticket/spike split:
+Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` replaces the corporate epic/feature/ticket/spike split. Kind is the type of work, regardless of size; the exact rules are in [criteria.md](criteria.md#kind).
 
 | Kind | Use for | Usually ends with |
 |---|---|---|
 | `initiative` | A multi-item effort; groups child items | All children done |
 | `feature` | New capability or a meaningful change in behavior | Merged code |
-| `task` | Small, well-understood change: a bug, chore or refactor | Merged code |
+| `task` | No new intended behavior: a bug fix, chore, refactor or dependency bump | Merged code |
 | `investigation` | A question to answer before committing to work | Findings and a recommendation |
 
 Nesting is done with the `parent` field, not nested folders, so items stay flat and easy to find.
