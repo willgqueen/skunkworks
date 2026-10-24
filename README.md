@@ -52,6 +52,7 @@ Details for each: [docs/skills.md](docs/skills.md).
 | [criteria.md](docs/criteria.md) | Every rule and threshold, and how they're calibrated |
 | [workspace.md](docs/workspace.md) | The local planning workspace and the log vocabulary |
 | [contributing.md](docs/contributing.md) | How to change this repo |
+| [testing.md](docs/testing.md) | Automated checks, and testing skills by hand in a sandbox |
 | [vision.md](docs/vision.md) | What this repo is for, in the owner's words |
 
 ## Setup

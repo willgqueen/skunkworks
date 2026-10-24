@@ -25,7 +25,7 @@ Check for L first, then S. Anything else is M.
 - **L** if *any* of these hold:
   - acceptance criteria can't be written yet (the problem is unclear)
   - there are ≥2 workable approaches with real trade-offs
-  - it spans ≥2 repos, or ≥2 modules and changes a shared contract between them; uniform mechanical edits and docs-only changes don't count
+  - it spans ≥2 repos, or ≥2 modules and changes a shared contract between them; uniform mechanical edits and docs-only changes don't count (skills and agents are code, not docs)
   - it touches a risk area
   - it needs a new dependency, service or infrastructure
   - it will likely take more than ~6 tasks *(provisional)*
@@ -150,6 +150,10 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
 
+## Testing
+
+- **Scenario budget** ([testing.md](testing.md#skill-scenarios)): about **$1** for a smoke run (one scenario) and **$10** for a full run (every scenario) *(provisional)*.
+
 ## Complete coverage
 
 Every review, audit, verification or research sweep:
@@ -203,3 +207,4 @@ The provisional numbers above are guesses until they're tested against sustained
 | 2026-10-24 | Every provisional number kept | 15 items, all single-repo, one day, no splits or re-sizes: too little spread to move any number (Tidy 024) |
 | 2026-10-24 | Deliver logs files and lines changed per task | No item recorded them, so the S file cap and the ~300-line task size couldn't be checked (Tidy 024) |
 | 2026-10-24 | Nit cap (5) moved here from the review rubric | Calibration only sees numbers in this file (Tidy 024) |
+| 2026-10-24 | L condition: skills and agents are code, not docs-only; scenario budget added | Your answer to Tidy 024's open review point; budget from 004 (item 019) |

@@ -50,20 +50,7 @@ Before committing, run `/review` (no argument reviews the working tree; or `/rev
 
 ## Testing
 
-Run before every commit:
-
-```sh
-python3 -I scripts/test.py
-```
-
-It runs:
-- the unit tests in `tests/` (board, ledger, manifests, sandbox, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
-- `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary
-- `scripts/check_docs.py`: links, anchors, and that every skill, agent and template is documented
-
-`scripts/install-hooks.sh` installs it as a git pre-commit hook (optional).
-
-Use each language's standard test framework: `unittest` for this repo's Python. Add a test with every script change; add a fixture case with every Next action rule change. Skill behavior is tested by hand, through the protocol item 019 adds.
+Run `python3 -I scripts/test.py` before every commit. [testing.md](testing.md) covers what it runs, when to add tests, and testing skills by hand in a sandbox.
 
 ## Known caveats
 

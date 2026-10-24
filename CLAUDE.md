@@ -10,7 +10,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
 - `scripts/`: python3 scripts (board, ledger, review manifests, docs check, skills lint, test runner, test sandbox)
-- `tests/`: unit tests and fixtures
+- `tests/`: unit tests, fixtures and skill scenarios ([docs/testing.md](docs/testing.md))
 - `.github/workflows/`, `ci/templates/`, `renovate.json`: the shared CI workflows, caller templates and Renovate config (docs/ci.md)
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for

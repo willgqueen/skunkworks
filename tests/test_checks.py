@@ -46,6 +46,9 @@ class LintSkills(unittest.TestCase):
     def test_model_name_any_case(self):
         self.assertTrue(self.found("model: names a model (Opus)"))
 
+    def test_skill_needs_scenario(self):
+        self.assertTrue(self.found("model: no scenario"))
+
     def test_log_lines_must_fully_match(self):
         self.assertTrue(self.found("define drafted extra junk"))
         self.assertTrue(self.found("bogus drafted"))

@@ -1,6 +1,7 @@
 """Static lint for skills and agents: required frontmatter, no model names in
-skills, and every log line a skill writes is in the log vocabulary
-(docs/workspace.md#log-vocabulary).
+skills, every log line a skill writes is in the log vocabulary
+(docs/workspace.md#log-vocabulary), and every skill has a manual test scenario
+(tests/scenarios/<skill>.md, docs/testing.md).
 
 Usage: python3 -I scripts/lint_skills.py
 """
@@ -48,6 +49,8 @@ def lint(root=ROOT):
         name = path.parent.name
         if not {"name", "description", "argument-hint"} <= set(frontmatter(path)):
             problems.append(f"{name}: frontmatter needs name, description, argument-hint")
+        if not (root / "tests/scenarios" / f"{name}.md").is_file():
+            problems.append(f"{name}: no scenario in tests/scenarios/{name}.md")
         text = path.read_text()
         model = MODELS.search(text)
         if model:
