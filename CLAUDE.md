@@ -6,16 +6,16 @@ The control center for orchestrating software work (ideation → planning → ar
 
 - `.claude/skills/<name>/SKILL.md`: skills, each callable as `/<name>`
 - `.claude/agents/`: the custom agents (implementer, reviewer, verifier, researcher); roster in `docs/agents.md`
-- `.claude/hooks/`: hooks registered in settings (subagents can't push or merge)
+- `.claude/hooks/`: the guard hook and its MCP allowlist (subagents can't act outward)
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
-- `scripts/`: python3 scripts (board, docs check, skills lint, test runner)
+- `scripts/`: python3 scripts (board, ledger, docs check, skills lint, test runner)
 - `tests/`: unit tests and fixtures
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for
 - `docs/process.md`: the method (phases, gates, sizing)
 - `docs/criteria.md`: every condition skills branch on, with calibration rules
-- `docs/agents.md`: the agent roster, parallelism and the push/merge guard
+- `docs/agents.md`: the agent roster, parallelism and the guard on subagents
 - `docs/workspace.md`: the workspace layout and item schema
 - `workspace/`: **gitignored** local planning data
 

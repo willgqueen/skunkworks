@@ -10,12 +10,12 @@ The front door: shows the board and routes work to the other skills.
 
 | | |
 |---|---|
-| **Use when** | You want status, to know what's next, to continue an item, to start new work without naming a skill, or to triage the inbox |
-| **Arguments** | none (board), `<project> <item>`, `<description of new work>`, or `inbox` |
-| **Reads** | `scripts/board.py` output, which reads every item.md |
-| **Writes** | Only waiver lines (`<phase> waived: <reason>`), and the inbox during triage. Everything else goes through the skills it calls |
+| **Use when** | You want status, what's next, to continue an item, to start new work without naming a skill, to triage the inbox, to see what changed (`ledger`), or to calibrate and tidy (`tidy`) |
+| **Arguments** | none (board), `<project> <item>`, `<description of new work>`, `inbox`, `tidy`, or `ledger [range] [project]` |
+| **Reads** | `scripts/board.py` and `scripts/ledger.py` output; for `tidy`, archived items and check output |
+| **Writes** | Waiver lines and the inbox during triage. Everything else, including `tidy`'s changes, goes through the skills and items it creates |
 | **Calls** | new-item, discover, define, develop, deliver |
-| **Agents** | researcher and Explore, in parallel, when advancing several items |
+| **Agents** | researcher and Explore, in parallel, when advancing several items or gathering `tidy` evidence |
 | **Gate** | None of its own. It stops at every gate of the skills it runs, and carries on after you approve |
 
 ## new-item
@@ -57,6 +57,19 @@ Checks whether work is too big for one item and proposes splitting it at natural
 | **Writes** | Child or sibling items (through new-item); `kind`, Breakdown and log lines on the original |
 | **Gate** | You choose: an initiative with children (default), sibling items, or keep it whole |
 | **Log lines** | `split: <choice>`, `re-kinded <old>→initiative: <signal>` |
+
+## integrate
+
+Adds an MCP server or external API the standard way.
+
+| | |
+|---|---|
+| **Use when** | Connecting a service, MCP server or API |
+| **Arguments** | `<service or MCP server> [purpose]` |
+| **Calls** | new-item |
+| **Writes** | An item; deliver adds config, the allowlist entries and the [registry](integrations.md) row |
+| **Agents** | researcher |
+| **Gate** | The item's own gates |
 
 ## repo-context
 
@@ -123,7 +136,7 @@ The Deliver phase: builds, verifies, publishes and closes. Resumable.
 | **Use when** | An item is ready (see [readiness](../.claude/skills/deliver/SKILL.md)), or to resume one that's waiting |
 | **Arguments** | `<project> <item>` |
 | **Reads** | The item's phase docs, `project.md`, the target repo |
-| **Writes** | Code in a worktree at `workspace/worktrees/<repo>/<branch>`; commits; a PR; `deliver.md` (Plan, Tasks, Verification, Review, CI, Outcome); then archives the item |
+| **Writes** | Code in a worktree at `workspace/worktrees/<repo>/<branch>`; commits (for skunkworks, also CHANGELOG.md); a PR; `deliver.md` (Plan, Tasks, Verification, Review, CI, Outcome); then archives the item |
 | **Agents** | implementer (one per task, in sequence), verifier (in parallel groups); review through `/review` |
 | **Gate** | One approval for the whole item, covering its outward actions. Merging follows the [merge rule](criteria.md#merge-rule) |
 | **Log lines** | `deliver authorized`, `task <n> committed <sha>`, `blocked` / `unblocked`, `check deferred to <NNN>`, `PR opened`, `review`, `merged`, `done` |

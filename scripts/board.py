@@ -11,6 +11,7 @@ Usage:
     python3 -I scripts/board.py --workspace <path>   use another workspace (tests)
 """
 import argparse
+import datetime
 import json
 import pathlib
 import re
@@ -99,6 +100,20 @@ def next_action(meta, log):
     return f"Run /{later[0]}", "claude"
 
 
+def is_done_line(line):
+    """A log line that closes the item: `done`, `done (<note>)`, or `<note>; done`."""
+    return bool(re.match(r"(?:[^:]*;\s*)?done\b", line))
+
+
+def find_workspace(start=ROOT):
+    """The live workspace: the nearest folder at or above start that holds workspace/projects,
+    so scripts run from a deliver worktree still read the real one."""
+    for folder in [start, *start.parents]:
+        if (folder / "workspace/projects").is_dir():
+            return folder / "workspace"
+    return start / "workspace"
+
+
 def calibration_due(workspace, criteria_path):
     """docs/criteria.md#calibration. Reads its thresholds from criteria.md."""
     text = criteria_path.read_text() if criteria_path.exists() else ""
@@ -115,7 +130,7 @@ def calibration_due(workspace, criteria_path):
             _, log = parse_item(path)
         except ValueError:
             continue
-        done += any(e == "done" or e.startswith("done ") for d, e in log if d >= since)
+        done += any(is_done_line(e) for d, e in log if d >= since)
         for d, e in log:
             m = re.match(r"re-sized \S+: (.*)", e)
             if m and d >= since:
@@ -144,8 +159,16 @@ def all_statuses(workspace):
     return found
 
 
-def collect(workspace):
+def stale_days(criteria_path):
+    """docs/criteria.md#context: the stale-item threshold."""
+    m = re.search(r"no log line in the last (\d+) days", criteria_path.read_text()) if criteria_path.exists() else None
+    return int(m.group(1)) if m else None
+
+
+def collect(workspace, today=None, criteria_path=ROOT / "docs/criteria.md"):
     items, problems = [], []
+    today = today or datetime.date.today()
+    days = stale_days(criteria_path)
     statuses = all_statuses(workspace)
     closed = ("done", "dropped")
     for path in sorted(workspace.glob("projects/*/items/*/item.md")):
@@ -165,12 +188,19 @@ def collect(workspace):
         kids = [s for (proj, _), (s, parent) in statuses.items() if proj == project and parent == meta["id"].zfill(3)]
         if kids:
             action += f" · children: {sum(s in closed for s in kids)}/{len(kids)}"
+        last = max([d for d, _ in log] or [meta.get("created", "")])
+        try:
+            stale = bool(days) and meta["status"] == "proposed" and (today - datetime.date.fromisoformat(last)).days > days
+        except ValueError:
+            stale = False
+            problems.append(f"{path.relative_to(workspace)}: bad date {last!r}")
         group = "blocked" if meta["status"] == "blocked" else "you" if waiting == "you" else \
             "active" if meta["status"] == "active" else "proposed"
         items.append({"project": project, "id": meta["id"], "title": meta["title"], "kind": meta["kind"],
                       "size": meta["size"], "phase": meta["phase"], "status": meta["status"],
                       "next": action, "waiting_on": waiting, "group": group,
                       "parent": (ids(meta.get("parent")) or [None])[0], "depends_on": ids(meta.get("depends_on")),
+                      "stale": stale,
                       "path": str(path.parent.relative_to(workspace.parent))})
     items.sort(key=lambda i: (i["project"], ORDER[i["group"]], i["id"]))
     return nest(items), problems
@@ -208,16 +238,19 @@ def render(items, problems, inbox, calibration):
     if not items:
         out += ["No open items.", ""]
     out.append(f"Inbox: {inbox} {'entry' if inbox == 1 else 'entries'}")
+    stale = [f"{i['project']}/{i['id']}" for i in items if i["stale"]]
+    if stale:
+        out.append("Stale: " + ", ".join(stale))
     if calibration:
-        out.append("Calibration due: " + "; ".join(calibration))
+        out.append("Calibration due (run /hq tidy): " + "; ".join(calibration))
     for p in problems:
-        out.append(f"Unreadable item: {p}")
+        out.append(f"Problem: {p}")
     return "\n".join(out)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--workspace", type=pathlib.Path, default=ROOT / "workspace")
+    parser.add_argument("--workspace", type=pathlib.Path, default=find_workspace())
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--item", help="<project>/<id>")
     args = parser.parse_args()
@@ -233,9 +266,11 @@ def main():
         print(json.dumps(match[0], indent=2))
         return 0
     calibration = calibration_due(workspace, ROOT / "docs/criteria.md")
+    if stale_days(ROOT / "docs/criteria.md") is None:
+        problems.append("can't read the stale-item threshold in docs/criteria.md#context")
     if args.json:
         print(json.dumps({"items": items, "inbox": inbox_count(workspace), "calibration_due": calibration,
-                          "unreadable": problems}, indent=2))
+                          "problems": problems}, indent=2))
     else:
         print(render(items, problems, inbox_count(workspace), calibration))
     return 0

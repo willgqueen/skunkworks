@@ -1,0 +1,1 @@
+- **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*.

@@ -1,7 +1,7 @@
 ---
 name: hq
-description: The front door to all work. With no arguments, show the board of every open item, its next action and who it's waiting on. Given an item, run its next phase and carry on after each approved gate. Given a description of new work, create the item and start it. Also triages the inbox and records gate waivers the user gives explicitly. Use when the user asks what's next, for status, to continue or advance work, to start something new without naming a skill, or to triage the inbox.
-argument-hint: "[<project> <item> | <description of new work> | inbox]"
+description: The front door to all work. With no arguments, show the board of every open item, its next action and who it's waiting on. Given an item, run its next phase and carry on after each approved gate. Given a description of new work, create the item and start it. Also triages the inbox, records gate waivers the user gives explicitly, and runs the combined calibration and tidy pass. Use when the user asks what's next, for status, to continue or advance work, to start something new without naming a skill, to triage the inbox, what changed recently, or to calibrate or tidy.
+argument-hint: "[<project> <item> | <description of new work> | inbox | tidy | ledger [range] [project]]"
 ---
 
 # hq
@@ -31,6 +31,21 @@ Run the **new-item** skill with the description, choosing the project as new-ite
 ## `inbox`: triage
 
 For each entry in `workspace/inbox.md`, in order, ask the user: **create** an item (through new-item, which removes the entry), **keep** it, or **drop** it (remove the entry). Batch up to four entries per question. End by showing the board.
+
+## `ledger`: what changed
+
+Run `python3 -I scripts/ledger.py` with `--since`, `--until` and `--project` as asked, and show the output as is.
+
+## `tidy`: calibrate and consolidate
+
+Run when the board says calibration is due, or on request. One pass covers [calibration](../../../docs/criteria.md#calibration) and consolidation.
+
+1. **Gather evidence.** Run `python3 -I scripts/test.py` and the board yourself, then give each area to a `researcher` agent in parallel (within the cap), with that output and the archived items, review findings and item logs:
+   - **calibration:** each *(provisional)* number in criteria.md against what completed items show
+   - **toolkit:** contradicting or restated rules, overlapping skills or docs, unused templates or agents, verbosity
+   - **backlog and hygiene:** overlapping, [stale](../../../docs/criteria.md#context) or mis-sized items; leftover worktrees; items stuck waiting
+2. **Propose** with **new-item**: one task item, `Tidy <date>`, listing each change (adjust, merge, prune, restructure, expand) with its evidence in its define.md.
+3. Ask the user to approve or reject each change. The Tidy item itself delivers the approved threshold changes (editing criteria.md and its calibration history). Every other approved change becomes its own item through new-item. The Tidy item closes when each proposal is applied, itemized or rejected.
 
 ## Waivers
 

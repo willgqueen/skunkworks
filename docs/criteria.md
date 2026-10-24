@@ -9,6 +9,7 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
 - **Public interface:** anything used from outside the module or repo that changes it: HTTP/RPC endpoints, CLI commands, flags and output, a library's exported API, config and env var formats, DB schema, event and message formats, on-disk file formats. Internal functions don't count.
 - **Risk area:** stored data (schema, migrations, data backfills), auth, permissions and secrets, payments or money, deletion of user data, deploy and infra config, public interfaces.
 - **Hard to reverse:** undoing it takes more than reverting the commit. Data has been written or migrated, others already depend on a published interface, there are external side effects (a deploy, a release, sent messages), or other code will be built on top of the choice (framework, datastore, core abstraction).
+- **Boring technology first:** a language, datastore, framework or runtime not already in the project's stack (project.md *Stack*) spends an innovation token, of about three per project *(provisional)*. Each one must be justified by the product's real differentiator and recorded in the decision ([guide](architecture/language-and-framework-selection.md#boring-technology)).
 - **Sensitive content:** never allowed in commit messages, PR text, branch names or code comments in a target repo:
   - secrets: keys, tokens, passwords, connection strings
   - personal data about anyone other than the author's own attribution
@@ -145,6 +146,7 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 
 ## Context
 
+- **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*.
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
 
@@ -163,7 +165,7 @@ The roster of agents, with each one's role, model, effort and tools, is in [agen
   - M: three finders: correctness + tests; design and consistency + compatibility and docs; security + performance and reliability
   - L or a risk area: one finder per dimension, in waves up to the cap
 - **Always sequential:** deliver's tasks (one commit per task, in dependency order) and every gate.
-- **Outward actions:** subagents never push or merge. A project hook enforces this. Commits are made by the main session.
+- **Outward actions:** subagents never act outward (push, merge, unlisted MCP tools); the [guard](agents.md#safety-subagents-cant-act-outward) enforces it. Commits are made by the main session.
 
 ## Calibration
 
@@ -180,7 +182,7 @@ The provisional numbers above are guesses until they're tested against sustained
 - Split proposals: how often a split was proposed, and how often you kept the work whole
 - Agent runs per skill, the model used, and, for agents whose default isn't opus, whether upgraded runs found more (review findings, failed verifications) than default runs
 
-**How:** propose each change to a number, citing the items that support it, and let the user approve. Record approved changes below. Definitions without a number can be recalibrated the same way when the evidence shows they misclassify work.
+**How:** run `/hq tidy`, which calibrates and consolidates in one pass. It proposes each change to a number, citing the items that support it, and lets the user approve. Record approved changes below. Definitions without a number can be recalibrated the same way when the evidence shows they misclassify work.
 
 ### Calibration history
 

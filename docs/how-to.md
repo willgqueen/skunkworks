@@ -5,7 +5,10 @@ Short recipes for everyday tasks. Each one names the command and what to expect.
 ## Seeing what's going on
 
 ### See all open work and what's next
-`/hq`. The board lists every open item with its next action and who it's waiting on, items waiting on you first. It ends with the inbox count and, when due, a calibration reminder. Outside a session: `python3 -I scripts/board.py`.
+`/hq`. The board lists every open item with its next action and who it's waiting on, items waiting on you first. It ends with the inbox count, any stale items, and, when due, a calibration reminder. Outside a session: `python3 -I scripts/board.py`.
+
+### See what changed
+`/hq ledger` (or `python3 -I scripts/ledger.py --since 2026-10-01 --project <p>`): one entry per committed task or merge, grouped by item, with repos, significant decisions and any `ledger:` notes. Items closed without per-task commit lines get one unlinked entry from their Outcome. skunkworks' own changes are also in [CHANGELOG.md](../CHANGELOG.md).
 
 ### See one item in detail
 Open its folder: `workspace/projects/<project>/items/<NNN>-<slug>/`. `item.md` has its state and log; each phase has its own doc. Or run `python3 -I scripts/board.py --item <project>/<NNN>`.
@@ -70,10 +73,15 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 ### Find where deliver is building
 `workspace/worktrees/<repo>/<branch>`. It's a normal git worktree of the target repo, and deliver removes it when the item closes.
 
+## Integrations
+
+### Connect an MCP server or API
+`/integrate <service>`. It creates an item that sets up the config, credentials (in `.env.local`, loaded per server), agent access and the allowlist, and adds it to the [registry](integrations.md).
+
 ## Keeping the toolkit honest
 
-### Calibrate the thresholds
-When the board (or new-item) says calibration is due, ask Claude to calibrate. It proposes each change to a *(provisional)* number in [criteria.md](criteria.md#calibration), citing completed items, and records the changes you approve.
+### Calibrate and tidy
+When the board says calibration is due, run `/hq tidy`. In one pass it proposes calibration changes to *(provisional)* numbers in [criteria.md](criteria.md#calibration) and consolidation changes to the toolkit and backlog, each with evidence. You approve each one.
 
 ### Review a change
 `/review` reviews your working tree; `/review <PR>`, `/review <base>..<head>` or `/review <project> <NNN>` review the rest. It ends with a verdict per the [rubric](review-rubric.md). To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.

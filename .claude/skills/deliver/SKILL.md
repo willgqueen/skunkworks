@@ -70,7 +70,7 @@ For each unchecked task, in order:
    - leaves the user's checkout as it was (compare against the checkout baseline in the Plan)
 3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below).
 4. **Commit:** one commit for the task, with the message following [templates/repo/commit.md](../../../templates/repo/commit.md) (repo conventions override it).
-5. **Record:** tick the task in deliver.md with its sha, add a progress note, and log `- <date>: task <n> committed <sha>`.
+5. **Record:** tick the task in deliver.md as `- [x] <n>. <task> (<sha>)`, add a progress note, and log `- <date>: task <n> committed <sha>`.
 
 **Stop the run** if a check is still failing, there's an unexpected blocker, the implementer reports the task can't be done as described, or a [re-size trigger](../../../docs/criteria.md#size) appears:
 - set `status: blocked` and log `- <date>: blocked: <cause>` (for a re-size, recommend it and log it only when the user agrees)
@@ -79,19 +79,20 @@ For each unchecked task, in order:
 
 ## 5. Verify
 
-If define was waived there are no ACs: verify against the Intent instead, and say so in *Verification*. Otherwise, first run the repo's check commands once yourself in the worktree. Then split the ACs into at most cap-many groups and give each group to a `verifier` agent, along with those check results, in parallel (see the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) and model policy). Check their reports, then record each AC in deliver.md's *Verification*:
+If define was waived there are no ACs: verify against the Intent instead, and say so in *Verification*. Otherwise, first run the repo's check commands once yourself in the worktree. Then split the ACs into at most cap-many groups and give each group to a `verifier` agent (read-only), along with those check results, in parallel (see the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) and model policy). Check their reports, then record each AC in deliver.md's *Verification*:
 - `verified: <how>`
 - `pending: <why>`
 - `deferred to <NNN>: <why it can't run here>`, only when the [deferral rule](../../../docs/criteria.md#deferring-a-check) allows it. Log the deferral in both items and add the check to the follow-up item.
 
-ACs that need commands writing build output, caches, ports or databases go to one verifier at a time, never in parallel.
+When a verifier reports `pending: needs <command>`, run it yourself in the worktree and give it the output.
 
 A verifier's `failed` result is a failing check: fix it with an extra task through step 4, or stop as step 4 describes. A pending check that isn't deferred keeps the item open. Report it and stop; the next run resumes here.
 
-If a verifier reports files its commands changed, check them against the baseline before going on.
+
 
 ## 6. Publish and review
 
+- **skunkworks items:** before every push (including re-pushes after fixes), regenerate the changelog in the worktree (`python3 -I scripts/ledger.py --changelog`) and commit it as part of the item.
 - **Remote:**
   - push: `git -C <worktree> push -u origin <branch>`
   - open the PR with `gh pr create`, writing the body to a file first, following [templates/repo/pull-request.md](../../../templates/repo/pull-request.md) (a repo PR template overrides it)

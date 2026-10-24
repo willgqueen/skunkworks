@@ -21,10 +21,11 @@ The full walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 
 | Skill | What it does |
 |---|---|
-| `/hq` | The front door: the board, routing, carrying items through their phases, inbox triage, waivers |
+| `/hq` | The front door: the board, routing, carrying items through their phases, inbox triage, waivers, `ledger`, `tidy` |
 | `/new-item` | Turns a description into a numbered item with kind, size and first phase |
 | `/review` | Strict multi-agent code review with a verdict |
 | `/split` | Proposes splitting work that's too big into right-sized items |
+| `/integrate` | Adds an MCP server or API with credentials, access and guards |
 | `/repo-context` | Maps a target repo into its project.md, read-only |
 | `/discover` | Maps the problem: context, options, open questions |
 | `/define` | Writes the spec: goal, scope, acceptance criteria |
@@ -40,7 +41,9 @@ Details for each: [docs/skills.md](docs/skills.md).
 | [getting-started.md](docs/getting-started.md) | A walkthrough of one item, start to finish |
 | [how-to.md](docs/how-to.md) | Recipes for everyday tasks |
 | [skills.md](docs/skills.md) | Reference for every skill |
-| [agents.md](docs/agents.md) | The agent roster, parallelism, and the push/merge guard |
+| [agents.md](docs/agents.md) | The agent roster, parallelism, and the guard on subagents |
+| [integrations.md](docs/integrations.md) | MCP servers and APIs: registry and rules |
+| [architecture/](docs/architecture/) | Architecture reference guides |
 | [templates.md](docs/templates.md) | Every template and who uses it |
 | [review-rubric.md](docs/review-rubric.md) | What reviews check, severities, verdict |
 | [process.md](docs/process.md) | The method: phases, gates, sizing, next actions |
@@ -59,4 +62,4 @@ Details for each: [docs/skills.md](docs/skills.md).
    mkdir -p workspace/projects workspace/archive workspace/worktrees && touch workspace/inbox.md
    ```
 
-4. Requirements: `git`, `python3`, and `gh` (authenticated) for repos with a GitHub remote.
+4. Requirements: Claude Code ≥ 2.1.295 (for the guard's fail-closed setting), `git`, `python3`, and `gh` (authenticated) for repos with a GitHub remote.

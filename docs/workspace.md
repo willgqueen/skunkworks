@@ -26,6 +26,8 @@ workspace/
           notes/              # research, scratch, raw material
   archive/
     <project>/<NNN>-<slug>/   # done or dropped items, moved here intact
+  reviews/
+    <date>-<scope>/           # diffs and PR text saved for /review's read-only reviewers
   worktrees/
     <repo>/<branch>/          # git worktrees deliver creates per item; removed at close
 ```
@@ -95,6 +97,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `split: <choice>` / `re-kinded <old>→initiative: <signal>` | split |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
 | `waiting on you: <what>` / `waiting on items: <ids>` | deliver, at any stop where the next step isn't Claude's |
+| `ledger: <note>` | anyone: an optional note for the change ledger |
 | `done` | deliver |
 
 Free-form lines are fine for anything else worth recording.

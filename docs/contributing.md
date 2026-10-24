@@ -40,6 +40,10 @@ Edit [criteria.md](criteria.md) only. Every skill that links to the rule follows
 
 Scripts live in `scripts/`. They use python3 and the standard library only, and are run with `python3 -I`. A script that implements a rule from process.md or criteria.md cites the section it implements, and changes to that rule update the script in the same change.
 
+## Recording the change
+
+Deliver regenerates the changelog before every push of a skunkworks item (`python3 -I scripts/ledger.py --changelog`). It refuses to write lines that look sensitive.
+
 ## Reviewing a change
 
 Before committing, run `/review` (no argument reviews the working tree; or `/review <project> <item>`) and fix or explicitly accept every Blocking finding. Record the result in the item's `deliver.md` *Review* section.
@@ -53,7 +57,7 @@ python3 -I scripts/test.py
 ```
 
 It runs:
-- the unit tests in `tests/` (board, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
+- the unit tests in `tests/` (board, ledger, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
 - `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary
 - `scripts/check_docs.py`: links, anchors, and that every skill, agent and template is documented
 

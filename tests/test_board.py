@@ -12,9 +12,12 @@ FIXTURE = ROOT / "tests/fixtures/workspace"
 class NextActionTable(unittest.TestCase):
     """One case per row of docs/process.md#next-action, plus edge cases."""
 
+    TODAY = board.datetime.date(2026, 10, 23)
+    CRITERIA = ROOT / "tests/fixtures/criteria-stale.md"
+
     @classmethod
     def setUpClass(cls):
-        items, cls.problems = board.collect(FIXTURE)
+        items, cls.problems = board.collect(FIXTURE, cls.TODAY, cls.CRITERIA)
         cls.items = {i["id"]: i for i in items}
 
     def expect(self, item_id, action, waiting):
@@ -79,7 +82,7 @@ class NextActionTable(unittest.TestCase):
         self.expect("033", "Run /define", "claude")
 
     def test_children_nested_with_progress(self):
-        order = [i["id"] for i in board.collect(FIXTURE)[0]]
+        order = [i["id"] for i in board.collect(FIXTURE, self.TODAY, self.CRITERIA)[0]]
         self.assertEqual(order[order.index("030"):order.index("030") + 5], ["030", "031", "036", "032", "033"])
         self.assertEqual(self.items["036"]["depth"], 2)
         self.assertEqual(self.items["037"]["depth"], 0)
@@ -93,9 +96,29 @@ class NextActionTable(unittest.TestCase):
         self.expect("038", "Fix the findings (/deliver), or accept them", "you")
 
     def test_render_and_json_fields(self):
-        items, problems = board.collect(FIXTURE)
+        items, problems = board.collect(FIXTURE, self.TODAY, self.CRITERIA)
         self.assertIn("| ↳ ↳ 036 |", board.render(items, problems, 0, []))
         self.assertEqual((self.items["032"]["parent"], self.items["032"]["depends_on"]), ("030", ["031"]))
+
+    def test_stale_proposed_items(self):
+        at_30 = {i["id"] for i in board.collect(FIXTURE, self.TODAY + board.datetime.timedelta(days=30), self.CRITERIA)[0] if i["stale"]}
+        self.assertNotIn("002", at_30)
+        later = board.collect(FIXTURE, self.TODAY + board.datetime.timedelta(days=31), self.CRITERIA)[0]
+        stale = {i["id"] for i in later if i["stale"]}
+        self.assertIn("002", stale)
+        self.assertIn("043", stale)  # no log lines: falls back to created
+        self.assertNotIn("004", stale)  # active, not proposed
+        self.assertEqual({i for i, item in self.items.items() if item["stale"]}, {"043"})
+
+    def test_done_lines(self):
+        for line in ["done", "done (note)", "delivered; done"]:
+            self.assertTrue(board.is_done_line(line), line)
+        for line in ["waiting on you: confirm task 2 is done", "child 018 done", "define waived: done in 012"]:
+            self.assertFalse(board.is_done_line(line), line)
+
+    def test_find_workspace_from_worktree(self):
+        nested = FIXTURE.parent / "workspace/worktrees/repo/branch"
+        self.assertEqual(board.find_workspace(nested), FIXTURE)
 
     def test_titles_keep_hash(self):
         self.assertEqual(self.items["016"]["title"], "Add C# bindings")
@@ -104,10 +127,20 @@ class NextActionTable(unittest.TestCase):
     def test_done_hidden_and_unreadable_reported(self):
         self.assertNotIn("010", self.items)
         self.assertNotIn("021", self.items)
-        self.assertEqual(len(self.problems), 1)
+        self.assertTrue(any("011-k" in p for p in self.problems))
+
+    def test_bad_date_reported_not_fatal(self):
+        self.assertIn("042", self.items)
+        self.assertTrue(any("bad date" in p for p in self.problems))
+
+    def test_stale_line_rendered(self):
+        later = self.TODAY + board.datetime.timedelta(days=31)
+        items, problems = board.collect(FIXTURE, later, self.CRITERIA)
+        stale_line = next(l for l in board.render(items, problems, 0, []).splitlines() if l.startswith("Stale: "))
+        self.assertIn("p/002", stale_line)
 
     def test_order_within_project(self):
-        groups = [i["group"] for i in board.collect(FIXTURE)[0] if i["depth"] == 0]
+        groups = [i["group"] for i in board.collect(FIXTURE, self.TODAY, self.CRITERIA)[0] if i["depth"] == 0]
         self.assertEqual(groups, sorted(groups, key=board.ORDER.get))
 
 

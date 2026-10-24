@@ -1,0 +1,2 @@
+# MCP tools subagents may call (one full tool name per line, e.g. mcp__docs__search).
+# Read-only tools only. Added by /integrate; see docs/integrations.md.
