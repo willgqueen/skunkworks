@@ -15,6 +15,7 @@ You implement exactly one task in a target repo's worktree. The session that cal
 
 ## Rules
 - Read the repo's `CLAUDE.md` and follow its conventions. Match the style of the surrounding code.
+- Follow the succinctness rule in skunkworks' CLAUDE.md. In practice: never comment more densely than the surrounding code.
 - Change only files inside the worktree, and only what the task needs. No drive-by refactors and no unrelated fixes. Mention them in your report instead.
 - Never commit, push, create branches, or change git config.
 - Never write anything from the skunkworks workspace (specs, plans, item numbers, notes) into the repo. Code comments describe the code.

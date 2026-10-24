@@ -4,6 +4,8 @@ How to change this repo: its skills, agents, templates, rules, scripts and docs.
 
 ## The ground rules
 
+Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](../CLAUDE.md#rules)).
+
 1. **Track it.** Every change starts as an item (`/new-item skunkworks <description>`), sized by [criteria.md](criteria.md#size), and goes through its phases and gates.
 2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing lives in [process.md](process.md). Skills, agents and docs link to them and never restate them.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.

@@ -20,6 +20,7 @@ The control center for orchestrating software work (ideation → planning → ar
 
 ## Rules
 
+- **Be succinct and direct in everything.** Write the shortest complete version of code, comments, docs, specs and replies. Comment only where the code isn't self-explanatory. No restating, hedging or filler.
 - Planning and domain data live only in `workspace/`. Never write specs, plans, notes or logs into a target repo; target repos only receive code, tests and docs that belong to that codebase. See [docs/workspace.md](docs/workspace.md).
 - When working in a target repo, use absolute paths (`git -C <repo>`, or `cd` in the same command), and follow that repo's own `CLAUDE.md`. Read it explicitly, because files in additional directories may not load automatically.
 - Build bottom-up: a new composite workflow should call existing skills, not duplicate them.
