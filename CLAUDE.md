@@ -9,7 +9,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - `.claude/hooks/`: the guard hook and its MCP allowlist (subagents can't act outward)
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
-- `scripts/`: python3 scripts (board, ledger, review manifests, docs check, skills lint, test runner)
+- `scripts/`: python3 scripts (board, ledger, review manifests, docs check, skills lint, test runner, test sandbox)
 - `tests/`: unit tests and fixtures
 - `.github/workflows/`, `ci/templates/`, `renovate.json`: the shared CI workflows, caller templates and Renovate config (docs/ci.md)
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
