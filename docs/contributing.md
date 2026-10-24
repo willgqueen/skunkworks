@@ -70,4 +70,4 @@ Use each language's standard test framework: `unittest` for this repo's Python. 
 - **New skills register after a delay.** A skill written mid-session shows up a few minutes later, without a restart.
 - **Loaded skills are snapshots.** Once a skill has loaded in a session, edits to its file don't reach that session. Test changed skills in a fresh session.
 - **Hooks apply immediately.** Changes to hooks in `.claude/settings.json` take effect in the running session.
-- **Commits in this repo** go straight to `main` while it has no remote. That's the bootstrap exception noted in each item's deliver.md.
+- **Commits in this repo** go straight to `main` while it has no remote. That's the bootstrap exception noted in each item's deliver.md. Each item still gets its own commits, each with deliver's `task <n> committed` log line and its stats.

@@ -70,7 +70,7 @@ For each unchecked task, in order:
    - leaves the user's checkout as it was (compare against the checkout baseline in the Plan)
 3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below).
 4. **Commit:** one commit for the task, with the message following [templates/repo/commit.md](../../../templates/repo/commit.md) (repo conventions override it).
-5. **Record:** tick the task in deliver.md as `- [x] <n>. <task> (<sha>)`, add a progress note, and log `- <date>: task <n> committed <sha>`.
+5. **Record:** tick the task in deliver.md as `- [x] <n>. <task> (<sha>)`, add a progress note, and log `- <date>: task <n> committed <sha> · <files> files, +<added>/-<deleted>` (from `git show --shortstat`), which calibration uses.
 
 **Stop the run** if a check is still failing, there's an unexpected blocker, the implementer reports the task can't be done as described, or a [re-size trigger](../../../docs/criteria.md#size) appears:
 - set `status: blocked` and log `- <date>: blocked: <cause>` (for a re-size, recommend it and log it only when the user agrees)

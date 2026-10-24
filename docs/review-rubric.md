@@ -44,7 +44,7 @@ Each dimension is a finder's brief; smaller reviews group them ([scaling](criter
 |---|---|---|
 | **Blocking** | A defect introduced by the change: wrong behavior, a broken acceptance criterion, a security hole, missing tests for changed behavior, a broken public interface | Yes |
 | **Non-blocking** | A real improvement worth making, but the change is acceptable without it | No |
-| **Nit** | Minor polish. At most 5 per review *(provisional)*; drop the rest | No |
+| **Nit** | Minor polish, up to the [nit cap](criteria.md#agents-and-parallelism); drop the rest | No |
 | **Pre-existing** | A real problem the change didn't introduce. Reported separately; worth an item | No |
 
 Every finding needs a file:line. Blocking and Non-blocking findings also need a concrete failure scenario. A finding without what it needs is dropped.

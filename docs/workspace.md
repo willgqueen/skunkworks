@@ -88,7 +88,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `<phase> approved` | the phase skill, on the user's approval |
 | `re-sized <old>→<new>: <condition>` | any skill, on the user's agreement |
 | `deliver authorized: <actions>` | deliver |
-| `task <n> committed <sha>` | deliver |
+| `task <n> committed <sha> · <files> files, +<added>/-<deleted>` | deliver |
 | `blocked: <cause>` / `unblocked: <how>` | deliver |
 | `check deferred to <NNN>: <check>` | deliver, in both items |
 | `PR opened <url>` | deliver |

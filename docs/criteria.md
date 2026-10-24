@@ -25,7 +25,7 @@ Check for L first, then S. Anything else is M.
 - **L** if *any* of these hold:
   - acceptance criteria can't be written yet (the problem is unclear)
   - there are ≥2 workable approaches with real trade-offs
-  - it spans ≥2 modules or ≥2 repos
+  - it spans ≥2 repos, or ≥2 modules and changes a shared contract between them; uniform mechanical edits and docs-only changes don't count
   - it touches a risk area
   - it needs a new dependency, service or infrastructure
   - it will likely take more than ~6 tasks *(provisional)*
@@ -173,6 +173,7 @@ The roster of agents, with each one's role, model, effort and tools, is in [agen
   - S: one finder covering every dimension
   - M: three finders: correctness + tests; design and consistency + compatibility and docs; security + performance and reliability
   - L or a risk area: one finder per dimension, in waves up to the cap
+- **Nit cap:** at most **5** [nits](review-rubric.md#severity) per review *(provisional)*; drop the rest.
 - **Always sequential:** deliver's tasks (one commit per task, in dependency order) and every gate.
 - **Outward actions:** subagents never act outward (push, merge, unlisted MCP tools); the [guard](agents.md#safety-subagents-cant-act-outward) enforces it. Commits are made by the main session.
 
@@ -185,7 +186,7 @@ The provisional numbers above are guesses until they're tested against sustained
 **Evidence** (from `workspace/projects/*/items/` and `workspace/archive/`):
 - Starting size vs. final size, and the `re-sized` log lines with their triggers
 - Actual task count in `deliver.md` against the ~6-task L threshold
-- Files and lines changed per task and per item (from the PRs or commits linked in `deliver.md`)
+- Files and lines changed per task and per item (from deliver's `task <n> committed` log lines)
 - Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions and the item logs)
 - Explore subagent use, and project.md refreshes that turned out to be needed or not
 - Split proposals: how often a split was proposed, and how often you kept the work whole
@@ -198,3 +199,7 @@ The provisional numbers above are guesses until they're tested against sustained
 | Date | Change | Evidence |
 |---|---|---|
 | 2026-10-23 | Initial values set | None yet: starting guesses |
+| 2026-10-24 | L condition narrowed: ≥2 modules counts only with a shared contract between them; uniform mechanical edits and docs-only changes don't count | 011 (a mechanical rename) sized L while other multi-folder items were M; "module" was undefined (Tidy 024) |
+| 2026-10-24 | Every provisional number kept | 15 items, all single-repo, one day, no splits or re-sizes: too little spread to move any number (Tidy 024) |
+| 2026-10-24 | Deliver logs files and lines changed per task | No item recorded them, so the S file cap and the ~300-line task size couldn't be checked (Tidy 024) |
+| 2026-10-24 | Nit cap (5) moved here from the review rubric | Calibration only sees numbers in this file (Tidy 024) |

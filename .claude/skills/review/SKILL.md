@@ -45,6 +45,6 @@ Start one fresh `reviewer` run with every candidate and the brief: "Try to dispr
 
 ## 5. Merge and report
 
-- Merge duplicates, keeping the highest severity. Apply the nit cap. List Pre-existing findings separately.
+- Merge duplicates, keeping the highest severity. Apply the [nit cap](../../../docs/criteria.md#agents-and-parallelism). List Pre-existing findings separately.
 - Output a table (severity, file:line, issue, failure scenario), most severe first, then coverage per dimension, then the [verdict line](../../../docs/review-rubric.md#verdict). Its coverage counts the files covered by every applicable dimension.
 - When called for an item, append the table to deliver.md *Review* under a dated heading (earlier rounds and recorded acceptances stay), and log the verdict line in item.md.
