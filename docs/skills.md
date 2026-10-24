@@ -32,6 +32,32 @@ Turns a description of work into a numbered item.
 | **Gate** | None. It reports the kind, size and starting phase, then asks before starting |
 | **Log lines** | `created`; in the parent, `child <NNN> added: <title>` |
 
+## review
+
+Strict, multi-agent code review against the [rubric](review-rubric.md).
+
+| | |
+|---|---|
+| **Use when** | Deliver calls it before merge; or run it on any PR or diff |
+| **Arguments** | none (the working tree), `<PR>`, `<base>..<head> [repo]`, or `<project> <item>` |
+| **Reads** | The diff, the item's ACs and decisions, the repo's REVIEW.md and CLAUDE.md |
+| **Writes** | For an item: deliver.md *Review* and the verdict log line |
+| **Agents** | reviewer finders covering the rubric (scaled by size and risk), then a fresh reviewer refute pass |
+| **Log lines** | `review: passed @<sha>` / `review: failed: <n> blocking @<sha>` |
+
+## split
+
+Checks whether work is too big for one item and proposes splitting it at natural seams.
+
+| | |
+|---|---|
+| **Use when** | Called by new-item, discover, define and develop; or run it yourself on an item or a description |
+| **Arguments** | `<project> <item>` or `<description>` |
+| **Reads** | Whatever the caller knows: the description, discover.md, the draft spec, or the task list |
+| **Writes** | Child or sibling items (through new-item); `kind`, Breakdown and log lines on the original |
+| **Gate** | You choose: an initiative with children (default), sibling items, or keep it whole |
+| **Log lines** | `split: <choice>`, `re-kinded <old>→initiative: <signal>` |
+
 ## repo-context
 
 Builds or refreshes a project's `project.md` from a target repo, read-only.
@@ -98,7 +124,7 @@ The Deliver phase: builds, verifies, publishes and closes. Resumable.
 | **Arguments** | `<project> <item>` |
 | **Reads** | The item's phase docs, `project.md`, the target repo |
 | **Writes** | Code in a worktree at `workspace/worktrees/<repo>/<branch>`; commits; a PR; `deliver.md` (Plan, Tasks, Verification, Review, CI, Outcome); then archives the item |
-| **Agents** | implementer (one per task, in sequence), verifier (in parallel groups), reviewer (until the review skill exists) |
+| **Agents** | implementer (one per task, in sequence), verifier (in parallel groups); review through `/review` |
 | **Gate** | One approval for the whole item, covering its outward actions. Merging follows the [merge rule](criteria.md#merge-rule) |
 | **Log lines** | `deliver authorized`, `task <n> committed <sha>`, `blocked` / `unblocked`, `check deferred to <NNN>`, `PR opened`, `review`, `merged`, `done` |
 

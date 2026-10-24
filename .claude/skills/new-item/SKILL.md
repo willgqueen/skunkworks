@@ -20,8 +20,10 @@ Turn a description of work into a numbered item under `workspace/projects/<proje
 
 Apply the rules in [docs/criteria.md](../../../docs/criteria.md) exactly. Don't restate or loosen them here.
 
-- **Kind:** [criteria.md#kind](../../../docs/criteria.md#kind). For an initiative, create only the initiative, and list candidate children in its Intent.
+- **Kind:** [criteria.md#kind](../../../docs/criteria.md#kind). For an initiative, the split skill proposes and creates its children.
 - **Size:** [criteria.md#size](../../../docs/criteria.md#size). Check the L conditions first, then S. In the report, name the condition that decided the size. If the description is [too thin to size](../../../docs/criteria.md#size), ask one question.
+
+Then run the **split** skill on the description. If you choose to split, create what it proposes instead of one item.
 
 **Starting phase**
 

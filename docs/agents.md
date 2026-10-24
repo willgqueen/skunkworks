@@ -7,7 +7,7 @@ The roster of agents that skills hand work to, and how they run in parallel. The
 | Agent | Kind | Role | Default model · effort | Tools | Called by |
 |---|---|---|---|---|---|
 | [implementer](../.claude/agents/implementer.md) | custom | Builds one deliver task in a worktree, runs its checks, reports. Never commits. | sonnet · high | all | deliver |
-| [reviewer](../.claude/agents/reviewer.md) | custom | Reviews a diff or PR against the ACs and design decisions; reports findings with failure scenarios. | opus · high | Read, Grep, Glob, Bash (read commands only, no tests) | deliver (until the review skill exists) |
+| [reviewer](../.claude/agents/reviewer.md) | custom | Finds or refutes review findings against the [rubric](review-rubric.md), per its brief. | opus · high | Read, Grep, Glob, Bash (read commands only, no tests) | review (finders and the refute pass) |
 | [verifier](../.claude/agents/verifier.md) | custom | Checks assigned ACs in a worktree; reports each as verified, failed or pending. | sonnet · medium | Read, Grep, Glob, Bash | deliver, in parallel groups |
 | [researcher](../.claude/agents/researcher.md) | custom | Answers one research question from code, docs and the web, with sources. | sonnet · medium | Read, Grep, Glob, Bash, WebFetch, WebSearch | discover, develop |
 | Explore | built-in | Fast read-only search across a codebase; returns conclusions. | built-in default | read-only | define, discover, develop, repo-context |

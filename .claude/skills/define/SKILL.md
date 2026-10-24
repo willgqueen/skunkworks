@@ -45,6 +45,8 @@ By kind:
 - **investigation:** the goal is the question. *Acceptance criteria* list the sub-questions that must be answered and the evidence that counts (benchmarks, code references, docs). *Approach* is how to find out.
 - **initiative:** after the criteria, add a `## Breakdown` section listing the child items, each with a working title, kind, size and one line of scope. Children are created at the gate, not now.
 
+Run the **split** skill on the draft spec.
+
 **Size check:** if the spec hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in your report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
 
 ## 5. Update the item
@@ -57,5 +59,5 @@ Report the path to define.md, the goal, how many acceptance criteria there are, 
 
 When the user approves:
 - Add the log line `- <date>: define approved` and set `phase` to the next phase: **develop** for L features and tasks, **deliver** for M items, investigations and initiatives.
-- **initiative:** offer to create each child in the Breakdown with the **new-item** skill, setting this item as their `parent`.
+- **initiative:** offer to create each Breakdown child that doesn't have an id yet with the **new-item** skill, setting this item as its `parent`.
 - Ask whether to start the next phase.

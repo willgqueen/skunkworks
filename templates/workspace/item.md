@@ -6,6 +6,7 @@ status: proposed       # proposed | active | blocked | done | dropped
 phase: discover        # discover | define | develop | deliver
 size: M                # S | M | L
 parent:
+depends_on: []       # ids that must be done first
 repos: []
 created: {{date}}
 updated: {{date}}

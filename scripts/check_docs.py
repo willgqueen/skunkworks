@@ -2,7 +2,7 @@
 skill, agent and template has an entry in its reference doc.
 
 Usage: python3 -I scripts/check_docs.py
-See docs/contributing.md#checking-the-docs.
+See docs/contributing.md#testing.
 """
 import pathlib
 import re
@@ -21,13 +21,14 @@ def anchors(path):
     return {slug(h) for h in re.findall(r"^#+\s+(.*)$", path.read_text(), re.M)}
 
 
-def tracked_markdown():
-    out = subprocess.run(["git", "-C", str(ROOT), "ls-files", "--cached", "--others",
+def tracked_markdown(root=ROOT):
+    """Tracked and new markdown, excluding test fixtures (which may break links on purpose)."""
+    out = subprocess.run(["git", "-C", str(root), "ls-files", "--cached", "--others",
                           "--exclude-standard", "*.md"], capture_output=True, text=True, check=True)
-    return [ROOT / p for p in out.stdout.split()]
+    return [root / p for p in out.stdout.split() if not p.startswith("tests/fixtures/")]
 
 
-def check_links(files):
+def check_links(files, root=ROOT):
     problems = []
     for f in files:
         for target in re.findall(r"\]\(([^)\s]+)\)", f.read_text()):
@@ -35,7 +36,7 @@ def check_links(files):
                 continue
             path, _, anchor = target.partition("#")
             dest = (f.parent / path).resolve() if path else f
-            rel = f.relative_to(ROOT)
+            rel = f.relative_to(root)
             if not dest.exists():
                 problems.append(f"missing link: {rel} -> {target}")
             elif anchor and dest.suffix == ".md" and anchor not in anchors(dest):
@@ -43,21 +44,21 @@ def check_links(files):
     return problems
 
 
-def check_coverage():
+def check_coverage(root=ROOT):
     problems = []
-    skills_doc = (ROOT / "docs/skills.md").read_text()
-    for skill in sorted((ROOT / ".claude/skills").glob("*/SKILL.md")):
+    skills_doc = (root / "docs/skills.md").read_text()
+    for skill in sorted((root / ".claude/skills").glob("*/SKILL.md")):
         name = skill.parent.name
         if not re.search(rf"^## {re.escape(name)}$", skills_doc, re.M):
             problems.append(f"skill not in docs/skills.md: {name}")
-    agents_doc = (ROOT / "docs/agents.md").read_text()
-    for agent in sorted((ROOT / ".claude/agents").glob("*.md")):
+    agents_doc = (root / "docs/agents.md").read_text()
+    for agent in sorted((root / ".claude/agents").glob("*.md")):
         if f"[{agent.stem}]" not in agents_doc:
             problems.append(f"agent not in docs/agents.md: {agent.stem}")
-    templates_doc = (ROOT / "docs/templates.md").read_text()
-    for tpl in sorted((ROOT / "templates").rglob("*.md")):
+    templates_doc = (root / "docs/templates.md").read_text()
+    for tpl in sorted((root / "templates").rglob("*.md")):
         if f"[{tpl.name}]" not in templates_doc:
-            problems.append(f"template not in docs/templates.md: {tpl.relative_to(ROOT)}")
+            problems.append(f"template not in docs/templates.md: {tpl.relative_to(root)}")
     return problems
 
 

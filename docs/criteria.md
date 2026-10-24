@@ -41,6 +41,32 @@ Check for L first, then S. Anything else is M.
 
 **Re-size trigger:** at any phase, an L condition appears on an S or M item, no L condition holds any longer for an L item, or all S conditions turn out to hold for an M item. Recommend re-sizing; only change the size with the user's agreement, and log it as `- <date>: re-sized <old>→<new>: <condition that triggered it>`.
 
+## Splitting
+
+- **Too big for one item** (propose a split) if any of these hold:
+  - more than ~8 tasks *(provisional)*
+  - more than ~12 acceptance criteria *(provisional)*
+  - ≥3 repos *(provisional)*
+  - a too-big signal
+- **Too-big signals:**
+  - the work joins separate outcomes ("and", a list of workflows)
+  - its acceptance criteria span distinct behaviors
+  - no demoable state until the end
+  - an unresolved unknown (split off an investigation)
+  - parts that could be built in parallel
+- **Seams**, preferred in this order:
+  1. user-visible workflow paths
+  2. interfaces or platforms
+  3. data variations
+  4. rules that can be deferred
+  5. a skeleton, then flesh
+  6. unknowns, as an investigation first
+  7. replaceable pieces of an existing system
+- **Never split** by layer (DB, API, UI) or by activity (design, build, test).
+- **A good increment** is observable, leaves the system working, can be tested on its own, and depends on as little as possible.
+- **Order:** a thin end-to-end skeleton first where the work needs one, then the riskiest parts. Re-cut to remove a dependency before recording it in `depends_on`.
+- **Depth:** detail children only as far as the idea's specificity allows. Later slices can stay `proposed` with just an Intent.
+
 ## Kind
 
 Kind is the type of work, regardless of size.
@@ -107,7 +133,7 @@ An item is done when the rule for its **kind** is met, finished the way its **re
 
 Deliver merges only when **all** of these hold. Otherwise it stops and the user merges.
 - project.md's *Merge policy* is `auto` (the default is `manual`)
-- review passed: findings resolved by fixes. Findings the user accepted without a fix mean the user merges.
+- the latest [review](review-rubric.md#verdict) verdict, for the final pushed head, is `review: passed`, and no Blocking finding was accepted without a fix
 - local checks and CI (where there is CI) are green
 - the item touches no [risk area](#building-blocks)
 
@@ -132,6 +158,10 @@ The roster of agents, with each one's role, model, effort and tools, is in [agen
   - the pieces of work are independent: no shared files to edit, no ordering between them, and no shared build output, caches, ports or databases
   - none needs the user's input
   - the main session merges the results
+- **Review scaling** (finders per review, *provisional*). A risk area takes precedence over size. Without an item (a PR, range or working tree), use M, or L if the diff touches a risk area.
+  - S: one finder covering every dimension
+  - M: three finders: correctness + tests; design and consistency + compatibility and docs; security + performance and reliability
+  - L or a risk area: one finder per dimension, in waves up to the cap
 - **Always sequential:** deliver's tasks (one commit per task, in dependency order) and every gate.
 - **Outward actions:** subagents never push or merge. A project hook enforces this. Commits are made by the main session.
 
@@ -147,6 +177,7 @@ The provisional numbers above are guesses until they're tested against sustained
 - Files and lines changed per task and per item (from the PRs or commits linked in `deliver.md`)
 - Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions and the item logs)
 - Explore subagent use, and project.md refreshes that turned out to be needed or not
+- Split proposals: how often a split was proposed, and how often you kept the work whole
 - Agent runs per skill, the model used, and, for agents whose default isn't opus, whether upgraded runs found more (review findings, failed verifications) than default runs
 
 **How:** propose each change to a number, citing the items that support it, and let the user approve. Record approved changes below. Definitions without a number can be recalibrated the same way when the evidence shows they misclassify work.

@@ -97,11 +97,9 @@ If a verifier reports files its commands changed, check them against the baselin
   - open the PR with `gh pr create`, writing the body to a file first, following [templates/repo/pull-request.md](../../../templates/repo/pull-request.md) (a repo PR template overrides it)
   - log `- <date>: PR opened <url>`
 - **Local only:** no push or PR. The review covers the branch diff.
-- **Review:** run the **review** skill on the PR or the branch diff.
-  - If the review skill doesn't exist yet, run the `reviewer` agent on the diff instead (applying the model policy), giving it the ACs and design decisions. If neither can run, record review as pending in *Review*, never skipped. It can be deferred only under the deferral rule.
-  - Fix findings as extra tasks through step 4, or record the user's explicit acceptance.
+- **Review:** run the **review** skill on the item (`<project> <id>`). It appends to deliver.md *Review* and logs `review: passed @<sha>` or `review: failed: <n> blocking @<sha>`.
+  - Fix Blocking findings as extra tasks through step 4, or record the user's explicit acceptance.
   - After fix commits, push again (remote), then re-run the review on the new changes and wait for CI again. Only the results for the final pushed head count.
-  - Log `- <date>: review: <result>`.
 - **CI:** if the repo has CI, wait for the PR's checks (for example, `gh pr checks <pr> --watch`, in the background) and record them in *CI*. A failing required check stops the run, as in step 4.
 
 ## 7. Merge and close

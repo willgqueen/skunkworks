@@ -32,6 +32,8 @@ For each repo in `repos`, read its `CLAUDE.md`, then the code and docs around th
 
 Anything that looks like a decision goes under *Options seen* or *Open questions*, never into the doc as settled. Don't invent requirements.
 
+Run the **split** skill with what Discover found.
+
 Work that turns up and is outside this item becomes a new item through the **new-item** skill. Mention it in the report; it doesn't become extra scope here.
 
 **Size check:** if Discover hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in the report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.

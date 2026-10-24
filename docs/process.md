@@ -27,7 +27,7 @@ An `initiative` runs Discover → Define (its breakdown into child items) → De
 
 An `investigation` runs Discover → Define (the question and what would answer it), then ends with findings in `deliver.md` and no code.
 
-When work turns out bigger than its size, re-size it and back up to the missing phase rather than pushing on.
+When work turns out bigger than its size, re-size it and back up to the missing phase rather than pushing on. When it's too big for one item, new-item, discover, define and develop propose a split ([split](skills.md#split), [criteria.md](criteria.md#splitting)).
 
 ## Next action
 
@@ -44,10 +44,11 @@ Every open item's next step follows from its `item.md`: the frontmatter, plus th
 | Phase deliver, latest deliver line is `waiting on you: …` | What that line says | you |
 | Phase deliver, latest deliver line is `waiting on items: …` | Wait for those items | items |
 | Phase deliver, no `deliver authorized` | Run deliver: plan, then one approval | claude |
-| Phase deliver, latest deliver line is `review: …` with no `merged` | Merge, or resume deliver | you |
+| Phase deliver, latest deliver line is `review: failed: …` | Fix the findings (resume deliver), or accept them | you |
+| Phase deliver, latest deliver line is `review: passed …` | Merge, or resume deliver | you |
 | Phase deliver, otherwise | Resume deliver | claude |
 
-The board orders items blocked → waiting on you → active → proposed.
+Two overrides: an item whose `depends_on` items aren't done or dropped waits on **items**, and an initiative's row adds `children: <done>/<total>`. The board orders items blocked → waiting on you → active → proposed, with children nested under their initiative.
 
 ## Why this combination
 

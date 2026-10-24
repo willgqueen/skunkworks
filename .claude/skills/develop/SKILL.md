@@ -50,6 +50,8 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
 - **Risks:** what could go wrong, each with how it's mitigated or how we'll notice.
 
+Run the **split** skill on the task list.
+
 **Size check:** if the design hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in your report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
 
 ## 6. Update the item

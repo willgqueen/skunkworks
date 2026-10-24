@@ -55,6 +55,7 @@ status: active         # proposed | active | blocked | done | dropped
 phase: define          # discover | define | develop | deliver
 size: M                # S | M | L — decides which phases run (see process.md)
 parent:                # id of the parent initiative, if any
+depends_on: []         # ids that must be done first (keep rare)
 repos: []              # repo folder names this item touches
 created: 2026-10-21
 updated: 2026-10-21
@@ -89,8 +90,9 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `blocked: <cause>` / `unblocked: <how>` | deliver |
 | `check deferred to <NNN>: <check>` | deliver, in both items |
 | `PR opened <url>` | deliver |
-| `review: <result>` | deliver |
+| `review: passed @<sha>` / `review: failed: <n> blocking @<sha>` | review |
 | `merged <sha>` | deliver |
+| `split: <choice>` / `re-kinded <old>→initiative: <signal>` | split |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
 | `waiting on you: <what>` / `waiting on items: <ids>` | deliver, at any stop where the next step isn't Claude's |
 | `done` | deliver |

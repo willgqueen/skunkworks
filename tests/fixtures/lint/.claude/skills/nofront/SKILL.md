@@ -1,0 +1,5 @@
+---
+name: nofront
+description:
+---
+Nothing.

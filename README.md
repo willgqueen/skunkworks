@@ -23,6 +23,8 @@ The full walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 |---|---|
 | `/hq` | The front door: the board, routing, carrying items through their phases, inbox triage, waivers |
 | `/new-item` | Turns a description into a numbered item with kind, size and first phase |
+| `/review` | Strict multi-agent code review with a verdict |
+| `/split` | Proposes splitting work that's too big into right-sized items |
 | `/repo-context` | Maps a target repo into its project.md, read-only |
 | `/discover` | Maps the problem: context, options, open questions |
 | `/define` | Writes the spec: goal, scope, acceptance criteria |
@@ -40,6 +42,7 @@ Details for each: [docs/skills.md](docs/skills.md).
 | [skills.md](docs/skills.md) | Reference for every skill |
 | [agents.md](docs/agents.md) | The agent roster, parallelism, and the push/merge guard |
 | [templates.md](docs/templates.md) | Every template and who uses it |
+| [review-rubric.md](docs/review-rubric.md) | What reviews check, severities, verdict |
 | [process.md](docs/process.md) | The method: phases, gates, sizing, next actions |
 | [criteria.md](docs/criteria.md) | Every rule and threshold, and how they're calibrated |
 | [workspace.md](docs/workspace.md) | The local planning workspace and the log vocabulary |

@@ -83,6 +83,8 @@ def next_action(meta, log):
             return f"Wait for items {last[len('waiting on items: '):].strip()}", "items"
         if not any(e.startswith("deliver authorized") for e in deliver_lines):
             return "Run /deliver: plan, then one approval", "claude"
+        if last.startswith("review: failed"):
+            return "Fix the findings (/deliver), or accept them", "you"
         if last.startswith("review:"):
             return "Merge, or resume /deliver", "you"
         return "Resume /deliver", "claude"
@@ -93,8 +95,8 @@ def next_action(meta, log):
     if latest in ("drafted", "revised"):
         return f"Answer and approve the {phase} gate", "you"
     path = phases_for(meta["kind"], meta["size"])
-    later = path[path.index(phase) + 1:] if phase in path else []
-    return (f"Run /{later[0]}", "claude") if later else ("Close the item (/deliver)", "claude")
+    later = path[path.index(phase) + 1:] if phase in path else ["deliver"]
+    return f"Run /{later[0]}", "claude"
 
 
 def calibration_due(workspace, criteria_path):
@@ -125,8 +127,27 @@ def calibration_due(workspace, criteria_path):
     return reasons
 
 
+def ids(value):
+    return [i.zfill(3) for i in re.findall(r"\d+", value or "")]
+
+
+def all_statuses(workspace):
+    """(project, id) -> (status, parent) for every readable item, open or archived."""
+    found = {}
+    for path in list(workspace.glob("projects/*/items/*/item.md")) + list(workspace.glob("archive/*/*/item.md")):
+        project = path.parts[-4] if path.parts[-3] == "items" else path.parts[-3]
+        try:
+            meta, _ = parse_item(path)
+        except ValueError:
+            continue
+        found[(project, meta["id"].zfill(3))] = (meta["status"], (ids(meta.get("parent")) or [None])[0])
+    return found
+
+
 def collect(workspace):
     items, problems = [], []
+    statuses = all_statuses(workspace)
+    closed = ("done", "dropped")
     for path in sorted(workspace.glob("projects/*/items/*/item.md")):
         project = path.parts[-4]
         try:
@@ -134,17 +155,40 @@ def collect(workspace):
         except ValueError as err:
             problems.append(f"{path.relative_to(workspace)}: {err}")
             continue
-        if meta["status"] in ("done", "dropped"):
+        if meta["status"] in closed:
             continue
         action, waiting = next_action(meta, log)
+        # depends_on (docs/criteria.md#splitting): unfinished dependencies come first.
+        pending = [d for d in ids(meta.get("depends_on")) if statuses.get((project, d), ("",))[0] not in closed]
+        if pending and meta["status"] != "blocked":
+            action, waiting = f"Wait for items {', '.join(pending)}", "items"
+        kids = [s for (proj, _), (s, parent) in statuses.items() if proj == project and parent == meta["id"].zfill(3)]
+        if kids:
+            action += f" · children: {sum(s in closed for s in kids)}/{len(kids)}"
         group = "blocked" if meta["status"] == "blocked" else "you" if waiting == "you" else \
             "active" if meta["status"] == "active" else "proposed"
         items.append({"project": project, "id": meta["id"], "title": meta["title"], "kind": meta["kind"],
                       "size": meta["size"], "phase": meta["phase"], "status": meta["status"],
                       "next": action, "waiting_on": waiting, "group": group,
+                      "parent": (ids(meta.get("parent")) or [None])[0], "depends_on": ids(meta.get("depends_on")),
                       "path": str(path.parent.relative_to(workspace.parent))})
     items.sort(key=lambda i: (i["project"], ORDER[i["group"]], i["id"]))
-    return items, problems
+    return nest(items), problems
+
+
+def nest(items):
+    """Children follow their open parent, in board order."""
+    open_ids = {(i["project"], i["id"]) for i in items}
+    top = [i for i in items if (i["project"], i["parent"]) not in open_ids]
+    out = []
+    def place(item, depth):
+        item["depth"] = depth
+        out.append(item)
+        for child in (c for c in items if c["parent"] == item["id"] and c["project"] == item["project"]):
+            place(child, depth + 1)
+    for item in top:
+        place(item, 0)
+    return out
 
 
 def inbox_count(workspace):
@@ -158,7 +202,7 @@ def render(items, problems, inbox, calibration):
         out += [f"## {project}", "", "| ID | Title | Kind | Size | Phase | Status | Next action | Waiting on |",
                 "|---|---|---|---|---|---|---|---|"]
         for i in (i for i in items if i["project"] == project):
-            out.append(f"| {i['id']} | {i['title']} | {i['kind']} | {i['size']} | {i['phase']} | {i['status']} "
+            out.append(f"| {'↳ ' * i['depth']}{i['id']} | {i['title']} | {i['kind']} | {i['size']} | {i['phase']} | {i['status']} "
                        f"| {i['next']} | {i['waiting_on']} |")
         out.append("")
     if not items:

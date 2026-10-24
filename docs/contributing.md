@@ -9,7 +9,7 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
 1. **Track it.** Every change starts as an item (`/new-item skunkworks <description>`), sized by [criteria.md](criteria.md#size), and goes through its phases and gates.
 2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing lives in [process.md](process.md). Skills, agents and docs link to them and never restate them.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.
-4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the docs check.
+4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the checks (see [Testing](#testing)).
 5. **Keep workspace data in the workspace.** Nothing from `workspace/` goes into a target repo, a commit message or a PR. See [workspace.md](workspace.md#the-containment-rule).
 
 ## Adding or changing a skill
@@ -42,15 +42,24 @@ Scripts live in `scripts/`. They use python3 and the standard library only, and 
 
 ## Reviewing a change
 
-Before committing, review the change. Until the review skill (item 005) exists, run the built-in `/code-review` on the diff and fix or explicitly accept every finding. Record the result in the item's `deliver.md` *Review* section.
+Before committing, run `/review` (no argument reviews the working tree; or `/review <project> <item>`) and fix or explicitly accept every Blocking finding. Record the result in the item's `deliver.md` *Review* section.
 
-## Checking the docs
+## Testing
+
+Run before every commit:
 
 ```sh
-python3 -I scripts/check_docs.py
+python3 -I scripts/test.py
 ```
 
-It checks every relative link and `#anchor` in the tracked markdown, and that every skill, agent and template has an entry in its reference doc. Run it before every commit that touches docs, skills, agents or templates.
+It runs:
+- the unit tests in `tests/` (board, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
+- `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary
+- `scripts/check_docs.py`: links, anchors, and that every skill, agent and template is documented
+
+`scripts/install-hooks.sh` installs it as a git pre-commit hook (optional).
+
+Use each language's standard test framework: `unittest` for this repo's Python. Add a test with every script change; add a fixture case with every Next action rule change. Skill behavior is tested by hand, through the protocol item 019 adds.
 
 ## Known caveats
 

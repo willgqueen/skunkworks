@@ -47,6 +47,9 @@ Say so explicitly, for example "skip to deliver" or "waive develop". hq logs `<p
 ### Change something after you approved it
 Run the phase again, for example `/define <project> <NNN>`, and say what to change. The skill logs that the phase was reopened, so the old approval stops counting, revises the doc, and asks you to approve again.
 
+### Split work that's too big
+new-item, discover, define and develop propose a split on their own when work is [too big for one item](criteria.md#splitting). To ask for one, run `/split <project> <NNN>`. You choose: an initiative with children, sibling items, or keep it whole.
+
 ### Change an item's size
 When a skill sees a [re-size trigger](criteria.md#size), it recommends one. You can also ask directly. Only you can agree to a re-size; it's logged with the condition that triggered it.
 
@@ -72,8 +75,11 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 ### Calibrate the thresholds
 When the board (or new-item) says calibration is due, ask Claude to calibrate. It proposes each change to a *(provisional)* number in [criteria.md](criteria.md#calibration), citing completed items, and records the changes you approve.
 
-### Check the docs
-`python3 -I scripts/check_docs.py`. It checks every link and anchor, and that every skill, agent and template is documented.
+### Review a change
+`/review` reviews your working tree; `/review <PR>`, `/review <base>..<head>` or `/review <project> <NNN>` review the rest. It ends with a verdict per the [rubric](review-rubric.md). To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.
+
+### Run the checks
+`python3 -I scripts/test.py`: unit tests, the skills lint and the docs check. Required before every commit.
 
 ### Change a skill, agent, template or rule
 Follow [contributing.md](contributing.md). It starts with `/new-item skunkworks <description>`, like any other work.
