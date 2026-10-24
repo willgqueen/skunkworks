@@ -20,6 +20,7 @@ class Sandbox(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.dest = sandbox.create(pathlib.Path(cls.tmp.name) / "sbx", remote=True)
         cls.local = sandbox.create(pathlib.Path(cls.tmp.name) / "local")
+        cls.seeded = sandbox.create(pathlib.Path(cls.tmp.name) / "seeded", seeded=True)
 
     @classmethod
     def tearDownClass(cls):
@@ -54,6 +55,17 @@ class Sandbox(unittest.TestCase):
     def test_without_remote(self):
         self.assertEqual(git(self.local / "target", "remote"), "")
         self.assertFalse((self.local / "remote.git").exists())
+
+    def test_seeded_workspace(self):
+        ws = self.seeded / "skunkworks/workspace"
+        texts = [p.read_text() for p in ws.rglob("*.md")]
+        self.assertFalse([t for t in texts if "{{" in t])
+        self.assertIn(str(self.seeded / "target"), (ws / "projects/greet/project.md").read_text())
+        self.assertTrue((ws / "projects/skunkworks/items").is_dir())
+        board = subprocess.run([sys.executable, "-I", "scripts/board.py"], cwd=self.seeded / "skunkworks",
+                               capture_output=True, text=True, check=True).stdout
+        for line in ["| 003 | Add pluggable greeting styles |", "Run /develop", "children: 2/2", "Inbox: 2 entries"]:
+            self.assertIn(line, board)
 
     def test_refuses_non_empty_dest(self):
         with self.assertRaises(SystemExit):

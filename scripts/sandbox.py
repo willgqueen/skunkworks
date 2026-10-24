@@ -1,6 +1,6 @@
 """Create a throwaway sandbox for manual skill tests (docs/testing.md).
 
-Usage: python3 -I scripts/sandbox.py [DEST] [--remote]
+Usage: python3 -I scripts/sandbox.py [DEST] [--remote] [--seed]
 
 DEST (absent or empty; default: a new temp folder) gets:
     skunkworks/  a copy of this working tree (tracked and new files, so
@@ -9,9 +9,13 @@ DEST (absent or empty; default: a new temp folder) gets:
     target/      a git repo from tests/fixtures/target-repo/, branch main
     remote.git/  with --remote: a local bare repo, target's origin
 
+--seed fills the workspace from tests/fixtures/sandbox-workspace/: a `greet`
+project for target, items in the states the scenarios start from, and an inbox.
+
 Start the test session with: cd DEST/skunkworks && claude
 """
 import argparse
+import datetime
 import json
 import pathlib
 import shutil
@@ -21,6 +25,7 @@ import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FIXTURE = ROOT / "tests/fixtures/target-repo"
+SEED = ROOT / "tests/fixtures/sandbox-workspace"
 # Fixed identity, so sandbox commits never depend on (or leak) the user's git config.
 IDENTITY = ["-c", "user.name=sandbox", "-c", "user.email=sandbox@example.invalid", "-c", "commit.gpgsign=false"]
 
@@ -53,7 +58,22 @@ def copy_skunkworks(dest):
     commit_all(dest, "chore: sandbox copy")
 
 
-def create(dest, remote=False):
+def seed(dest):
+    workspace = dest / "skunkworks/workspace"
+    values = {"{{today}}": datetime.date.today().isoformat(), "{{target}}": str(dest / "target"),
+              "{{skunkworks}}": str(dest / "skunkworks")}
+    for src in SEED.rglob("*.md"):
+        text = src.read_text()
+        for key, value in values.items():
+            text = text.replace(key, value)
+        out = workspace / src.relative_to(SEED)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(text)
+    for project in (workspace / "projects").iterdir():
+        (project / "items").mkdir(exist_ok=True)
+
+
+def create(dest, remote=False, seeded=False):
     dest = dest.resolve()
     if dest.exists() and any(dest.iterdir()):
         raise SystemExit(f"sandbox: {dest} is not empty")
@@ -66,6 +86,8 @@ def create(dest, remote=False):
         git(dest, "init", "-q", "--bare", "-b", "main", "remote.git")
         git(target, "remote", "add", "origin", str(dest / "remote.git"))
         git(target, "push", "-q", "-u", "origin", "main")
+    if seeded:
+        seed(dest)
     return dest
 
 
@@ -73,8 +95,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("dest", nargs="?", type=pathlib.Path)
     parser.add_argument("--remote", action="store_true", help="add a local bare remote as target's origin")
+    parser.add_argument("--seed", action="store_true", help="fill the workspace with the scenario fixtures")
     args = parser.parse_args(argv)
-    dest = create(args.dest or pathlib.Path(tempfile.mkdtemp(prefix="skw-")), args.remote)
+    dest = create(args.dest or pathlib.Path(tempfile.mkdtemp(prefix="skw-")), args.remote, args.seed)
     print(f"sandbox ready: cd {dest / 'skunkworks'} && claude")
 
 
