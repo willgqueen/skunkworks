@@ -23,6 +23,7 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
 4. Use the [log vocabulary](workspace.md#log-vocabulary). If the skill needs a new log line, add it to that table in the same change.
 5. Spawn only roster agents, and apply the [model policy](criteria.md#agents-and-parallelism).
 6. Document it: an entry in [skills.md](skills.md), and in the README's skill list.
+7. Add or update its scenarios in `tests/scenarios/<name>.md` ([testing.md](testing.md#skill-scenarios)), and run them in a sandbox.
 
 ## Adding or changing an agent
 

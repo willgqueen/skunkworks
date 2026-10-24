@@ -207,4 +207,4 @@ The provisional numbers above are guesses until they're tested against sustained
 | 2026-10-24 | Every provisional number kept | 15 items, all single-repo, one day, no splits or re-sizes: too little spread to move any number (Tidy 024) |
 | 2026-10-24 | Deliver logs files and lines changed per task | No item recorded them, so the S file cap and the ~300-line task size couldn't be checked (Tidy 024) |
 | 2026-10-24 | Nit cap (5) moved here from the review rubric | Calibration only sees numbers in this file (Tidy 024) |
-| 2026-10-24 | L condition: skills and agents are code, not docs-only; scenario budget added | Your answer to Tidy 024's open review point; budget from 004 (item 019) |
+| 2026-10-24 | L condition: skills and agents are code, not docs-only; scenario budget added | Tidy 024's open review point, decided in 019; budget from 004's discover (019) |

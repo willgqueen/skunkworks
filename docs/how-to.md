@@ -92,7 +92,7 @@ When the board says calibration is due, run `/hq tidy`. In one pass it proposes 
 `/review` reviews your working tree; `/review --all [repo]` audits a whole codebase; `/review <PR>`, `/review <base>...<head>` or `/review <project> <NNN>` review the rest. It covers every file in scope, reports coverage, and ends with a verdict per the [rubric](review-rubric.md); a review that didn't cover everything says `incomplete`. To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.
 
 ### Run the checks
-`python3 -I scripts/test.py`: unit tests, the skills lint and the docs check. Required before every commit.
+`python3 -I scripts/test.py`: unit tests, the skills lint and the docs check. Required before every commit. To test a skill by hand, see [testing.md](testing.md#skill-scenarios).
 
 ### Change a skill, agent, template or rule
 Follow [contributing.md](contributing.md). It starts with `/new-item skunkworks <description>`, like any other work.

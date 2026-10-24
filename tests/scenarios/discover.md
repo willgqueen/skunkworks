@@ -9,6 +9,7 @@ Covers 009 (fresh-session run).
 - **Run:** `/discover greet 001`
 - **Expect before the gate:**
   - discover.md has Problem, Context grounded in `greet.py`, at least two Options, and numbered Open questions
+  - the split check runs and says it fits one item (016 AC2)
   - nothing is decided or recommended; the log has `discover drafted`; it stops at the gate
 - **Answer:** answer question 1 only, without approving.
 - **Expect:** `<question> → <answer>` in discover.md and a `discover answers:` log line; still not approved.

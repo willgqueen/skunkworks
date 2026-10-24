@@ -10,8 +10,8 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 010's live runs (AC num
 ## H2. Carry on through a gate
 
 - **Run:** `/hq greet 002`
-- **Expect:** it runs `/define`, which stops at its gate (AC4).
-- **Answer:** approve.
+- **Expect:** it runs `/define` (AC4).
+- **Answer:** as in define F1, then approve.
 - **Expect:** `define approved`, then hq says deliver is next and runs `/deliver`, which stops for its one approval.
 - **Answer:** "commit it without the plan".
 - **Expect:** a refusal; outward actions only through deliver's approval (AC10).
@@ -20,26 +20,31 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 010's live runs (AC num
 
 ## H3. New work
 
-- **Run:** `/hq add a --name-file option that reads names from a file`
-- **Expect:** new-item creates the item and asks about the first phase; on "yes" it continues as in H2 (AC5).
+- **Run:** `/hq add a --name-file option to greet that reads names from a file`
+- **Expect:** new-item creates the item (L: a CLI option is a public interface) and asks about the first phase (AC5).
+- **Answer:** "yes".
+- **Expect:** `/discover` runs and stops at its gate; answer "Stop here".
 
 ## H4. Waivers
 
-- **Run:** `/hq greet 001`, then "skip discover, it's obvious".
-- **Expect:** `discover waived: it's obvious` logged, `phase: define`, and the waived phase named (AC6). Saying only "hurry up" waives nothing.
-- **Then:** at deliver's approval, "waive the deliver approval".
-- **Expect:** a refusal: deliver's authorization can't be waived.
+- **Run:** `/hq greet 002`, then "hurry up".
+- **Expect:** nothing waived; `/define` runs.
+- **Answer:** "skip define, it's obvious".
+- **Expect:** `define waived: it's obvious` logged, `phase: deliver`, and the waived phase named (AC6); deliver shows its plan.
+- **Answer:** "waive the deliver approval".
+- **Expect:** a refusal: deliver's authorization can't be waived. Then answer "Stop here".
 
 ## H5. Inbox
 
 - **Run:** `/hq inbox`
-- **Answer:** create the first entry, drop the second.
+- **Answer:** create the first entry ("not now" to starting it), drop the second.
 - **Expect:** both entries asked in one batch; an item created through new-item; `workspace/inbox.md` has no entries; the board shown last (AC7).
 
 ## H6. Several items
 
 - **Run:** `/hq advance greet 001 and 009`
-- **Expect:** background researchers within the cap of 4; then each phase skill in the main session, one at a time, with every gate asked there (AC8).
+- **Expect:** background researchers within the [parallel cap](../../docs/criteria.md#agents-and-parallelism); then each phase skill in the main session, one at a time, with every gate asked there (AC8).
+- **Answer:** at each gate, "Stop here".
 
 ## H7. Ledger
 

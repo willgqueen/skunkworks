@@ -21,7 +21,7 @@ Use each language's standard test framework: `unittest` for this repo's Python. 
 
 ## Skill scenarios
 
-Skills are tested by hand: you drive a fresh Claude Code session through a scenario in a throwaway sandbox, so your real workspace, memory and repos are never touched.
+Skills are tested by hand: you drive a fresh Claude Code session through a scenario in a throwaway sandbox, away from your real workspace, memory and repos. Your MCP connectors and `gh` login still work there, so scenarios only call read-only tools.
 
 ### 1. Create a sandbox
 
@@ -48,10 +48,13 @@ If `claude` isn't on your PATH, open `DEST/skunkworks` with your editor's Claude
 ### 3. Run the scenario
 
 Each file in [tests/scenarios/](../tests/scenarios/) has numbered scenarios with:
-- **Setup:** the sandbox command, plus any extra steps (run from `DEST/skunkworks`)
+- **Setup:** the sandbox command (run here), then any extra steps (run from `DEST/skunkworks`)
 - **Run:** what to type
 - **Answer:** what to say at each question or gate
 - **Expect:** the files, log lines and board state to check afterwards
+- **Then:** a follow-up step, followed by its own **Expect**
+
+Each scenario starts in a new sandbox from its Setup (or the file's "Setup for all"), except one whose Setup says "X done", which continues in X's sandbox and session.
 
 Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too.
 

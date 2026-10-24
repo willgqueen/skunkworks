@@ -6,16 +6,16 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed`
 - **Run:** `/deliver greet 004`
-- **Expect the plan:** the definition of done (code item, local only), worktree `workspace/worktrees/target/feat/add-version-flag`, branch `feat/add-version-flag`, one task from the Intent, every outward action, and that you merge (`manual`). One question for approval (AC4).
+- **Expect the plan:** the definition of done (code item, local only), worktree `workspace/worktrees/target/chore/test-cli-shout`, branch `chore/test-cli-shout`, one task from the Intent, every outward action, and that you merge (`manual`). One question for approval (AC4).
 - **Answer:** approve.
 - **Expect:**
   - `deliver authorized:` logged once; no further approval asked
-  - an implementer runs the task, deliver runs `python3 -m unittest` itself and makes one conventional commit with no sensitive content or workspace text (AC6)
+  - an implementer runs the task; deliver runs `python3 -m unittest` itself and makes one conventional commit with no sensitive content or workspace text (AC6)
   - the log line `task 1 committed <sha> · <files> files, +<added>/-<deleted>`
-  - each AC verified by verifiers in *Verification*, ending `Coverage: n/n ACs` (AC9)
-  - `/review` runs and logs its verdict; it stops with the branch ready for you to merge (AC12)
+  - *Verification* checks the Intent, since S items have no ACs; record what deliver does there
+  - `/review` runs on the item and logs its verdict; it stops with the branch ready for you to merge (AC12)
   - `git -C ../target status` is clean and still on `main`
-- **Then:** `git -C ../target merge --no-ff feat/add-version-flag`, and `/deliver greet 004` again.
+- **Then:** `git -C ../target merge --no-ff --no-edit chore/test-cli-shout`, and `/deliver greet 004` again.
 - **Expect:** it sees the merge, removes the worktree and branch, completes *Outcome*, archives the item, and offers *Conventions learned* additions (AC13).
 
 ## L2. Not ready
@@ -24,11 +24,12 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 - **Run:** `/deliver greet 002`
 - **Expect:** a refusal naming what's missing (define not approved), and no files changed (AC2).
 
-## L3. Tasks from develop
+## L3. L item from develop
 
-- **Setup:** develop scenario V1 done.
-- **Run:** `/deliver greet 003`, then answer "Stop here".
-- **Expect:** deliver.md's tasks copied from develop.md, in order (AC3).
+- **Setup:** develop scenario V2 done.
+- **Run:** `/deliver greet 003`, approve.
+- **Expect:** deliver.md's tasks copied from develop.md, in order (AC3); one commit per task; each of 003's ACs verified by verifiers, ending `Coverage: 4/4 ACs` (AC9).
+- **Answer:** at the merge, stop.
 
 ## L4. With a remote
 
@@ -56,4 +57,12 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed`
 - **Run:** `/deliver greet 006`, approve.
-- **Expect:** both children found done in the archive, the initiative's ACs checked, *Outcome* summarizes the children, archived (AC15).
+- **Expect:** both children found done in the archive, the initiative's two ACs checked, *Outcome* summarizes the children, archived (AC15).
+
+## L8. A re-size trigger stops the run
+
+- **Setup:** `python3 -I scripts/sandbox.py --seed`; append "Then publish greet to PyPI." to 004's Intent in `workspace/projects/greet/items/004-test-cli-shout/item.md`.
+- **Run:** `/deliver greet 004`
+- **Expect:** a re-size to L recommended, naming the condition (an external side effect: hard to reverse); nothing built or committed (AC8).
+- **Answer:** agree.
+- **Expect:** `re-sized S→L: <condition>` logged.
