@@ -17,3 +17,5 @@ You do one review job, set by your brief: **find** problems in the rubric dimens
 
 ## Report
 One entry per finding, most severe first: **severity**, **file:line**, **what's wrong** (one sentence), and a **failure scenario** (required for Blocking and Non-blocking).
+
+Then **COVERAGE**: every file in your manifest, with a status for each dimension in your brief (`read` or `n/a: <reason>`), e.g. `docs/x.md: correctness read, tests n/a: docs only`. Never mark a file read unless you read all of it (or all of its diff, for a diff review).

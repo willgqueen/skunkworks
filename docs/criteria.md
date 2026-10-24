@@ -127,14 +127,14 @@ An item is done when the rule for its **kind** is met, finished the way its **re
 | Remote, no CI | Push, open PR, review, local checks green, merge per the merge rule |
 | Local only | No push or PR; review the branch diff, local checks green, merge locally per the merge rule |
 
-- **CI green:** every required check on the PR passes.
+- **CI green:** every required check on the PR passes, and, in a repo with the [standard CI](ci.md), `ci-ok / ok` passes whether or not a ruleset requires it.
 - **Local checks:** the test, lint and build commands listed in project.md's *Commands*, where they exist.
 
 ### Merge rule
 
 Deliver merges only when **all** of these hold. Otherwise it stops and the user merges.
 - project.md's *Merge policy* is `auto` (the default is `manual`)
-- the latest [review](review-rubric.md#verdict) verdict, for the final pushed head, is `review: passed`, and no Blocking finding was accepted without a fix
+- the latest [review](review-rubric.md#verdict) verdict, for the final pushed head, is `review: passed` (full coverage), and no Blocking finding was accepted without a fix
 - local checks and CI (where there is CI) are green
 - the item touches no [risk area](#building-blocks)
 
@@ -149,6 +149,15 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 - **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*.
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
+
+## Complete coverage
+
+Every review, audit, verification or research sweep:
+1. **Builds a scope manifest first:** every file, AC or item in scope (`scripts/manifest.py list` for files).
+2. **Accounts for every entry** before reporting: covered, or excluded with a stated reason.
+3. **Reports coverage** as `<covered>/<total>`.
+
+Anything less is **incomplete**, and is reported as incomplete, never as done or passed. An empty scope is reported as such, never as complete. Large scopes are split into chunks of about **40 files** per finder *(provisional)* and run in waves, never sampled or truncated. A missing entry gets at most **two re-runs** before the result is incomplete. `n/a` counts as covered only with a real reason (deleted, binary or generated, or the dimension doesn't apply, and why); "not reached" or "not read" means not covered.
 
 ## Agents and parallelism
 

@@ -1,0 +1,17 @@
+# Extra job for a repo's ci.yml (docs/ci.md#stages): add under `jobs:` and to ci-ok's `needs`.
+# Example: integration tests against a service container. Pin any added action to a SHA.
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: make integration

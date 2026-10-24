@@ -1,0 +1,93 @@
+# Reusable CI for go repos (docs/ci.md). Callers override any input; an empty command skips its step.
+# Commands run as shell: pass only fixed text, never event data such as PR titles or branch names.
+name: ci-go
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        type: string
+        default: "."
+      go-version-file:
+        type: string
+        default: "go.mod"
+      cache:
+        type: boolean
+        default: true
+      cache-dependency-path:
+        type: string
+        default: "go.sum"
+      install:
+        type: string
+        default: ""
+      lint:
+        type: string
+        default: "test -z \"$(gofmt -l .)\" && go vet ./..."
+      typecheck:
+        type: string
+        default: ""
+      test:
+        type: string
+        default: "go test -race ./..."
+      audit:
+        type: string
+        default: "go run golang.org/x/vuln/cmd/govulncheck@v1.9.0 ./..."
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: ${{ inputs.go-version-file }}
+          cache: false
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.lint != ''
+        run: ${{ inputs.lint }}
+      - if: inputs.typecheck != ''
+        run: ${{ inputs.typecheck }}
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: ${{ inputs.go-version-file }}
+          cache: ${{ inputs.cache }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.test != ''
+        run: ${{ inputs.test }}
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: ${{ inputs.go-version-file }}
+          cache: false
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.audit != ''
+        run: ${{ inputs.audit }}

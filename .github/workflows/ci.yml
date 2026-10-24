@@ -1,0 +1,32 @@
+# skunkworks' own CI, using its shared workflows.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  merge_group:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  checks:
+    uses: ./.github/workflows/ci-python.yml
+    with:
+      cache: ""
+      install: ""
+      lint: ""
+      test: "python3 -I scripts/test.py"
+      audit: ""
+  workflow-lint:
+    uses: ./.github/workflows/ci-workflow-lint.yml
+  ci-ok:
+    needs: [checks, workflow-lint]
+    if: always()
+    permissions:
+      contents: read
+      actions: read
+    uses: ./.github/workflows/ci-gate.yml
+    with:
+      results: ${{ join(needs.*.result, ' ') }}

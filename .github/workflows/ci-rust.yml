@@ -1,0 +1,99 @@
+# Reusable CI for rust repos (docs/ci.md). Callers override any input; an empty command skips its step.
+# Commands run as shell: pass only fixed text, never event data such as PR titles or branch names.
+name: ci-rust
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        type: string
+        default: "."
+      toolchain:
+        type: string
+        default: "1.99.1"
+      cache:
+        type: boolean
+        default: true
+      install:
+        type: string
+        default: ""
+      lint:
+        type: string
+        default: "cargo fmt --check && cargo clippy --all-targets -- -D warnings"
+      typecheck:
+        type: string
+        default: ""
+      test:
+        type: string
+        default: "cargo test"
+      audit:
+        type: string
+        default: "cargo audit"
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: ${{ inputs.toolchain }}
+          components: rustfmt, clippy
+      - if: inputs.cache
+        uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: ${{ inputs.working-directory }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.lint != ''
+        run: ${{ inputs.lint }}
+      - if: inputs.typecheck != ''
+        run: ${{ inputs.typecheck }}
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: ${{ inputs.toolchain }}
+      - if: inputs.cache
+        uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+        with:
+          workspaces: ${{ inputs.working-directory }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.test != ''
+        run: ${{ inputs.test }}
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: ${{ inputs.toolchain }}
+      - if: inputs.audit != ''
+        uses: taiki-e/install-action@1e29709c0ec63babbe8f266397a465f29a825f91 # v2.87.31
+        with:
+          tool: cargo-audit@0.22.2
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.audit != ''
+        run: ${{ inputs.audit }}

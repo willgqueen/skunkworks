@@ -1,0 +1,15 @@
+# Lints the caller repo's workflows with actionlint (docs/ci.md#rules).
+name: ci-workflow-lint
+on:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12

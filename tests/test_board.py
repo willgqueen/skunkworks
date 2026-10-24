@@ -92,6 +92,9 @@ class NextActionTable(unittest.TestCase):
     def test_archived_dependency_is_met(self):
         self.expect("035", "Run /define", "claude")
 
+    def test_incomplete_review_is_finished_first(self):
+        self.expect("044", "Finish the review (/review)", "claude")
+
     def test_failed_review_asks_to_fix(self):
         self.expect("038", "Fix the findings (/deliver), or accept them", "you")
 

@@ -44,6 +44,8 @@ Run when the board says calibration is due, or on request. One pass covers [cali
    - **calibration:** each *(provisional)* number in criteria.md against what completed items show
    - **toolkit:** contradicting or restated rules, overlapping skills or docs, unused templates or agents, verbosity
    - **backlog and hygiene:** overlapping, [stale](../../../docs/criteria.md#context) or mis-sized items; leftover worktrees; items stuck waiting
+
+   Give each researcher the full list of items or files its area covers, and check its *Coverage* line. If anything still isn't covered after the [re-run limit](../../../docs/criteria.md#complete-coverage), mark the Tidy proposal incomplete ([complete coverage](../../../docs/criteria.md#complete-coverage)).
 2. **Propose** with **new-item**: one task item, `Tidy <date>`, listing each change (adjust, merge, prune, restructure, expand) with its evidence in its define.md.
 3. Ask the user to approve or reject each change. The Tidy item itself delivers the approved threshold changes (editing criteria.md and its calibration history). Every other approved change becomes its own item through new-item. The Tidy item closes when each proposal is applied, itemized or rejected.
 

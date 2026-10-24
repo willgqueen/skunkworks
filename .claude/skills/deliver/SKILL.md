@@ -86,22 +86,26 @@ If define was waived there are no ACs: verify against the Intent instead, and sa
 
 When a verifier reports `pending: needs <command>`, run it yourself in the worktree and give it the output.
 
+End *Verification* with `Coverage: <accounted>/<total> ACs`; any AC not accounted for keeps the item open ([complete coverage](../../../docs/criteria.md#complete-coverage)).
+
 A verifier's `failed` result is a failing check: fix it with an extra task through step 4, or stop as step 4 describes. A pending check that isn't deferred keeps the item open. Report it and stop; the next run resumes here.
 
 
 
 ## 6. Publish and review
 
+- **skunkworks items that change `.github/workflows/ci-*.yml`:** after the merge, tag the merge commit `ci-v<n+1>` and push the tag; include that in the item's authorized actions ([docs/ci.md](../../../docs/ci.md#rules)).
 - **skunkworks items:** before every push (including re-pushes after fixes), regenerate the changelog in the worktree (`python3 -I scripts/ledger.py --changelog`) and commit it as part of the item.
 - **Remote:**
   - push: `git -C <worktree> push -u origin <branch>`
   - open the PR with `gh pr create`, writing the body to a file first, following [templates/repo/pull-request.md](../../../templates/repo/pull-request.md) (a repo PR template overrides it)
   - log `- <date>: PR opened <url>`
 - **Local only:** no push or PR. The review covers the branch diff.
-- **Review:** run the **review** skill on the item (`<project> <id>`). It appends to deliver.md *Review* and logs `review: passed @<sha>` or `review: failed: <n> blocking @<sha>`.
+- **Review:** run the **review** skill on the item (`<project> <id>`). It appends to deliver.md *Review* and logs its [verdict](../../../docs/review-rubric.md#verdict).
+  - If the verdict is `incomplete`, run `/review` again, up to the [re-run limit](../../../docs/criteria.md#complete-coverage); if it's still incomplete, stop and log `waiting on you: review incomplete (<what's missing>)`. An incomplete review never counts toward the merge rule.
   - Fix Blocking findings as extra tasks through step 4, or record the user's explicit acceptance.
   - After fix commits, push again (remote), then re-run the review on the new changes and wait for CI again. Only the results for the final pushed head count.
-- **CI:** if the repo has CI, wait for the PR's checks (for example, `gh pr checks <pr> --watch`, in the background) and record them in *CI*. A failing required check stops the run, as in step 4.
+- **CI:** if the repo has CI, wait until it's [green](../../../docs/criteria.md#definitions-of-done) (for example, `gh pr checks <pr> --watch` filtered to the required checks and `ci-ok / ok`, in the background, with a time limit) and record the result in *CI*. A failing required check stops the run, as in step 4.
 
 ## 7. Merge and close
 
@@ -114,7 +118,7 @@ Log `- <date>: merged <sha>`.
 If the merge rule doesn't allow it, report that the PR (or branch) is ready for the user to merge, and stop. The next run checks whether it was merged (`gh pr view <pr> --json state`, or `git -C <repo> branch --merged <default>`).
 
 **Close**, once the definition of done is met:
-1. Remove the worktree: `git -C <repo> worktree remove <path>`. Delete the local branch with `git -C <repo> branch -d <branch>`, which only works once it's merged.
+1. Remove the worktree: `git -C <repo> worktree remove <path>`, and the item's review folders under `workspace/reviews/`. Delete the local branch with `git -C <repo> branch -d <branch>`, which only works once it's merged.
 2. Complete the *Outcome*. For code items, add the PR link and the merge sha. For investigations, keep the findings already written there. For initiatives, summarize the children and their outcomes.
 3. Set `status: done`, log `- <date>: done`, and move the item folder to `workspace/archive/<project>/`.
 4. If the item has a parent, log `- <date>: child <NNN> done` in the parent.

@@ -21,4 +21,4 @@ You check acceptance criteria. You don't change anything.
 One line per criterion:
 - `AC<n>: verified: <how>`, `AC<n>: failed: <what happened>` or `AC<n>: pending: <why it couldn't be checked>`
 
-Include the failing output for any `failed` line.
+Include the failing output for any `failed` line. Account for every AC you were given; end with `coverage <accounted>/<total>`.

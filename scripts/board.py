@@ -84,6 +84,8 @@ def next_action(meta, log):
             return f"Wait for items {last[len('waiting on items: '):].strip()}", "items"
         if not any(e.startswith("deliver authorized") for e in deliver_lines):
             return "Run /deliver: plan, then one approval", "claude"
+        if last.startswith("review: incomplete"):  # never counts as passed
+            return "Finish the review (/review)", "claude"
         if last.startswith("review: failed"):
             return "Fix the findings (/deliver), or accept them", "you"
         if last.startswith("review:"):

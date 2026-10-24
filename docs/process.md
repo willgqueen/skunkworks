@@ -44,6 +44,7 @@ Every open item's next step follows from its `item.md`: the frontmatter, plus th
 | Phase deliver, latest deliver line is `waiting on you: …` | What that line says | you |
 | Phase deliver, latest deliver line is `waiting on items: …` | Wait for those items | items |
 | Phase deliver, no `deliver authorized` | Run deliver: plan, then one approval | claude |
+| Phase deliver, latest deliver line is `review: incomplete …` | Finish the review | claude |
 | Phase deliver, latest deliver line is `review: failed: …` | Fix the findings (resume deliver), or accept them | you |
 | Phase deliver, latest deliver line is `review: passed …` | Merge, or resume deliver | you |
 | Phase deliver, otherwise | Resume deliver | claude |

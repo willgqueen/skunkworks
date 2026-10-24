@@ -1,0 +1,95 @@
+# Reusable CI for python repos (docs/ci.md). Callers override any input; an empty command skips its step.
+# Commands run as shell: pass only fixed text, never event data such as PR titles or branch names.
+name: ci-python
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        type: string
+        default: "."
+      python-version:
+        type: string
+        default: "3.12"
+      cache:
+        type: string
+        default: "pip"
+      cache-dependency-path:
+        type: string
+        default: ""
+      install:
+        type: string
+        default: "if [ -f requirements.txt ]; then pip install -r requirements.txt; fi && if [ -f pyproject.toml ] && grep -q \"^\\[build-system\\]\" pyproject.toml; then pip install -e .; fi"
+      lint:
+        type: string
+        default: "pip install ruff==0.17.2 && ruff check . && ruff format --check ."
+      typecheck:
+        type: string
+        default: ""
+      test:
+        type: string
+        default: "pip install pytest==9.1.1 && pytest"
+      audit:
+        type: string
+        default: "pip install pip-audit==2.10.1 && pip-audit"
+permissions:
+  contents: read
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: ${{ inputs.cache }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.lint != ''
+        run: ${{ inputs.lint }}
+      - if: inputs.typecheck != ''
+        run: ${{ inputs.typecheck }}
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: ${{ inputs.cache }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.test != ''
+        run: ${{ inputs.test }}
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: ${{ inputs.python-version }}
+          cache: ${{ inputs.cache }}
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
+      - if: inputs.install != ''
+        run: ${{ inputs.install }}
+      - if: inputs.audit != ''
+        run: ${{ inputs.audit }}

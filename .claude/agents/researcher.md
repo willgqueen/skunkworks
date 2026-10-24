@@ -21,4 +21,5 @@ You answer one research question and say where each fact came from.
 - **Answer:** a direct answer in a few sentences.
 - **Evidence:** bullets, each with its source (file:line or URL).
 - **Uncertain:** what you couldn't confirm.
+- **Coverage:** every source or path you were asked to cover, as checked or not, with the reason.
 - **Adjacent:** anything outside the question worth a follow-up (optional).

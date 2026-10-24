@@ -1,0 +1,35 @@
+# The ci-ok gate (docs/ci.md#the-one-required-check), called as the last job of every repo's CI.
+name: ci-gate
+on:
+  workflow_call:
+    inputs:
+      results:
+        description: "join(needs.*.result, ' ') from the caller"
+        type: string
+        required: true
+      budget-seconds:
+        type: number
+        default: 600
+permissions:
+  contents: read
+jobs:
+  ok:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      actions: read
+    env:
+      RESULTS: ${{ inputs.results }}
+      BUDGET: ${{ inputs.budget-seconds }}
+      GH_TOKEN: ${{ github.token }}
+      RUN: repos/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - run: |
+          case " $RESULTS " in *" failure "*|*" cancelled "*) echo "a job failed or was cancelled: $RESULTS"; exit 1 ;; esac
+          # Budget from this attempt's first job start, so re-runs and initial queue time don't count; an API error only warns.
+          if started=$(gh api "$RUN/attempts/$GITHUB_RUN_ATTEMPT/jobs" --jq '[.jobs[].started_at | select(. != null)] | min'); then
+            elapsed=$(( $(date +%s) - $(date -d "$started" +%s) ))
+            [ "$elapsed" -le "$BUDGET" ] || { echo "CI took ${elapsed}s; the budget is ${BUDGET}s"; exit 1; }
+          else
+            echo "::warning::could not read job start times; time budget not checked"
+          fi

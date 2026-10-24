@@ -57,7 +57,7 @@ python3 -I scripts/test.py
 ```
 
 It runs:
-- the unit tests in `tests/` (board, ledger, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
+- the unit tests in `tests/` (board, ledger, manifests, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
 - `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary
 - `scripts/check_docs.py`: links, anchors, and that every skill, agent and template is documented
 

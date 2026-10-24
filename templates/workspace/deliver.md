@@ -18,6 +18,8 @@
 <!-- One line per acceptance criterion, numbered as in define.md. -->
 - AC1: verified: <how> | pending: <why> | deferred to <NNN>: <why it can't run here>
 
+Coverage: <accounted>/<total> ACs
+
 ## Review
 <!-- Review result, findings, and how each was resolved or accepted. -->
 

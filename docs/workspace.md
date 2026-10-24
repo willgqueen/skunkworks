@@ -27,7 +27,7 @@ workspace/
   archive/
     <project>/<NNN>-<slug>/   # done or dropped items, moved here intact
   reviews/
-    <date>-<scope>/           # diffs and PR text saved for /review's read-only reviewers
+    <date>-<scope>[-n]/       # one per /review: manifest, chunks, coverage lists, saved diff and PR text; item reviews are removed when the item closes
   worktrees/
     <repo>/<branch>/          # git worktrees deliver creates per item; removed at close
 ```
@@ -92,7 +92,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `blocked: <cause>` / `unblocked: <how>` | deliver |
 | `check deferred to <NNN>: <check>` | deliver, in both items |
 | `PR opened <url>` | deliver |
-| `review: passed @<sha>` / `review: failed: <n> blocking @<sha>` | review |
+| `review: passed @<sha> · coverage <covered>/<total>` / `review: failed: <n> blocking @<sha> · coverage <covered>/<total>` / `review: incomplete @<sha> · coverage <covered>/<total>` | review |
 | `merged <sha>` | deliver |
 | `split: <choice>` / `re-kinded <old>→initiative: <signal>` | split |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |

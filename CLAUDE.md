@@ -9,8 +9,9 @@ The control center for orchestrating software work (ideation → planning → ar
 - `.claude/hooks/`: the guard hook and its MCP allowlist (subagents can't act outward)
 - `.claude/settings.json`: project settings, including access to `~/repos`
 - `templates/workspace/`: templates for workspace files
-- `scripts/`: python3 scripts (board, ledger, docs check, skills lint, test runner)
+- `scripts/`: python3 scripts (board, ledger, review manifests, docs check, skills lint, test runner)
 - `tests/`: unit tests and fixtures
+- `.github/workflows/`, `ci/templates/`, `renovate.json`: the shared CI workflows, caller templates and Renovate config (docs/ci.md)
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for
 - `docs/process.md`: the method (phases, gates, sizing)
@@ -27,4 +28,5 @@ The control center for orchestrating software work (ideation → planning → ar
 - Build bottom-up: a new composite workflow should call existing skills, not duplicate them.
 - Skills that create workspace files start from `templates/workspace/`.
 - Every change updates the docs it affects, in the same change, and passes `python3 -I scripts/test.py` (unit tests, skills lint, docs check) before it's committed. [docs/contributing.md](docs/contributing.md) is the guide.
+- **Reviews are exhaustive.** Any review, audit or verification covers its whole scope and reports coverage; partial work is reported as incomplete ([criteria.md](docs/criteria.md#complete-coverage)).
 - Skills never define their own thresholds or conditions. They link to [docs/criteria.md](docs/criteria.md), so calibrating it updates every skill.

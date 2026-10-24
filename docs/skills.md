@@ -39,11 +39,11 @@ Strict, multi-agent code review against the [rubric](review-rubric.md).
 | | |
 |---|---|
 | **Use when** | Deliver calls it before merge; or run it on any PR or diff |
-| **Arguments** | none (the working tree), `<PR>`, `<base>..<head> [repo]`, or `<project> <item>` |
-| **Reads** | The diff, the item's ACs and decisions, the repo's REVIEW.md and CLAUDE.md |
-| **Writes** | For an item: deliver.md *Review* and the verdict log line |
+| **Arguments** | none (the working tree), `--all [repo]` (whole codebase), `<PR>`, `<base>...<head> [repo]`, or `<project> <item>` |
+| **Reads** | Every file in its manifest (the change, or the whole repo for `--all`), the item's ACs and decisions, the repo's REVIEW.md and CLAUDE.md |
+| **Writes** | A review folder (manifest, chunks, coverage lists, saved diff and PR text); for an item, deliver.md *Review* and the verdict log line |
 | **Agents** | reviewer finders covering the rubric (scaled by size and risk), then a fresh reviewer refute pass |
-| **Log lines** | `review: passed @<sha>` / `review: failed: <n> blocking @<sha>` |
+| **Log lines** | `review: passed …` / `failed …` / `incomplete …`, each with coverage |
 
 ## split
 
@@ -70,6 +70,18 @@ Adds an MCP server or external API the standard way.
 | **Writes** | An item; deliver adds config, the allowlist entries and the [registry](integrations.md) row |
 | **Agents** | researcher |
 | **Gate** | The item's own gates |
+
+## ci
+
+Sets up the [standard CI](ci.md) in a GitHub repo.
+
+| | |
+|---|---|
+| **Use when** | A repo has no CI or non-standard CI; run again after adoption to require `ci-ok` |
+| **Arguments** | `<repo>` |
+| **Calls** | repo-context, new-item |
+| **Writes** | An item; deliver adds the caller workflow and Renovate config. The second run adds, with your approval, a ruleset requiring `ci-ok / ok` |
+| **Gate** | The item's own gates, plus your approval per repo for the ruleset |
 
 ## repo-context
 

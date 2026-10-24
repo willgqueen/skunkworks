@@ -1,0 +1,26 @@
+# CI for a python repo (docs/ci.md). /ci fills in OWNER, SHA, VERSION and DEFAULT_BRANCH.
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [DEFAULT_BRANCH]
+  merge_group:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+jobs:
+  checks:
+    uses: OWNER/skunkworks/.github/workflows/ci-python.yml@SHA # VERSION
+  workflow-lint:
+    uses: OWNER/skunkworks/.github/workflows/ci-workflow-lint.yml@SHA # VERSION
+  ci-ok:
+    needs: [checks, workflow-lint]
+    if: always()
+    permissions:
+      contents: read
+      actions: read
+    uses: OWNER/skunkworks/.github/workflows/ci-gate.yml@SHA # VERSION
+    with:
+      results: ${{ join(needs.*.result, ' ') }}

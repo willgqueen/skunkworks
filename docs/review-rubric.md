@@ -51,7 +51,10 @@ Every finding needs a file:line. Blocking and Non-blocking findings also need a 
 
 ## Verdict
 
-- `review: passed @<sha>`: no Blocking findings at the reviewed head.
-- `review: failed: <n> blocking @<sha>`: any Blocking finding.
+- `review: passed @<sha> · coverage <covered>/<total>`: every file covered by every applicable dimension, and no Blocking findings at the reviewed head.
+- `review: failed: <n> blocking @<sha> · coverage <covered>/<total>`: any Blocking finding.
+- `review: incomplete @<sha> · coverage <covered>/<total>`: some file wasn't covered by an applicable dimension, or the scope was empty ([complete coverage](criteria.md#complete-coverage)). Never passes, and **takes precedence over `failed`**: Blocking findings are still listed, but the verdict is incomplete until coverage is.
+
+`<sha>` is the reviewed head, or `no commit` in a repo without one.
 
 User-accepted Blocking findings don't make a review pass; they mean the user merges ([merge rule](criteria.md#merge-rule)).

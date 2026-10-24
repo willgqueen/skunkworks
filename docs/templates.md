@@ -17,6 +17,10 @@ In [`templates/workspace/`](../templates/workspace/). These end up in the gitign
 
 new-item creates only the starting phase's doc. Later phase skills create theirs when they run.
 
+## CI templates
+
+[`ci/templates/`](../ci/templates/) holds the caller workflows and Renovate config that `/ci` copies into target repos ([docs/ci.md](ci.md)). Their placeholders are `OWNER`, `SHA`, `VERSION` and `DEFAULT_BRANCH`.
+
 ## Repo templates
 
 In [`templates/repo/`](../templates/repo/). These shape what goes **into target repos**. A repo's own conventions (CLAUDE.md, CONTRIBUTING, commitlint config, `.github/pull_request_template.md`) always override them. Both are checked against [sensitive content](criteria.md#building-blocks) before use.

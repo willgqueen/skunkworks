@@ -73,6 +73,11 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 ### Find where deliver is building
 `workspace/worktrees/<repo>/<branch>`. It's a normal git worktree of the target repo, and deliver removes it when the item closes.
 
+## CI
+
+### Set up CI in a repo
+`/ci <repo>`. It creates an item that adds the [standard CI](ci.md), ending in one required check, `ci-ok`, and asks before requiring it on the default branch.
+
 ## Integrations
 
 ### Connect an MCP server or API
@@ -84,7 +89,7 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 When the board says calibration is due, run `/hq tidy`. In one pass it proposes calibration changes to *(provisional)* numbers in [criteria.md](criteria.md#calibration) and consolidation changes to the toolkit and backlog, each with evidence. You approve each one.
 
 ### Review a change
-`/review` reviews your working tree; `/review <PR>`, `/review <base>..<head>` or `/review <project> <NNN>` review the rest. It ends with a verdict per the [rubric](review-rubric.md). To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.
+`/review` reviews your working tree; `/review --all [repo]` audits a whole codebase; `/review <PR>`, `/review <base>...<head>` or `/review <project> <NNN>` review the rest. It covers every file in scope, reports coverage, and ends with a verdict per the [rubric](review-rubric.md); a review that didn't cover everything says `incomplete`. To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.
 
 ### Run the checks
 `python3 -I scripts/test.py`: unit tests, the skills lint and the docs check. Required before every commit.

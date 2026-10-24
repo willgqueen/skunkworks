@@ -26,6 +26,7 @@ The full walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 | `/review` | Strict multi-agent code review with a verdict |
 | `/split` | Proposes splitting work that's too big into right-sized items |
 | `/integrate` | Adds an MCP server or API with credentials, access and guards |
+| `/ci` | Sets up the standard CI, with one required `ci-ok` check |
 | `/repo-context` | Maps a target repo into its project.md, read-only |
 | `/discover` | Maps the problem: context, options, open questions |
 | `/define` | Writes the spec: goal, scope, acceptance criteria |
@@ -42,6 +43,7 @@ Details for each: [docs/skills.md](docs/skills.md).
 | [how-to.md](docs/how-to.md) | Recipes for everyday tasks |
 | [skills.md](docs/skills.md) | Reference for every skill |
 | [agents.md](docs/agents.md) | The agent roster, parallelism, and the guard on subagents |
+| [ci.md](docs/ci.md) | The standard CI and its shared workflows |
 | [integrations.md](docs/integrations.md) | MCP servers and APIs: registry and rules |
 | [architecture/](docs/architecture/) | Architecture reference guides |
 | [templates.md](docs/templates.md) | Every template and who uses it |
