@@ -1,4 +1,4 @@
-# Define: Add a config file for defaults
+# Define: Move the CLI into cli.py
 
 ## Goal
 <!-- One or two sentences: the outcome, not the implementation. -->

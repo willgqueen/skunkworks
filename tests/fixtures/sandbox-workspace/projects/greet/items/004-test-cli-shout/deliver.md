@@ -1,4 +1,4 @@
-# Deliver: Add a --version flag
+# Deliver: Test the CLI's --shout output
 
 ## Plan
 - **Definition of done:** <kind> · <repo setup> (docs/criteria.md#definitions-of-done)

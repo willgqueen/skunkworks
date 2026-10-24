@@ -26,25 +26,31 @@ import tempfile
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 FIXTURE = ROOT / "tests/fixtures/target-repo"
 SEED = ROOT / "tests/fixtures/sandbox-workspace"
-# Fixed identity, so sandbox commits never depend on (or leak) the user's git config.
-IDENTITY = ["-c", "user.name=sandbox", "-c", "user.email=sandbox@example.invalid", "-c", "commit.gpgsign=false"]
+# Repo-local settings, so sandbox commits (Claude's and the scenarios') never use
+# or leak the user's identity, signing or global hooks.
+LOCAL_CONFIG = {"user.name": "sandbox", "user.email": "sandbox@example.invalid",
+                "commit.gpgsign": "false", "core.hooksPath": "/dev/null"}
 
 
 def git(repo, *args):
-    subprocess.run(["git", *IDENTITY, "-C", str(repo), *args], check=True, capture_output=True)
+    out = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True)
+    if out.returncode:
+        raise SystemExit(f"sandbox: git {' '.join(args)}: {out.stderr.strip()}")
 
 
 def commit_all(repo, message):
     git(repo, "init", "-q", "-b", "main")
+    for key, value in LOCAL_CONFIG.items():
+        git(repo, "config", key, value)
     git(repo, "add", "-A")
     git(repo, "commit", "-q", "-m", message)
 
 
-def copy_skunkworks(dest):
-    out = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "-co", "--exclude-standard"],
+def copy_skunkworks(dest, root=ROOT):
+    out = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "-co", "--exclude-standard"],
                          check=True, capture_output=True).stdout
     for rel in (p.decode() for p in out.split(b"\0") if p):
-        src = ROOT / rel
+        src = root / rel
         if src.is_file():  # skips tracked files deleted in the working tree
             (dest / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest / rel)
@@ -75,19 +81,23 @@ def seed(dest):
 
 def create(dest, remote=False, seeded=False):
     dest = dest.resolve()
-    if dest.exists() and any(dest.iterdir()):
-        raise SystemExit(f"sandbox: {dest} is not empty")
+    if dest.exists() and (not dest.is_dir() or any(dest.iterdir())):
+        raise SystemExit(f"sandbox: {dest} is not an empty folder")
     dest.mkdir(parents=True, exist_ok=True)
-    copy_skunkworks(dest / "skunkworks")
-    target = dest / "target"
-    shutil.copytree(FIXTURE, target, ignore=shutil.ignore_patterns("__pycache__"))
-    commit_all(target, "chore: initial commit")
-    if remote:
-        git(dest, "init", "-q", "--bare", "-b", "main", "remote.git")
-        git(target, "remote", "add", "origin", str(dest / "remote.git"))
-        git(target, "push", "-q", "-u", "origin", "main")
-    if seeded:
-        seed(dest)
+    try:
+        copy_skunkworks(dest / "skunkworks")
+        target = dest / "target"
+        shutil.copytree(FIXTURE, target, ignore=shutil.ignore_patterns("__pycache__"))
+        commit_all(target, "chore: initial commit")
+        if remote:
+            git(dest, "init", "-q", "--bare", "-b", "main", "remote.git")
+            git(target, "remote", "add", "origin", str(dest / "remote.git"))
+            git(target, "push", "-q", "-u", "origin", "main")
+        if seeded:
+            seed(dest)
+    except BaseException:
+        shutil.rmtree(dest, ignore_errors=True)  # never leave a half-built sandbox
+        raise
     return dest
 
 

@@ -18,13 +18,10 @@ class Sandbox(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.tmp.cleanup)
         cls.dest = sandbox.create(pathlib.Path(cls.tmp.name) / "sbx", remote=True)
         cls.local = sandbox.create(pathlib.Path(cls.tmp.name) / "local")
         cls.seeded = sandbox.create(pathlib.Path(cls.tmp.name) / "seeded", seeded=True)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.tmp.cleanup()
 
     def test_skunkworks_copy(self):
         sk = self.dest / "skunkworks"
@@ -34,6 +31,27 @@ class Sandbox(unittest.TestCase):
         settings = json.loads((sk / ".claude/settings.json").read_text())
         self.assertEqual(settings["permissions"]["additionalDirectories"], [str(self.dest)])
         self.assertIn("PreToolUse", settings["hooks"])
+
+    def test_copies_untracked_but_not_ignored_or_deleted(self):
+        root, dest = pathlib.Path(self.tmp.name) / "src", pathlib.Path(self.tmp.name) / "copy"
+        (root / ".claude").mkdir(parents=True)
+        (root / ".claude/settings.json").write_text('{"permissions": {}}')
+        (root / ".gitignore").write_text("secret.txt\n")
+        (root / "gone.md").write_text("x")
+        git(root, "init", "-q")
+        git(root, "add", "-A")
+        (root / "gone.md").unlink()
+        (root / "new.md").write_text("x")
+        (root / "secret.txt").write_text("x")
+        sandbox.copy_skunkworks(dest, root)
+        self.assertTrue((dest / "new.md").is_file())
+        self.assertFalse((dest / "secret.txt").exists())
+        self.assertFalse((dest / "gone.md").exists())
+
+    def test_repo_local_identity(self):
+        for repo in (self.dest / "skunkworks", self.dest / "target"):
+            self.assertEqual(git(repo, "config", "--local", "user.email"), "sandbox@example.invalid")
+            self.assertEqual(git(repo, "config", "--local", "core.hooksPath"), "/dev/null")
 
     def test_empty_workspace(self):
         ws = self.dest / "skunkworks/workspace"
@@ -64,12 +82,27 @@ class Sandbox(unittest.TestCase):
         self.assertTrue((ws / "projects/skunkworks/items").is_dir())
         board = subprocess.run([sys.executable, "-I", "scripts/board.py"], cwd=self.seeded / "skunkworks",
                                capture_output=True, text=True, check=True).stdout
-        for line in ["| 003 | Add pluggable greeting styles |", "Run /develop", "children: 2/2", "Inbox: 2 entries"]:
-            self.assertIn(line, board)
+        starts = {"001": "Run /discover", "002": "Run /define", "003": "Run /develop", "004": "Run /deliver",
+                  "005": "Run /deliver", "006": "children: 2/2", "009": "Run /discover"}
+        rows = {line.split(" | ")[0].strip("| ↳"): line for line in board.splitlines() if line.startswith("| 0")}
+        self.assertEqual(sorted(rows), sorted(starts))
+        for id, start in starts.items():
+            self.assertIn(start, rows[id])
+        self.assertIn("Inbox: 2 entries", board)
 
     def test_refuses_non_empty_dest(self):
         with self.assertRaises(SystemExit):
             sandbox.create(self.dest)
+
+    def test_failure_removes_partial_dest(self):
+        dest = pathlib.Path(self.tmp.name) / "broken"
+        fixture, sandbox.FIXTURE = sandbox.FIXTURE, pathlib.Path(self.tmp.name) / "missing"
+        try:
+            with self.assertRaises(FileNotFoundError):
+                sandbox.create(dest)
+        finally:
+            sandbox.FIXTURE = fixture
+        self.assertFalse(dest.exists())
 
 
 if __name__ == "__main__":
