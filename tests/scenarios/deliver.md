@@ -1,6 +1,6 @@
 # deliver scenarios
 
-Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15; AC numbers below are 003's. `../target` is the sandbox's target repo.
+Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15 (AC numbers below are 003's), and 036 in L6 and L9. `../target` is the sandbox's target repo.
 
 ## L1. S item, local only, end to end
 
@@ -74,5 +74,7 @@ Covers 036.
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed`; add the line ``- Lint: `nonexistent-linter .` `` under *Commands* in `workspace/projects/greet/project.md`.
 - **Run:** `/deliver greet 004`, approve.
-- **Expect:** the lint check fails for a missing tool; deliver stops with `status: blocked`, a `blocked:` line naming `nonexistent-linter`, and nothing installed or proposed for install without asking you; read every Bash command in the transcript.
+- **Expect:** the lint check fails for a missing tool; deliver doesn't send it back to the implementer, logs `waiting on you: install nonexistent-linter at …, or approve that host change` and stops; nothing committed after the failure, nothing installed (read every Bash command in the transcript).
+- **Answer:** "don't install it".
+- **Expect:** it stays stopped; no `host change approved:` line.
 

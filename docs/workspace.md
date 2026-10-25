@@ -97,6 +97,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `split: <choice>` / `re-kinded <old>→initiative: <signal>` | split |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
 | `waiting on you: <what>` / `waiting on items: <ids>` | deliver, at any stop where the next step isn't Claude's |
+| `host change approved: <what>` | deliver, when the user approves a [host change](criteria.md#building-blocks) |
 | `ledger: <note>` | anyone: an optional note for the change ledger |
 | `done` | deliver |
 

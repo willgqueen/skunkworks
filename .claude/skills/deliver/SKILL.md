@@ -42,7 +42,7 @@ Investigations go to [step 8](#8-investigations), and initiatives to [step 9](#9
    - **Plan:** the definition of done, worktree, branch and authorized actions.
    - **Tasks:** copied from develop.md (L), from define.md's approach (M), or one task from the Intent (S). If the phase that would supply them was [waived](../../../docs/criteria.md#phase-state), draft the tasks here from what does exist (define.md's criteria, or the Intent), and show them in the plan for approval.
    - **Branch:** follow the repo's convention if its CLAUDE.md or CONTRIBUTING states one; otherwise `<type>/<slug>` (`feat` for features; `fix`, `chore` or `refactor` for tasks).
-4. **Show the plan:** definition of done, worktree path, branch, tasks, and every outward action: commits, push, PR, review, and merge, saying whether the [merge rule](../../../docs/criteria.md#merge-rule) can allow deliver to merge or whether the user will.
+4. **Show the plan:** definition of done, worktree path, branch, tasks, and every outward action: commits, push, PR, review, and merge, saying whether the [merge rule](../../../docs/criteria.md#merge-rule) can allow deliver to merge or whether the user will. List any [host change](../../../docs/criteria.md#building-blocks) the item already needs (an install its Intent names) as its own question.
 5. **Ask for one approval for the whole item.** When given, log `- <date>: deliver authorized: <actions>` and set `status: active`, `phase: deliver` and `updated`. Don't ask again per commit.
 
 ## 3. Create the worktree
@@ -68,7 +68,7 @@ For each unchecked task, in order:
    - stays within the task and matches the approach
    - contains no workspace or [sensitive](../../../docs/criteria.md#building-blocks) content
    - leaves the user's checkout as it was (compare against the checkout baseline in the Plan)
-3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below). If a check needs a tool missing outside the repo's own environment, stop as below and name it: installing it is a [host change](../../../docs/criteria.md#building-blocks), which only the user's approval of that change allows.
+3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below). Run checks with toolchain auto-fetch off (`RUSTUP_AUTO_INSTALL=0`, `GOTOOLCHAIN=local`). A check that fails for a tool missing outside the repo's own environment isn't sent back: log `- <date>: waiting on you: install <tool> at <where>, or approve that host change` and stop. On resume, log `- <date>: host change approved: <what> at <where>`, make it, and continue.
 4. **Commit:** one commit for the task, with the message following [templates/repo/commit.md](../../../templates/repo/commit.md) (repo conventions override it).
 5. **Record:** tick the task in deliver.md as `- [x] <n>. <task> (<sha>)`, add a progress note, and log `- <date>: task <n> committed <sha> · <files> files, +<added>/-<deleted>` (from `git show --shortstat`), which calibration uses.
 

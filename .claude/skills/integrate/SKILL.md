@@ -15,5 +15,5 @@ Follow [docs/integrations.md](../../../docs/integrations.md). Integrations touch
    - each read-only tool the agents need, in `.claude/hooks/mcp-allow.txt` and the agent's `tools` list; outward tools stay main-session only
    - the registry row in docs/integrations.md
 
-   A server that needs software installed outside the repo is a [host change](../../../docs/criteria.md#building-blocks): say so in the Intent, so deliver asks for that approval separately.
+   A server that needs software installed or fetched outside the repo (including `npx -y` or `uvx` at startup) is a [host change](../../../docs/criteria.md#building-blocks): name it in the Intent, so deliver's plan asks for it.
 4. **Never** write a credential value into any file but `.env.local`.
