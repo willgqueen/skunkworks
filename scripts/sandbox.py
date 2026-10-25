@@ -5,7 +5,7 @@ Usage: python3 -I scripts/sandbox.py [DEST] [--remote] [--seed]
 DEST (absent or empty; default: a new temp folder) gets:
     skunkworks/  a copy of this working tree (tracked and new files, so
                  uncommitted skill changes are tested), as a fresh git repo,
-                 with an empty workspace and access to DEST only
+                 with an empty workspace; its settings' `../` grants DEST
     target/      a git repo from tests/fixtures/target-repo/, branch main
     remote.git/  with --remote: a local bare repo, target's origin
 
@@ -16,7 +16,6 @@ Start the test session with: cd DEST/skunkworks && claude
 """
 import argparse
 import datetime
-import json
 import os
 import pathlib
 import shutil
@@ -59,10 +58,6 @@ def copy_skunkworks(dest, root=ROOT):
         if src.is_file():  # skips tracked files deleted in the working tree
             (dest / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest / rel)
-    settings = dest / ".claude/settings.json"
-    data = json.loads(settings.read_text())
-    data["permissions"]["additionalDirectories"] = [str(dest.parent)]
-    settings.write_text(json.dumps(data, indent=2) + "\n")
     for sub in ("projects", "archive", "reviews", "worktrees"):
         (dest / "workspace" / sub).mkdir(parents=True)
     (dest / "workspace/inbox.md").write_text("# Inbox\n\nRaw, unsorted ideas. Triage into a project item when ready.\n")

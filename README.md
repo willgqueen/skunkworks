@@ -57,8 +57,8 @@ Details for each: [docs/skills.md](docs/skills.md).
 
 ## Setup
 
-1. Start Claude Code from this folder: `cd ~/repos/skunkworks && claude`. Skills, agents and hooks in `.claude/` load automatically.
-2. Repos under `~/repos` are reachable through `.claude/settings.json`. For a repo elsewhere, run `/add-dir <path>` in the session.
+1. Clone this repo into the folder that holds your other repos (for example `~/repos`): Claude Code gets read access to that whole folder, so never clone it into your home folder. Start Claude Code from here: `cd ~/repos/skunkworks && claude`. Skills, agents and hooks in `.claude/` load automatically.
+2. Repos next to this one (in `~/repos`) are reachable through `.claude/settings.json`. For a repo elsewhere, run `/add-dir <path>` in the session.
 3. On a fresh clone, create the workspace:
 
    ```sh

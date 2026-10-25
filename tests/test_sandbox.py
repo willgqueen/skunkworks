@@ -34,13 +34,12 @@ class Sandbox(unittest.TestCase):
         self.assertTrue((sk / "scripts/sandbox.py").is_file())
         self.assertEqual(git(sk, "status", "--porcelain"), "")
         settings = json.loads((sk / ".claude/settings.json").read_text())
-        self.assertEqual(settings["permissions"]["additionalDirectories"], [str(self.dest)])
+        self.assertEqual(settings["permissions"]["additionalDirectories"], ["../"])  # DEST: tests the shipped value
         self.assertIn("PreToolUse", settings["hooks"])
 
     def test_copies_untracked_but_not_ignored_or_deleted(self):
         root, dest = pathlib.Path(self.tmp.name) / "src", pathlib.Path(self.tmp.name) / "copy"
-        (root / ".claude").mkdir(parents=True)
-        (root / ".claude/settings.json").write_text('{"permissions": {}}')
+        root.mkdir()
         (root / ".gitignore").write_text("secret.txt\n")
         (root / "gone.md").write_text("x")
         git(root, "init", "-q")

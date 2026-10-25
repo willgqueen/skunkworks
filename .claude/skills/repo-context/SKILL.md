@@ -10,8 +10,8 @@ Read a target repo and record what future work needs to know in `workspace/proje
 
 ## 1. Resolve the repo and project
 
-- A bare name means `~/repos/<name>`; otherwise use the path given. Confirm it exists and note whether it is a git repo.
-- If the path is outside `~/repos` and not reachable, ask the user to run `/add-dir <path>`.
+- A bare name means `../<name>`, a repo next to this one (usually `~/repos/<name>`); otherwise use the path given. Resolve it to an absolute path. Confirm it exists and note whether it is a git repo.
+- If the path isn't next to this repo and isn't reachable, ask the user to run `/add-dir <path>`.
 - The project slug defaults to the repo folder name. If the user names an existing project, add this repo to that project instead (a project can span several repos).
 
 ## 2. Gather

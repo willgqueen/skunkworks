@@ -9,7 +9,7 @@ cd ~/repos/skunkworks
 claude
 ```
 
-Everything loads from `.claude/`: the skills, the agents, and the hook that stops subagents from pushing or merging. Repos under `~/repos` are reachable from here; for a repo somewhere else, run `/add-dir <path>`.
+Everything loads from `.claude/`: the skills, the agents, and the hook that stops subagents from pushing or merging. Repos next to this one (in `~/repos`) are reachable from here; for a repo somewhere else, run `/add-dir <path>`.
 
 On a fresh clone, create the workspace first (see the [README](../README.md#setup)).
 

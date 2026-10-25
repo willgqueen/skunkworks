@@ -12,7 +12,7 @@ Turn a description of work into a numbered item under `workspace/projects/<proje
 
 - Use the project the user names. If none is named, infer it from the conversation; if that's ambiguous, list the projects in `workspace/projects/` and ask.
 - If the project doesn't exist yet:
-  - If a matching repo exists (`~/repos/<project>` or a path the user gave), run the **repo-context** skill first.
+  - If a matching repo exists (`../<project>`, next to this repo, or a path the user gave), run the **repo-context** skill first.
   - If it's an idea with no repo yet, create `workspace/projects/<project>/items/` and a `project.md` from the template, with *Repos* set to "none yet".
 - Read `project.md` before going on.
 
