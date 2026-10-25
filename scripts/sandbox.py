@@ -17,6 +17,7 @@ Start the test session with: cd DEST/skunkworks && claude
 import argparse
 import datetime
 import json
+import os
 import pathlib
 import shutil
 import subprocess
@@ -32,8 +33,13 @@ LOCAL_CONFIG = {"user.name": "sandbox", "user.email": "sandbox@example.invalid",
                 "commit.gpgsign": "false", "core.hooksPath": "/dev/null"}
 
 
+# Without the caller's GIT_* variables (a git hook's GIT_INDEX_FILE would aim every
+# call at the caller's repo), and in English, so errors read the same everywhere.
+ENV = {**{k: v for k, v in os.environ.items() if not k.startswith("GIT_")}, "LC_ALL": "C"}
+
+
 def git(repo, *args):
-    out = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True)
+    out = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True, env=ENV)
     if out.returncode:
         raise SystemExit(f"sandbox: git {' '.join(args)}: {out.stderr.strip()}")
     return out.stdout
@@ -80,10 +86,13 @@ def seed(dest):
 
 def create(dest, remote=False, seeded=False):
     dest = dest.resolve()
-    if dest.exists() and (not dest.is_dir() or any(dest.iterdir())):
-        raise SystemExit(f"sandbox: {dest} is not an empty folder")
-    created = not dest.exists()
-    dest.mkdir(parents=True, exist_ok=True)
+    try:
+        dest.mkdir(parents=True)
+        created = True
+    except FileExistsError:
+        created = False
+        if not dest.is_dir() or any(dest.iterdir()):
+            raise SystemExit(f"sandbox: {dest} is not an empty folder")
     try:
         copy_skunkworks(dest / "skunkworks")
         target = dest / "target"

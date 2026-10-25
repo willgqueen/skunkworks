@@ -64,7 +64,7 @@ Give the answers as written. Anything the skill does that the scenario doesn't e
 | new-item | [new-item.md](../tests/scenarios/new-item.md) | |
 | split | [split.md](../tests/scenarios/split.md) | 016 |
 | discover | [discover.md](../tests/scenarios/discover.md) | 009, 016 |
-| define | [define.md](../tests/scenarios/define.md) | |
+| define | [define.md](../tests/scenarios/define.md) | 016 |
 | develop | [develop.md](../tests/scenarios/develop.md) | 001, 016 |
 | deliver | [deliver.md](../tests/scenarios/deliver.md) | 003 |
 | review | [review.md](../tests/scenarios/review.md) | 005, 023 |

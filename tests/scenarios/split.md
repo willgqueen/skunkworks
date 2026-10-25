@@ -1,6 +1,6 @@
 # split scenarios
 
-Run per [docs/testing.md](../../docs/testing.md). Covers 016's live runs; AC numbers are 016's (AC2 in discover and develop runs in their D1 and V1). Setup for all: `python3 -I scripts/sandbox.py --seed`.
+Run per [docs/testing.md](../../docs/testing.md). Covers 016's live runs; AC numbers are 016's (AC2 in discover, define and develop runs in their D1, F1 and V1). Setup for all: `python3 -I scripts/sandbox.py --seed`.
 
 ## P1. Split into an initiative
 

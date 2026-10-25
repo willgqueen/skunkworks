@@ -2,7 +2,7 @@
 
 Run per [docs/testing.md](../../docs/testing.md). Covers 005's live runs (AC numbers are 005's; `<project> <item>` input runs in deliver L1, a PR needs item 025) and 023's coverage scenario.
 
-Setup for R1–R2: `python3 -I scripts/sandbox.py --seed`, then add a repo rule on `main` and an untested bug on branch `bug`, left checked out:
+Setup for all: `python3 -I scripts/sandbox.py --seed`. For R1, add a repo rule on `main` and an untested bug on branch `bug`, left checked out:
 
 ```sh
 printf '# Review\n\n- Flag every CLI option that README.md does not document.\n' > ../target/REVIEW.md

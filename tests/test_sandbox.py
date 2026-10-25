@@ -12,7 +12,8 @@ import sandbox  # noqa: E402
 
 
 def git(repo, *args):
-    return subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True, text=True).stdout.strip()
+    return subprocess.run(["git", "-C", str(repo), *args], check=True, capture_output=True, text=True,
+                          env=sandbox.ENV).stdout.strip()
 
 
 class Sandbox(unittest.TestCase):

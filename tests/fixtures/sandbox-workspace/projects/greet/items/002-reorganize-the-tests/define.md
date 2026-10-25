@@ -1,4 +1,4 @@
-# Define: Document greet for contributors
+# Define: Reorganize the tests
 
 ## Goal
 <!-- One or two sentences: the outcome, not the implementation. -->
