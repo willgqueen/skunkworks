@@ -1,4 +1,6 @@
+import importlib
 import json
+import os
 import re
 import pathlib
 import subprocess
@@ -116,6 +118,18 @@ class Sandbox(unittest.TestCase):
         finally:
             sandbox.FIXTURE = fixture
         self.assertEqual(list(dest.iterdir()), [])
+
+    def test_ignores_callers_git_variables(self):
+        index = pathlib.Path(self.tmp.name) / "hook-index"
+        os.environ["GIT_INDEX_FILE"] = str(index)  # as a git pre-commit hook sets it
+        try:
+            importlib.reload(sandbox)
+            dest = sandbox.create(pathlib.Path(self.tmp.name) / "hooked")
+        finally:
+            del os.environ["GIT_INDEX_FILE"]
+            importlib.reload(sandbox)
+        self.assertFalse(index.exists())
+        self.assertEqual(git(dest / "target", "log", "--format=%s"), "chore: initial commit")
 
     def test_git_errors_show_stderr(self):
         with self.assertRaisesRegex(SystemExit, "not a git repository"):
