@@ -1,7 +1,7 @@
-- I want this folder to become a centralized repository from which I can orchstrate software ideation, planning, architecting and implementation.
+- I want this folder to become a centralized repository from which I can orchestrate software ideation, planning, architecting and implementation.
 - I'd like to build out skills dedicated to many different tasks
 - I've used the double diamond approach to taking features and individual tickets from ideation to completion in my professional life
--- I think this is a good approach for this repo as well, but I'd like to weigh other options.
+  - I think this is a good approach for this repo as well, but I'd like to weigh other options.
 - I'd like to start building this repo in an organized manner from the simplest building blocks and then build more and more complex workflows
-- Our initial completion point should be a set of tools that allows me to orchestrate all routine software engineering tasts in a standardized and streamlined manner
-- I will commit this as it's own repo, and I will use it to work in other repos I have in the same ~/repos folder. It should not be limited to just that space, but that is generally where I will do development in different repos locally.
+- Our initial completion point should be a set of tools that allows me to orchestrate all routine software engineering tasks in a standardized and streamlined manner
+- I will commit this as its own repo, and I will use it to work in other repos I have in the same ~/repos folder. It should not be limited to just that space, but that is generally where I will do development in different repos locally.

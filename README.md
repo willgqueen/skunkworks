@@ -7,6 +7,7 @@ A control center for software work. Claude Code runs from this repo and takes id
 ## Quick start
 
 ```sh
+git clone https://github.com/willgqueen/skunkworks ~/repos/skunkworks
 cd ~/repos/skunkworks && claude
 ```
 
@@ -66,3 +67,7 @@ Details for each: [docs/skills.md](docs/skills.md).
    ```
 
 4. Requirements: Claude Code ≥ 2.1.295 (for the guard's fail-closed setting), `git`, `python3`, and `gh` (authenticated) for repos with a GitHub remote.
+
+## License
+
+[MIT](LICENSE)
