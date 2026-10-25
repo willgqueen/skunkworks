@@ -1,6 +1,6 @@
 # Contributing
 
-How to change this repo: its skills, agents, templates, rules, scripts and docs. Changes go through the same process as any other work: they're tracked as items in the `skunkworks` project, built through the phases, and reviewed before they're committed.
+How to change this repo: its skills, agents, templates, rules, scripts and docs. Changes go through the same process as any other work: they're tracked as items in the `skunkworks` project, built through the phases, and reviewed and merged through PRs.
 
 ## The ground rules
 
@@ -10,7 +10,8 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
 2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing lives in [process.md](process.md). Skills, agents and docs link to them and never restate them.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.
 4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the checks (see [Testing](#testing)).
-5. **Keep workspace data in the workspace.** Nothing from `workspace/` goes into a target repo, a commit message or a PR. See [workspace.md](workspace.md#the-containment-rule).
+5. **Reach `main` through a PR.** A ruleset requires `ci-ok / ok` on `main`, with no bypass; deliver opens the PR and you merge it.
+6. **Keep workspace data in the workspace.** Nothing from `workspace/` goes into a target repo, a commit message or a PR. See [workspace.md](workspace.md#the-containment-rule).
 
 ## Adding or changing a skill
 
@@ -47,7 +48,7 @@ Deliver regenerates the changelog before every push of a skunkworks item (`pytho
 
 ## Reviewing a change
 
-Before committing, run `/review` (no argument reviews the working tree; or `/review <project> <item>`) and fix or explicitly accept every Blocking finding. Record the result in the item's `deliver.md` *Review* section.
+[Deliver](../.claude/skills/deliver/SKILL.md#6-publish-and-review) runs `/review` on the item's PR and records it. Fix, or explicitly accept, every Blocking finding before merging. Run `/review` yourself any time on the working tree.
 
 ## Testing
 
@@ -58,4 +59,3 @@ Run `python3 -I scripts/test.py` before every commit. [testing.md](testing.md) c
 - **New skills register after a delay.** A skill written mid-session shows up a few minutes later, without a restart.
 - **Loaded skills are snapshots.** Once a skill has loaded in a session, edits to its file don't reach that session. Test changed skills in a fresh session.
 - **Hooks apply immediately.** Changes to hooks in `.claude/settings.json` take effect in the running session.
-- **Changes reach `main` through PRs**, like any repo: a ruleset requires `ci-ok / ok`, with no bypass. (Items before the first push were committed straight to `main`, the bootstrap exception noted in their deliver.md.)

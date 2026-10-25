@@ -8,7 +8,9 @@ A control center for software work. Claude Code runs from this repo and takes id
 
 ```sh
 git clone https://github.com/willgqueen/skunkworks ~/repos/skunkworks
-cd ~/repos/skunkworks && claude
+cd ~/repos/skunkworks
+mkdir -p workspace/projects workspace/archive workspace/worktrees && touch workspace/inbox.md
+claude
 ```
 
 Then:

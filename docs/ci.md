@@ -27,7 +27,7 @@ A repo calls them from a thin workflow made from [`ci/templates/`](../ci/templat
 
 ## Rules
 
-- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own Go and pip are the exceptions). skunkworks tags each release of its shared workflows `ci-v<n>` (deliver tags the merge commit of any item that changes them, starting with `ci-v1` at the first push), and callers pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
+- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own Go and pip are the exceptions). skunkworks tags each release of its shared workflows `ci-v<n>` (starting from `ci-v1`; deliver tags the merge commit of any item that changes them), and callers pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
 - **Least privilege:** `permissions: contents: read` by default; the gate adds `actions: read`.
 - **`persist-credentials: false`** on checkout; never `pull_request_target`.
 - **`timeout-minutes`** on every job (8 for stage jobs, 2 for the gate, so the critical path stays within 10); **`concurrency`** cancels superseded PR runs.
@@ -39,4 +39,4 @@ A repo calls them from a thin workflow made from [`ci/templates/`](../ci/templat
 
 ## Limits
 
-GitHub only. Shared workflows are called across repos, so they work once skunkworks is on GitHub. If skunkworks is private, its Actions settings must allow access from repositories owned by the same user.
+GitHub only. Other repos call the shared workflows from the public skunkworks repo, so a fork made private must allow access from repositories owned by the same user in its Actions settings.

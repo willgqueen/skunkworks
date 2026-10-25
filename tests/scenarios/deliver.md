@@ -35,7 +35,7 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed --remote`
 - **Run:** `/deliver greet 004`, approve.
-- **Expect:** the branch pushed to `remote.git` (`git -C ../remote.git branch` lists it). A local bare remote isn't GitHub, so no PR or CI: record exactly how deliver handles that. The PR and CI parts of AC10–AC11 need a GitHub remote (item 025).
+- **Expect:** the branch pushed to `remote.git` (`git -C ../remote.git branch` lists it). A local bare remote isn't GitHub, so no PR or CI: record exactly how deliver handles that. The PR and CI parts of AC10–AC11 need a GitHub remote (item 038).
 
 ## L5. A failing check blocks
 

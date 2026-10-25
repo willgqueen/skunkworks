@@ -1,6 +1,6 @@
 # review scenarios
 
-Run per [docs/testing.md](../../docs/testing.md). Covers 005's live runs (AC numbers are 005's; `<project> <item>` input runs in deliver L1, a PR needs item 025) and 023's coverage scenario.
+Run per [docs/testing.md](../../docs/testing.md). Covers 005's live runs (AC numbers are 005's; `<project> <item>` input runs in deliver L1, a PR needs item 038) and 023's coverage scenario.
 
 Setup for all: `python3 -I scripts/sandbox.py --seed`. For R1, add a repo rule on `main` and an untested bug on branch `bug`, left checked out:
 
