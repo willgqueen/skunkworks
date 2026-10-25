@@ -19,7 +19,7 @@ You implement exactly one task in a target repo's worktree. The session that cal
 - Follow the succinctness rule in skunkworks' CLAUDE.md. In practice: never comment more densely than the surrounding code.
 - Change only files inside the worktree, and only what the task needs. No drive-by refactors and no unrelated fixes. Mention them in your report instead.
 - Never commit, push, create branches, or change git config.
-- Make no [host change](../../docs/criteria.md#building-blocks). Run checks with toolchain auto-fetch off (`RUSTUP_AUTO_INSTALL=0`, `GOTOOLCHAIN=local`); if a check needs a tool missing outside the repo's own environment, report it instead.
+- Make no [host change](../../docs/criteria.md#building-blocks), and run checks with toolchain auto-fetch off as it says. If a check needs a tool missing outside the repo's own setup, report it instead.
 - Never write anything from the skunkworks workspace (specs, plans, item numbers, notes) into the repo. Code comments describe the code.
 - Don't write sensitive content (see docs/criteria.md in skunkworks) into code, comments or config.
 - If the task can't be done as described (it conflicts with the code, it's bigger than one task, or it needs a decision), stop and report that instead of improvising.

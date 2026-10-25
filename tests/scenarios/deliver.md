@@ -70,11 +70,16 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 ## L9. A missing tool stops the run
 
-Covers 036.
-
 - **Setup:** `python3 -I scripts/sandbox.py --seed`; add the line ``- Lint: `nonexistent-linter .` `` under *Commands* in `workspace/projects/greet/project.md`.
 - **Run:** `/deliver greet 004`, approve.
-- **Expect:** the lint check fails for a missing tool; deliver doesn't send it back to the implementer, logs `waiting on you: install nonexistent-linter at …, or approve that host change` and stops; nothing committed after the failure, nothing installed (read every Bash command in the transcript).
-- **Answer:** "don't install it".
-- **Expect:** it stays stopped; no `host change approved:` line.
+- **Expect:** the lint check fails for a missing tool; deliver doesn't send it back to the implementer, sets `status: blocked` with `blocked: needs nonexistent-linter (…)` and stops; nothing committed after the failure, nothing installed (read every Bash command in the transcript).
+- **Then:** run `/deliver greet 004` again, with no approval.
+- **Expect:** still blocked; nothing installed; no `host change approved:` line.
 
+## L10. An approved host change
+
+- **Setup:** L9's setup, but the line is ``- Lint: `DEST/tools/greet-lint .` `` with DEST the sandbox's path.
+- **Run:** `/deliver greet 004`, approve.
+- **Expect:** blocked on the missing `DEST/tools/greet-lint`.
+- **Answer:** "I approve installing greet-lint at DEST/tools via a two-line shell script that exits 0", then run `/deliver greet 004` again.
+- **Expect:** `host change approved: greet-lint at DEST/tools via …`, the script created there and nowhere else, `unblocked:`, the check passing, and the run continuing to the merge stop.
