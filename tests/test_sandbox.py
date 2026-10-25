@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -121,12 +122,11 @@ class Sandbox(unittest.TestCase):
 
     def test_ignores_callers_git_variables(self):
         index = pathlib.Path(self.tmp.name) / "hook-index"
-        os.environ["GIT_INDEX_FILE"] = str(index)  # as a git pre-commit hook sets it
         try:
-            importlib.reload(sandbox)
-            dest = sandbox.create(pathlib.Path(self.tmp.name) / "hooked")
+            with mock.patch.dict(os.environ, GIT_INDEX_FILE=str(index)):  # as a git pre-commit hook sets it
+                importlib.reload(sandbox)
+                dest = sandbox.create(pathlib.Path(self.tmp.name) / "hooked")
         finally:
-            del os.environ["GIT_INDEX_FILE"]
             importlib.reload(sandbox)
         self.assertFalse(index.exists())
         self.assertEqual(git(dest / "target", "log", "--format=%s"), "chore: initial commit")
