@@ -14,4 +14,6 @@ Follow [docs/integrations.md](../../../docs/integrations.md). Integrations touch
    - the server config: stdio servers through `scripts/with-env.sh <VARS> -- <command>`, HTTP servers with a headersHelper; variable names (no values) in `.env.local.example`
    - each read-only tool the agents need, in `.claude/hooks/mcp-allow.txt` and the agent's `tools` list; outward tools stay main-session only
    - the registry row in docs/integrations.md
+
+   A server that needs software installed outside the repo is a [host change](../../../docs/criteria.md#building-blocks): say so in the Intent, so deliver asks for that approval separately.
 4. **Never** write a credential value into any file but `.env.local`.

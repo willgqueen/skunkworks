@@ -51,8 +51,8 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed`
 - **Run:** `/deliver greet 005`, approve.
-- **Answer:** if it proposes installing anything, refuse.
-- **Expect:** no worktree or branch; no host change (it installs nothing; any part it can't verify with what's installed is marked unverified in *Outcome*, with a follow-up offered); *Outcome* answers both questions, citing lines and Python releases, with a recommendation; it offers follow-up items; the item is archived (AC14).
+- **Answer:** if it proposes a host change, refuse; the run has then failed.
+- **Expect:** no worktree or branch; no host change proposed or made (read every Bash command in the transcript); any part it can't verify with what's installed is marked `unverified:` in *Outcome* and deferred to a follow-up item; *Outcome* answers both questions, citing lines and Python releases, with a recommendation; it offers follow-up items; the item is archived (AC14).
 
 ## L7. Initiative
 
@@ -67,3 +67,12 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 - **Expect:** the run stops with a re-size to L recommended, naming an L condition (for example a new service, or deploy config as a risk area): `status: blocked` if it got past approval, nothing committed after the trigger, nothing published (AC8).
 - **Answer:** agree.
 - **Expect:** `re-sized S→L: <condition>` logged.
+
+## L9. A missing tool stops the run
+
+Covers 036.
+
+- **Setup:** `python3 -I scripts/sandbox.py --seed`; add the line ``- Lint: `nonexistent-linter .` `` under *Commands* in `workspace/projects/greet/project.md`.
+- **Run:** `/deliver greet 004`, approve.
+- **Expect:** the lint check fails for a missing tool; deliver stops with `status: blocked`, a `blocked:` line naming `nonexistent-linter`, and nothing installed or proposed for install without asking you; read every Bash command in the transcript.
+

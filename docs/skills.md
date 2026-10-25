@@ -150,7 +150,7 @@ The Deliver phase: builds, verifies, publishes and closes. Resumable.
 | **Reads** | The item's phase docs, `project.md`, the target repo |
 | **Writes** | Code in a worktree at `workspace/worktrees/<repo>/<branch>`; commits (for skunkworks, also CHANGELOG.md); a PR; `deliver.md` (Plan, Tasks, Verification, Review, CI, Outcome); then archives the item |
 | **Agents** | implementer (one per task, in sequence), verifier (in parallel groups); review through `/review` |
-| **Gate** | One approval for the whole item, covering its outward actions. Merging follows the [merge rule](criteria.md#merge-rule) |
+| **Gate** | One approval for the whole item, covering its outward actions but never a [host change](criteria.md#building-blocks). Merging follows the [merge rule](criteria.md#merge-rule) |
 | **Log lines** | `deliver authorized`, `task <n> committed <sha> · <files> files, +<added>/-<deleted>`, `blocked` / `unblocked`, `check deferred to <NNN>`, `PR opened`, `review`, `merged`, `done` |
 
 The full log vocabulary is in [workspace.md](workspace.md#log-vocabulary).

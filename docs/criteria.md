@@ -9,7 +9,7 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
 - **Public interface:** anything used from outside the module or repo that changes it: HTTP/RPC endpoints, CLI commands, flags and output, a library's exported API, config and env var formats, DB schema, event and message formats, on-disk file formats. Internal functions don't count.
 - **Risk area:** stored data (schema, migrations, data backfills), auth, permissions and secrets, payments or money, deletion of user data, deploy and infra config, public interfaces.
 - **Hard to reverse:** undoing it takes more than reverting the commit. Data has been written or migrated, others already depend on a published interface, there are external side effects (a deploy, a release, sent messages), or other code will be built on top of the choice (framework, datastore, core abstraction).
-- **Host change:** installing, upgrading or removing software, interpreters or packages outside a repo's own environment (a project's venv or `node_modules` doesn't count), or changing system or user configuration (shell profiles, global git config, system settings). It needs the user's explicit approval of that specific change (what, and where); deliver's per-item authorization never covers one.
+- **Host change:** installing, upgrading or removing software, interpreters or packages outside a repo's own environment in its worktree (a project's venv or `node_modules` there doesn't count; a toolchain a check fetches by itself, such as rustup's or Go's, does), or changing system or user configuration (shell profiles, global git config, system settings). It needs the user's explicit approval of that specific change (what, and where); deliver's per-item authorization never covers one.
 - **Boring technology first:** a language, datastore, framework or runtime not already in the project's stack (project.md *Stack*) spends an innovation token, of about three per project *(provisional)*. Each one must be justified by the product's real differentiator and recorded in the decision ([guide](architecture/language-and-framework-selection.md#boring-technology)).
 - **Sensitive content:** never allowed in commit messages, PR text, branch names or code comments in a target repo:
   - secrets: keys, tokens, passwords, connection strings
@@ -117,7 +117,7 @@ An item is done when the rule for its **kind** is met, finished the way its **re
   - review passed, or its findings resolved or explicitly accepted by the user
   - merged into the default branch
   - worktree removed, item archived
-- **Investigation:** every question in define.md answered in deliver.md's *Outcome*, with evidence that meets define.md's standard, plus a recommendation. Recommended follow-up work is proposed as items.
+- **Investigation:** every question in define.md answered in deliver.md's *Outcome*, with evidence that meets define.md's standard, or [deferred](#deferring-a-check) when that evidence needs a tool that isn't available, plus a recommendation. Recommended follow-up work is proposed as items.
 - **Initiative:** every child item is done or dropped, and the initiative's own acceptance criteria are verified.
 
 ### By repo setup

@@ -59,7 +59,7 @@ When a skill sees a [re-size trigger](criteria.md#size), it recommends one. You 
 ## Delivery
 
 ### Approve delivery
-`/deliver <project> <NNN>` shows one plan (worktree, branch, tasks, definition of done, and every outward action). Your approval covers the whole item; you won't be asked per commit.
+`/deliver <project> <NNN>` shows one plan (worktree, branch, tasks, definition of done, and every outward action). Your approval covers the whole item, except a [host change](criteria.md#building-blocks), which needs its own; you won't be asked per commit.
 
 ### Let Claude merge in a project
 Set *Merge policy* to `auto` in `workspace/projects/<project>/project.md`. Claude then merges only when the [merge rule](criteria.md#merge-rule) holds. The default, `manual`, means you always merge.
