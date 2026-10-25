@@ -68,7 +68,7 @@ For each unchecked task, in order:
    - stays within the task and matches the approach
    - contains no workspace or [sensitive](../../../docs/criteria.md#building-blocks) content
    - leaves the user's checkout as it was (compare against the checkout baseline in the Plan)
-3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below).
+3. **Check:** run the checks yourself in the worktree, and report the results faithfully. If they fail, send the failure output back to the implementer **once**. If they still fail, stop (see below). A check that needs a tool that isn't installed is handled by the [deferral rule](../../../docs/criteria.md#deferring-a-check), never by installing it; installing anything outside the repo is a [host change](../../../docs/criteria.md#building-blocks) that needs the user's approval of that change.
 4. **Commit:** one commit for the task, with the message following [templates/repo/commit.md](../../../templates/repo/commit.md) (repo conventions override it).
 5. **Record:** tick the task in deliver.md as `- [x] <n>. <task> (<sha>)`, add a progress note, and log `- <date>: task <n> committed <sha> · <files> files, +<added>/-<deleted>` (from `git show --shortstat`), which calibration uses.
 
@@ -128,6 +128,7 @@ If the merge rule doesn't allow it, report that the PR (or branch) is ready for 
 
 No worktree, branch or PR. Research with read-only reads and commands. A scratch worktree is allowed for experiments; it's never committed, and it's removed afterwards.
 - In *Outcome*, answer each of define.md's questions with evidence that meets its standard, then give a recommendation.
+- Make no [host change](../../../docs/criteria.md#building-blocks). When evidence would need a tool that isn't available, answer from what is, mark the answer `unverified: <what's missing> (<what would verify it>)` in *Outcome*, and offer that check as a follow-up item.
 - Verify against define.md (step 5), and offer to create the recommended follow-up items with **new-item**.
 - Close as in step 7, without the merge.
 
