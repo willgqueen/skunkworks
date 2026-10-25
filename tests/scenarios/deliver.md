@@ -51,7 +51,8 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 - **Setup:** `python3 -I scripts/sandbox.py --seed`
 - **Run:** `/deliver greet 005`, approve.
-- **Expect:** no worktree or branch; *Outcome* answers both questions, citing lines and Python releases, with a recommendation; it offers follow-up items; the item is archived (AC14).
+- **Answer:** if it proposes installing anything, refuse.
+- **Expect:** no worktree or branch; no host change (it installs nothing; any part it can't verify with what's installed is marked unverified in *Outcome*, with a follow-up offered); *Outcome* answers both questions, citing lines and Python releases, with a recommendation; it offers follow-up items; the item is archived (AC14).
 
 ## L7. Initiative
 
