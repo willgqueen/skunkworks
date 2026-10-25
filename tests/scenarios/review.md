@@ -37,9 +37,9 @@ git -C ../target commit -qam "feat: add --times"
 - **Setup:** R1 done. Fix the loop, test it and document the option:
   ```sh
   sed -i.bak 's/range(args.times - 1)/range(args.times)/' ../target/greet.py && rm ../target/greet.py.bak
-  printf '\n\nclass Times(unittest.TestCase):\n    def test_times(self):\n        from contextlib import redirect_stdout\n        from io import StringIO\n        from greet import main\n        out = StringIO()\n        with redirect_stdout(out):\n            main(["Ada", "--times", "2"])\n        self.assertEqual(out.getvalue(), "Hello, Ada!\\nHello, Ada!\\n")\n' >> ../target/test_greet.py
+  printf 'import unittest\nfrom contextlib import redirect_stdout\nfrom io import StringIO\n\nfrom greet import main\n\n\nclass Times(unittest.TestCase):\n    def test_times(self):\n        out = StringIO()\n        with redirect_stdout(out):\n            main(["Ada", "--times", "2"])\n        self.assertEqual(out.getvalue(), "Hello, Ada!\\nHello, Ada!\\n")\n' > ../target/test_cli.py
   printf '\n`--times N` repeats the greeting N times.\n' >> ../target/README.md
-  git -C ../target commit -qam "fix: print --times greetings"
+  git -C ../target add -A && git -C ../target commit -qm "fix: print --times greetings"
   ```
 - **Run:** `/review main...bug ../target`
 - **Expect:** only the commits after R1's sha reviewed, each earlier Blocking finding confirmed resolved, and `review: passed @<sha> · coverage <n>/<n>` (AC9).

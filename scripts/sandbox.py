@@ -36,6 +36,7 @@ def git(repo, *args):
     out = subprocess.run(["git", "-C", str(repo), *args], capture_output=True, text=True)
     if out.returncode:
         raise SystemExit(f"sandbox: git {' '.join(args)}: {out.stderr.strip()}")
+    return out.stdout
 
 
 def commit_all(repo, message):
@@ -47,9 +48,7 @@ def commit_all(repo, message):
 
 
 def copy_skunkworks(dest, root=ROOT):
-    out = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "-co", "--exclude-standard"],
-                         check=True, capture_output=True).stdout
-    for rel in (p.decode() for p in out.split(b"\0") if p):
+    for rel in (p for p in git(root, "ls-files", "-z", "-co", "--exclude-standard").split("\0") if p):
         src = root / rel
         if src.is_file():  # skips tracked files deleted in the working tree
             (dest / rel).parent.mkdir(parents=True, exist_ok=True)
@@ -83,6 +82,7 @@ def create(dest, remote=False, seeded=False):
     dest = dest.resolve()
     if dest.exists() and (not dest.is_dir() or any(dest.iterdir())):
         raise SystemExit(f"sandbox: {dest} is not an empty folder")
+    created = not dest.exists()
     dest.mkdir(parents=True, exist_ok=True)
     try:
         copy_skunkworks(dest / "skunkworks")
@@ -96,7 +96,9 @@ def create(dest, remote=False, seeded=False):
         if seeded:
             seed(dest)
     except BaseException:
-        shutil.rmtree(dest, ignore_errors=True)  # never leave a half-built sandbox
+        # Never leave a half-built sandbox; keep a folder the user made.
+        for path in [dest] if created else list(dest.iterdir()):
+            shutil.rmtree(path, ignore_errors=True)
         raise
     return dest
 

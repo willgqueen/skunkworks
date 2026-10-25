@@ -1,4 +1,5 @@
 import json
+import re
 import pathlib
 import subprocess
 import sys
@@ -84,7 +85,7 @@ class Sandbox(unittest.TestCase):
                                capture_output=True, text=True, check=True).stdout
         starts = {"001": "Run /discover", "002": "Run /define", "003": "Run /develop", "004": "Run /deliver",
                   "005": "Run /deliver", "006": "children: 2/2", "009": "Run /discover"}
-        rows = {line.split(" | ")[0].strip("| ↳"): line for line in board.splitlines() if line.startswith("| 0")}
+        rows = {m.group(1): line for line in board.splitlines() if (m := re.match(r"\| (?:↳ )*(\d{3}) \|", line))}
         self.assertEqual(sorted(rows), sorted(starts))
         for id, start in starts.items():
             self.assertIn(start, rows[id])
@@ -103,6 +104,27 @@ class Sandbox(unittest.TestCase):
         finally:
             sandbox.FIXTURE = fixture
         self.assertFalse(dest.exists())
+
+    def test_failure_keeps_users_empty_dest(self):
+        dest = pathlib.Path(self.tmp.name) / "mine"
+        dest.mkdir()
+        fixture, sandbox.FIXTURE = sandbox.FIXTURE, pathlib.Path(self.tmp.name) / "missing"
+        try:
+            with self.assertRaises(FileNotFoundError):
+                sandbox.create(dest)
+        finally:
+            sandbox.FIXTURE = fixture
+        self.assertEqual(list(dest.iterdir()), [])
+
+    def test_git_errors_show_stderr(self):
+        with self.assertRaisesRegex(SystemExit, "not a git repository"):
+            sandbox.git(pathlib.Path(self.tmp.name), "log")
+
+    def test_refuses_file_dest(self):
+        path = pathlib.Path(self.tmp.name) / "file"
+        path.write_text("x")
+        with self.assertRaises(SystemExit):
+            sandbox.create(path)
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ Each file in [tests/scenarios/](../tests/scenarios/) has numbered scenarios with
 - **Expect:** the files, log lines and board state to check afterwards
 - **Then:** a follow-up step, followed by its own **Expect**
 
-Each scenario starts in a new sandbox from its Setup (or the file's "Setup for all"), except one whose Setup says "X done", which continues in X's sandbox and session.
+Each scenario starts in a new sandbox, made by its own sandbox command or the file's "Setup for all", then runs any other Setup steps. A Setup that says "X done" instead continues in X's sandbox and session.
 
 Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too.
 
@@ -63,9 +63,9 @@ Give the answers as written. Anything the skill does that the scenario doesn't e
 | hq | [hq.md](../tests/scenarios/hq.md) | 010, 015 |
 | new-item | [new-item.md](../tests/scenarios/new-item.md) | |
 | split | [split.md](../tests/scenarios/split.md) | 016 |
-| discover | [discover.md](../tests/scenarios/discover.md) | 009 |
+| discover | [discover.md](../tests/scenarios/discover.md) | 009, 016 |
 | define | [define.md](../tests/scenarios/define.md) | |
-| develop | [develop.md](../tests/scenarios/develop.md) | 001 |
+| develop | [develop.md](../tests/scenarios/develop.md) | 001, 016 |
 | deliver | [deliver.md](../tests/scenarios/deliver.md) | 003 |
 | review | [review.md](../tests/scenarios/review.md) | 005, 023 |
 | repo-context | [repo-context.md](../tests/scenarios/repo-context.md) | |

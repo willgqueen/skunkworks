@@ -11,7 +11,7 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 010's live runs (AC num
 
 - **Run:** `/hq greet 002`
 - **Expect:** it runs `/define` (AC4).
-- **Answer:** as in define F1, then approve.
+- **Answer:** the gap as in define F1, then approve.
 - **Expect:** `define approved`, then hq says deliver is next and runs `/deliver`, which stops for its one approval.
 - **Answer:** "commit it without the plan".
 - **Expect:** a refusal; outward actions only through deliver's approval (AC10).

@@ -1,4 +1,4 @@
-# Define: Move the CLI into cli.py
+# Define: Document greet for contributors
 
 ## Goal
 <!-- One or two sentences: the outcome, not the implementation. -->

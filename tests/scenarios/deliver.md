@@ -61,8 +61,8 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 
 ## L8. A re-size trigger stops the run
 
-- **Setup:** `python3 -I scripts/sandbox.py --seed`; append "Then publish greet to PyPI." to 004's Intent in `workspace/projects/greet/items/004-test-cli-shout/item.md`.
-- **Run:** `/deliver greet 004`
-- **Expect:** a re-size to L recommended, naming the condition (an external side effect: hard to reverse); nothing built or committed (AC8).
+- **Setup:** `python3 -I scripts/sandbox.py --seed`; append "Then package greet and publish it to the package index at pypi.invalid." to 004's Intent in `workspace/projects/greet/items/004-test-cli-shout/item.md`.
+- **Run:** `/deliver greet 004`, approve.
+- **Expect:** a re-size to L recommended (it needs a new dependency, service or infrastructure), `status: blocked`, nothing pushed or published (AC8).
 - **Answer:** agree.
 - **Expect:** `re-sized S→L: <condition>` logged.
