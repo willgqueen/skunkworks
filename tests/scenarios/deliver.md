@@ -1,6 +1,6 @@
 # deliver scenarios
 
-Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15 (AC numbers below are 003's), and 036 in L6 and L9. `../target` is the sandbox's target repo.
+Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15 (AC numbers below are 003's), and 036 in L6, L9 and L10. `../target` is the sandbox's target repo.
 
 ## L1. S item, local only, end to end
 

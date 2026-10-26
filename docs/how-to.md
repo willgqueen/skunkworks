@@ -68,7 +68,7 @@ Set *Merge policy* to `auto` in `workspace/projects/<project>/project.md`. Claud
 Merge the PR (or branch), then run `/deliver <project> <NNN>` (or `/hq <project> <NNN>`). It confirms the merge, removes the worktree and archives the item.
 
 ### Unblock an item
-The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver checks that the cause is resolved, logs `unblocked`, and resumes. When a check needs a tool that isn't installed, the cause names it: install it yourself, or tell deliver you approve installing it (what, where, how), then run `/deliver` again. Running it again alone approves nothing.
+The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver checks that the cause is resolved, logs `unblocked`, and resumes. When a check needs a tool that isn't installed, the cause names it: install it yourself, or approve installing it ([what, where, how](criteria.md#building-blocks)) when you run `/deliver` again.
 
 ### Find where deliver is building
 `workspace/worktrees/<repo>/<branch>`. It's a normal git worktree of the target repo, and deliver removes it when the item closes.
