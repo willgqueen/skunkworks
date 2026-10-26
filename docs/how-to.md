@@ -59,7 +59,7 @@ When a skill sees a [re-size trigger](criteria.md#size), it recommends one. You 
 ## Delivery
 
 ### Approve delivery
-`/deliver <project> <NNN>` shows one plan (worktree, branch, tasks, definition of done, and every outward action). Your approval covers the whole item; you won't be asked per commit.
+`/deliver <project> <NNN>` shows one plan (worktree, branch, tasks, definition of done, and every outward action). Your approval covers the whole item, except a [host change](criteria.md#building-blocks), which needs its own; you won't be asked per commit.
 
 ### Let Claude merge in a project
 Set *Merge policy* to `auto` in `workspace/projects/<project>/project.md`. Claude then merges only when the [merge rule](criteria.md#merge-rule) holds. The default, `manual`, means you always merge.
@@ -68,7 +68,7 @@ Set *Merge policy* to `auto` in `workspace/projects/<project>/project.md`. Claud
 Merge the PR (or branch), then run `/deliver <project> <NNN>` (or `/hq <project> <NNN>`). It confirms the merge, removes the worktree and archives the item.
 
 ### Unblock an item
-The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver checks that the cause is resolved, logs `unblocked`, and resumes.
+The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver checks that the cause is resolved, logs `unblocked`, and resumes. When a check needs a tool that isn't installed, the cause names it: install it yourself, or approve installing it ([what, where, how](criteria.md#building-blocks)) when you run `/deliver` again.
 
 ### Find where deliver is building
 `workspace/worktrees/<repo>/<branch>`. It's a normal git worktree of the target repo, and deliver removes it when the item closes.

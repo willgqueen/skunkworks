@@ -56,7 +56,7 @@ Each file in [tests/scenarios/](../tests/scenarios/) has numbered scenarios with
 
 Each scenario starts in a new sandbox, made by its own sandbox command or the file's "Setup for all", then runs any other Setup steps. A Setup that says "X done" instead continues in X's sandbox and session.
 
-Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too.
+Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too. Refuse any [host change](criteria.md#building-blocks) a skill proposes (installing tools, changing system or user config), unless the scenario's Answer approves that change inside `DEST`; a run that makes any other is recorded as `failed`.
 
 | Skill | Scenarios | Covers deferred checks from |
 |---|---|---|
@@ -66,7 +66,7 @@ Give the answers as written. Anything the skill does that the scenario doesn't e
 | discover | [discover.md](../tests/scenarios/discover.md) | 009, 016 |
 | define | [define.md](../tests/scenarios/define.md) | 016 |
 | develop | [develop.md](../tests/scenarios/develop.md) | 001, 016 |
-| deliver | [deliver.md](../tests/scenarios/deliver.md) | 003 |
+| deliver | [deliver.md](../tests/scenarios/deliver.md) | 003, 036 |
 | review | [review.md](../tests/scenarios/review.md) | 005, 023 |
 | repo-context | [repo-context.md](../tests/scenarios/repo-context.md) | |
 | ci | [ci.md](../tests/scenarios/ci.md) | |
