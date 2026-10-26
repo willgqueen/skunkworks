@@ -13,7 +13,7 @@ Follow [docs/ci.md](../../../docs/ci.md).
 1. **Inspect** the repo, read-only (repo-context first if it has no project.md): its stack, its default branch, its existing workflows and required checks, and its own lint/test/build commands.
 2. **Create the item** with **new-item**, recording in its Intent the stack, what exists and what changes. Size it by [criteria.md](../../../docs/criteria.md#size).
 3. Deliver adds:
-   - `.github/workflows/ci.yml` from `ci/templates/<stack>.yml`, filling `OWNER` (skunkworks' GitHub owner), `SHA` and `VERSION` (the latest `ci-v<n>` tag and its commit), and `DEFAULT_BRANCH`; the repo's own commands go in as `with:` overrides where they differ
+   - `.github/workflows/ci.yml` from `ci/templates/ci.yml`, filling `STACK` (python, node, go or rust), `OWNER` (skunkworks' GitHub owner), `SHA` and `VERSION` (the latest `ci-v<n>` tag and its commit), and `DEFAULT_BRANCH`; the repo's own commands go in as `with:` overrides where they differ
    - `renovate.json` from the template, unless the repo already has Renovate or Dependabot for actions
    - existing CI kept, replaced or merged into the standard, as the item's spec says
 

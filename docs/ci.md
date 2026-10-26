@@ -23,7 +23,7 @@ Lint and format (with typecheck), unit tests and a dependency audit, as parallel
 
 Setup actions look for lock files (and Go's `go.mod`) at the repo root; a repo with its code in a subfolder also sets `cache-dependency-path` (and `go-version-file`).
 
-A repo calls them from a thin workflow made from [`ci/templates/`](../ci/templates/). Commands passed as inputs run as shell: pass only fixed text, never event data such as PR titles or branch names.
+A repo calls them from a thin workflow made from [`ci/templates/ci.yml`](../ci/templates/ci.yml), with `STACK` set to python, node, go or rust. Commands passed as inputs run as shell: pass only fixed text, never event data such as PR titles or branch names.
 
 ## Rules
 

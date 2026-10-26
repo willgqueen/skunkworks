@@ -8,6 +8,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 WORKFLOWS = sorted((ROOT / ".github/workflows").glob("*.yml"))
 TEMPLATES = sorted((ROOT / "ci/templates").glob("*.yml"))
 EXTRAS = sorted((ROOT / "ci/templates/extras").glob("*.yml"))
+STACKS = ("python", "node", "go", "rust")
 USES = re.compile(r"^\s*(?:- )?uses: (\S+)(?: # (\S+))?$")
 ANY_USES = re.compile(r"^\s*(?:- )?uses:", re.M)
 RUN = re.compile(r"^(\s*(?:- )?)run:(.*)$")
@@ -39,7 +40,7 @@ class CiFiles(unittest.TestCase):
                     name, _, sha = ref.partition("@")
                     if name.startswith("OWNER/skunkworks/"):
                         self.assertEqual((sha, version), ("SHA", "VERSION"))
-                        self.assertTrue((ROOT / name.split("/", 2)[2]).exists())
+                        self.assertTrue((ROOT / name.split("/", 2)[2].replace("STACK", "python")).exists())
                         continue
                     self.assertRegex(sha, r"^[0-9a-f]{40}$")
                     self.assertTrue(version)
@@ -70,9 +71,14 @@ class CiFiles(unittest.TestCase):
                 self.assertIn("      actions: read\n", gate)
                 self.assertIn("concurrency:", text)
 
+    def test_every_stack_has_a_shared_workflow(self):
+        for stack in STACKS:
+            with self.subTest(stack=stack):
+                self.assertTrue((ROOT / f".github/workflows/ci-{stack}.yml").exists())
+
     def test_stage_jobs_skip_when_their_commands_are_empty(self):
         conds = {"lint": "inputs.lint != '' || inputs.typecheck != ''", "test": "inputs.test != ''", "audit": "inputs.audit != ''"}
-        for stack in ("python", "node", "go", "rust"):
+        for stack in STACKS:
             text = (ROOT / f".github/workflows/ci-{stack}.yml").read_text()
             jobs = re.findall(r"^  ([\w-]+):\n    if: (.*)\n", text.split("\njobs:\n", 1)[1], re.M)
             with self.subTest(stack=stack):
