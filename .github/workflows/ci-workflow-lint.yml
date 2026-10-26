@@ -12,4 +12,13 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+      - env:
+          # From the release's actionlint_<version>_checksums.txt.
+          ACTIONLINT_VERSION: 1.7.12
+          ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
+        run: |
+          tarball="$RUNNER_TEMP/actionlint.tar.gz"
+          curl -fsSL --retry 3 --retry-all-errors --connect-timeout 10 --max-time 60 -o "$tarball" "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          echo "$ACTIONLINT_SHA256  $tarball" | sha256sum -c -
+          tar -xzf "$tarball" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint"

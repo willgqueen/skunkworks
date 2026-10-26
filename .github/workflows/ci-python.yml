@@ -1,4 +1,4 @@
-# Reusable CI for python repos (docs/ci.md). Callers override any input; an empty command skips its step.
+# Reusable CI for python repos (docs/ci.md). Callers override any input; an empty command skips its step, and a job with no stage command is skipped.
 # Commands run as shell: pass only fixed text, never event data such as PR titles or branch names.
 name: ci-python
 on:
@@ -35,6 +35,7 @@ permissions:
   contents: read
 jobs:
   lint:
+    if: inputs.lint != '' || inputs.typecheck != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:
@@ -56,6 +57,7 @@ jobs:
       - if: inputs.typecheck != ''
         run: ${{ inputs.typecheck }}
   test:
+    if: inputs.test != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:
@@ -75,6 +77,7 @@ jobs:
       - if: inputs.test != ''
         run: ${{ inputs.test }}
   audit:
+    if: inputs.audit != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:
