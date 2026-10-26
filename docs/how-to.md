@@ -1,6 +1,6 @@
 # How-to
 
-Short recipes for everyday tasks. Each one names the command and what to expect. For a full walkthrough, see [getting-started.md](getting-started.md).
+Short recipes for everyday tasks. Each one names the command and what to expect. For a walkthrough, see [getting-started.md](getting-started.md).
 
 ## Seeing what's going on
 
@@ -8,7 +8,7 @@ Short recipes for everyday tasks. Each one names the command and what to expect.
 `/hq`. The board lists every open item with its next action and who it's waiting on, items waiting on you first. It ends with the inbox count, any stale items, and, when due, a calibration reminder. Outside a session: `python3 -I scripts/board.py`.
 
 ### See what changed
-`/hq ledger` (or `python3 -I scripts/ledger.py --since 2026-10-01 --project <p>`): one entry per committed task or merge, grouped by item, with repos, significant decisions and any `ledger:` notes. Items closed without per-task commit lines get one unlinked entry from their Outcome. skunkworks' own changes are also in [CHANGELOG.md](../CHANGELOG.md).
+`/hq ledger` (or `python3 -I scripts/ledger.py --since YYYY-MM-DD --project <p>`): one entry per committed task or merge. skunkworks' own changes are also in [CHANGELOG.md](../CHANGELOG.md).
 
 ### See one item in detail
 Open its folder: `workspace/projects/<project>/items/<NNN>-<slug>/`. `item.md` has its state and log; each phase has its own doc. Or run `python3 -I scripts/board.py --item <project>/<NNN>`.
@@ -45,16 +45,16 @@ Reply in chat. Approve ("approved"), request changes, or answer the numbered que
 Ask `/hq` to advance them. Research for each runs in parallel in the background; then each phase runs in turn in the main session, with its gate.
 
 ### Skip a gate
-Say so explicitly, for example "skip to deliver" or "waive develop". hq logs `<phase> waived: <reason>`, and a waived phase counts as [approved](criteria.md#phase-state). Deliver's one approval for outward actions can't be waived.
+Say so explicitly, for example "skip to deliver". How a waived phase counts: [criteria.md](criteria.md#phase-state).
 
 ### Change something after you approved it
-Run the phase again, for example `/define <project> <NNN>`, and say what to change. The skill logs that the phase was reopened, so the old approval stops counting, revises the doc, and asks you to approve again.
+Run the phase again, for example `/define <project> <NNN>`, and say what to change. It [reopens](criteria.md#phase-state) the phase and asks you to approve again.
 
 ### Split work that's too big
-new-item, discover, define and develop propose a split on their own when work is [too big for one item](criteria.md#splitting). To ask for one, run `/split <project> <NNN>`. You choose: an initiative with children, sibling items, or keep it whole.
+Skills propose a split when work is [too big](criteria.md#splitting); or run `/split <project> <NNN>`. You [choose](skills.md#split) how it's split.
 
 ### Change an item's size
-When a skill sees a [re-size trigger](criteria.md#size), it recommends one. You can also ask directly. Only you can agree to a re-size; it's logged with the condition that triggered it.
+Skills recommend a [re-size](criteria.md#size) when a trigger fires, or you can ask for one; only you agree to one.
 
 ## Delivery
 
@@ -86,10 +86,10 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 ## Keeping the toolkit honest
 
 ### Calibrate and tidy
-When the board says calibration is due, run `/hq tidy`. In one pass it proposes calibration changes to *(provisional)* numbers in [criteria.md](criteria.md#calibration) and consolidation changes to the toolkit and backlog, each with evidence. You approve each one.
+`/hq tidy`, when the board says [calibration](criteria.md#calibration) is due.
 
 ### Review a change
-`/review` reviews your working tree; `/review --all [repo]` audits a whole codebase; `/review <PR>`, `/review <base>...<head>` or `/review <project> <NNN>` review the rest. It covers every file in scope, reports coverage, and ends with a verdict per the [rubric](review-rubric.md); a review that didn't cover everything says `incomplete`. To add checks for one repo, put them in its REVIEW.md or CLAUDE.md; they can add to the rubric but never remove Blocking checks.
+`/review` (the working tree), `/review --all [repo]` (a whole codebase), `/review <PR>`, `/review <base>...<head>` or `/review <project> <NNN>`. What it checks and how it decides: [review-rubric.md](review-rubric.md). A repo's own checks go in its REVIEW.md or CLAUDE.md.
 
 ### Run the checks
 `python3 -I scripts/test.py`: unit tests, the skills lint and the docs check. Required before every commit. To test a skill by hand, see [testing.md](testing.md#skill-scenarios).
