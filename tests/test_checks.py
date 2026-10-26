@@ -43,6 +43,9 @@ class LintSkills(unittest.TestCase):
         self.assertTrue(self.found("nofront: frontmatter"))
         self.assertTrue(self.found("agent agent: frontmatter"))
 
+    def test_agent_needs_tools(self):
+        self.assertTrue(self.found("agent notools: frontmatter"))
+
     def test_model_name_any_case(self):
         self.assertTrue(self.found("model: names a model (Opus)"))
 

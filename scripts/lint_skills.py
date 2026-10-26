@@ -63,8 +63,8 @@ def lint(root=ROOT):
             if not in_vocabulary(line, vocab):
                 problems.append(f"{name}: log line not in the vocabulary: {line}")
     for path in sorted((root / ".claude/agents").glob("*.md")):
-        if not {"name", "description", "model", "effort"} <= set(frontmatter(path)):
-            problems.append(f"agent {path.stem}: frontmatter needs name, description, model, effort")
+        if not {"name", "description", "model", "effort", "tools"} <= set(frontmatter(path)):
+            problems.append(f"agent {path.stem}: frontmatter needs name, description, model, effort, tools")
     return problems
 
 

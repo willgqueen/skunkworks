@@ -23,6 +23,12 @@ PHASE_EVENT = re.compile(r"^(discover|define|develop|deliver) (drafted|revised|r
 ORDER = {"blocked": 0, "you": 1, "active": 2, "proposed": 3}
 
 
+def item_paths(workspace, open_only=False):
+    """Every item.md in the workspace: open items, plus archived ones unless open_only."""
+    paths = list(workspace.glob("projects/*/items/*/item.md"))
+    return paths if open_only else paths + list(workspace.glob("archive/*/*/item.md"))
+
+
 def phases_for(kind, size):
     """Phase path by size and kind (docs/process.md#sizing)."""
     if kind in ("investigation", "initiative"):
@@ -127,7 +133,7 @@ def calibration_due(workspace, criteria_path):
     done_at, fired_at = int(done_at.group(1)), int(fired_at.group(1))
     since = max(dates) if dates else "0000-00-00"
     done, triggers = 0, {}
-    for path in list(workspace.glob("projects/*/items/*/item.md")) + list(workspace.glob("archive/*/*/item.md")):
+    for path in item_paths(workspace):
         try:
             _, log = parse_item(path)
         except ValueError:
@@ -151,7 +157,7 @@ def ids(value):
 def all_statuses(workspace):
     """(project, id) -> (status, parent) for every readable item, open or archived."""
     found = {}
-    for path in list(workspace.glob("projects/*/items/*/item.md")) + list(workspace.glob("archive/*/*/item.md")):
+    for path in item_paths(workspace):
         project = path.parts[-4] if path.parts[-3] == "items" else path.parts[-3]
         try:
             meta, _ = parse_item(path)
@@ -173,7 +179,7 @@ def collect(workspace, today=None, criteria_path=ROOT / "docs/criteria.md"):
     days = stale_days(criteria_path)
     statuses = all_statuses(workspace)
     closed = ("done", "dropped")
-    for path in sorted(workspace.glob("projects/*/items/*/item.md")):
+    for path in sorted(item_paths(workspace, open_only=True)):
         project = path.parts[-4]
         try:
             meta, log = parse_item(path)

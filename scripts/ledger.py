@@ -27,7 +27,7 @@ def section(text, name):
 
 def entries(workspace):
     items = []
-    paths = list(workspace.glob("projects/*/items/*/item.md")) + list(workspace.glob("archive/*/*/item.md"))
+    paths = board.item_paths(workspace)
     for path in paths:
         project = path.parts[-4] if path.parts[-3] == "items" else path.parts[-3]
         try:
