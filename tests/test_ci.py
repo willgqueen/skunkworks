@@ -10,6 +10,19 @@ TEMPLATES = sorted((ROOT / "ci/templates").glob("*.yml"))
 EXTRAS = sorted((ROOT / "ci/templates/extras").glob("*.yml"))
 USES = re.compile(r"^\s*(?:- )?uses: (\S+)(?: # (\S+))?$")
 ANY_USES = re.compile(r"^\s*(?:- )?uses:", re.M)
+RUN = re.compile(r"^(\s*(?:- )?)run:(.*)$")
+
+
+def run_blocks(text):
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if m := RUN.match(line):
+            body = [m.group(2)]
+            for l in lines[i + 1:]:
+                if l.strip() and len(l) - len(l.lstrip()) <= len(m.group(1)):
+                    break
+                body.append(l)
+            yield "\n".join(body)
 
 
 class CiFiles(unittest.TestCase):
@@ -64,6 +77,14 @@ class CiFiles(unittest.TestCase):
             jobs = re.findall(r"^  ([\w-]+):\n    if: (.*)\n", text.split("\njobs:\n", 1)[1], re.M)
             with self.subTest(stack=stack):
                 self.assertEqual(dict(jobs), conds)
+
+    def test_tools_are_downloaded_and_verified_not_built(self):
+        for f in WORKFLOWS + TEMPLATES + EXTRAS:
+            for run in run_blocks(f.read_text()):
+                with self.subTest(file=f.name):
+                    self.assertNotIn("go run", run)
+                    if re.search(r"\b(?:curl|wget)\b", run):
+                        self.assertIn("sha256sum -c", run)
 
     def test_renovate_configs_parse(self):
         for f in (ROOT / "renovate.json", ROOT / "ci/templates/renovate.json"):

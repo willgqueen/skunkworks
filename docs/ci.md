@@ -27,7 +27,7 @@ A repo calls them from a thin workflow made from [`ci/templates/`](../ci/templat
 
 ## Rules
 
-- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own Go and pip are the exceptions). skunkworks tags each release of its shared workflows `ci-v<n>` (starting from `ci-v1`; deliver tags the merge commit of any item that changes them), and callers pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
+- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own Go and pip are the exceptions); a downloaded tool is checked with `sha256sum -c` against its release's checksum. skunkworks tags each release of its shared workflows `ci-v<n>` (starting from `ci-v1`; deliver tags the merge commit of any item that changes them), and callers pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
 - **Least privilege:** `permissions: contents: read` by default; the gate adds `actions: read`.
 - **`persist-credentials: false`** on checkout; never `pull_request_target`.
 - **`timeout-minutes`** on every job (8 for stage jobs, 2 for the gate, so the critical path stays within 10); **`concurrency`** cancels superseded PR runs.
@@ -35,7 +35,7 @@ A repo calls them from a thin workflow made from [`ci/templates/`](../ci/templat
 - **Flaky tests:** quarantine and track them; bounded, reported retries only.
 - **Branch protection:** a ruleset on the default branch requiring `ci-ok / ok` from GitHub Actions, set by `/ci` only with your approval per repo.
 - **Use each language's standard tools**, exposed as the repo's own commands where it has them.
-- `python3 -I scripts/test.py` checks these rules on the files here (pins, timeouts, permissions, the gate).
+- `python3 -I scripts/test.py` checks these rules on the files here (pins, downloads, timeouts, permissions, the gate).
 
 ## Limits
 
