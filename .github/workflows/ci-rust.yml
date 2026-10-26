@@ -1,4 +1,4 @@
-# Reusable CI for rust repos (docs/ci.md). Callers override any input; an empty command skips its step.
+# Reusable CI for rust repos (docs/ci.md). Callers override any input; an empty command skips its step, and a job with no stage command is skipped.
 # Commands run as shell: pass only fixed text, never event data such as PR titles or branch names.
 name: ci-rust
 on:
