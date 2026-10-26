@@ -1,4 +1,5 @@
 """Print a greeting."""
+
 import argparse
 
 
