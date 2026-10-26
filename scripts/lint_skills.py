@@ -40,8 +40,8 @@ def vocabulary(root=ROOT):
 
 
 def in_vocabulary(line, vocab):
-    """Placeholders in a skill's line stand for any value: <phase> for a phase name, the rest for text."""
-    line = re.sub(r"^- <date>: ", "", line).replace("<phase>", "define")
+    """Placeholders in a skill's line stand for any value: (planning) phases for a phase name, the rest for text."""
+    line = re.sub(r"^- <date>: ", "", line).replace("<phase>", "define").replace("<planning phase>", "define")
     line = re.sub(r"<[^<>]*>", "x", line)
     return any(v.fullmatch(line) for v in vocab)
 
