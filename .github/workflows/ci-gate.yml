@@ -29,7 +29,7 @@ jobs:
           # Budget from the first job this attempt ran: jobs carried over from earlier attempts and skipped jobs (stamped
           # when the run is created) don't count, nor does initial queue time; an API error only warns.
           if SINCE=$(gh api "$RUN/attempts/$GITHUB_RUN_ATTEMPT" --jq .run_started_at) && export SINCE &&
-             started=$(gh api "$RUN/attempts/$GITHUB_RUN_ATTEMPT/jobs" --jq '[.jobs[] | select(.conclusion != "skipped" and .started_at != null and .started_at >= env.SINCE) | .started_at] | min'); then
+             started=$(gh api "$RUN/attempts/$GITHUB_RUN_ATTEMPT/jobs?per_page=100" --jq '[.jobs[] | select(.conclusion != "skipped" and .started_at != null and .started_at >= env.SINCE) | .started_at] | min') && [ -n "$started" ]; then
             elapsed=$(( $(date +%s) - $(date -d "$started" +%s) ))
             [ "$elapsed" -le "$BUDGET" ] || { echo "CI took ${elapsed}s; the budget is ${BUDGET}s"; exit 1; }
           else
