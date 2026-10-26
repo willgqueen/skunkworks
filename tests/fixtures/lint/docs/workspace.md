@@ -4,6 +4,6 @@
 
 | Line | Written by |
 |---|---|
-| `<phase> drafted` | x |
+| `<planning phase> drafted` | x |
 | `task <n> committed <sha>` | x |
 | `done` | x |

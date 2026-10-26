@@ -53,6 +53,10 @@ class LintSkills(unittest.TestCase):
         self.assertTrue(self.found("define drafted extra junk"))
         self.assertTrue(self.found("bogus drafted"))
 
+    def test_planning_phase_placeholder(self):
+        self.assertTrue(self.found("badlog: log line not in the vocabulary: deliver drafted"))
+        self.assertFalse(self.found("discover drafted"))
+
 
 if __name__ == "__main__":
     unittest.main()
