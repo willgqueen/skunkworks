@@ -12,7 +12,7 @@ Lint and format (with typecheck), unit tests and a dependency audit, as parallel
 
 ## Shared workflows
 
-[`.github/workflows/`](../.github/workflows/) holds a reusable workflow per stack (`on: workflow_call`). Each sets up the toolchain with dependency caching, which a repo turns off with `cache: ""` (Python, JS/TS) or `cache: false` (Go, Rust), and runs commands a repo can override; an empty command skips the step:
+[`.github/workflows/`](../.github/workflows/) holds a reusable workflow per stack (`on: workflow_call`). Each sets up the toolchain with dependency caching, which a repo turns off with `cache: ""` (Python, JS/TS) or `cache: false` (Go, Rust), and runs commands a repo can override; an empty command skips the step, and a job whose commands are all empty is skipped:
 
 | Stack | Lint | Typecheck | Test | Audit |
 |---|---|---|---|---|

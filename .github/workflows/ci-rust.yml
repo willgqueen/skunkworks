@@ -32,6 +32,7 @@ permissions:
   contents: read
 jobs:
   lint:
+    if: inputs.lint != '' || inputs.typecheck != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:
@@ -56,6 +57,7 @@ jobs:
       - if: inputs.typecheck != ''
         run: ${{ inputs.typecheck }}
   test:
+    if: inputs.test != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:
@@ -77,6 +79,7 @@ jobs:
       - if: inputs.test != ''
         run: ${{ inputs.test }}
   audit:
+    if: inputs.audit != ''
     runs-on: ubuntu-latest
     timeout-minutes: 8
     defaults:

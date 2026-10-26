@@ -57,6 +57,14 @@ class CiFiles(unittest.TestCase):
                 self.assertIn("      actions: read\n", gate)
                 self.assertIn("concurrency:", text)
 
+    def test_stage_jobs_skip_when_their_commands_are_empty(self):
+        conds = {"lint": "inputs.lint != '' || inputs.typecheck != ''", "test": "inputs.test != ''", "audit": "inputs.audit != ''"}
+        for stack in ("python", "node", "go", "rust"):
+            text = (ROOT / f".github/workflows/ci-{stack}.yml").read_text()
+            jobs = re.findall(r"^  ([\w-]+):\n    if: (.*)\n", text.split("\njobs:\n", 1)[1], re.M)
+            with self.subTest(stack=stack):
+                self.assertEqual(dict(jobs), conds)
+
     def test_renovate_configs_parse(self):
         for f in (ROOT / "renovate.json", ROOT / "ci/templates/renovate.json"):
             self.assertIn("helpers:pinGitHubActionDigests", json.loads(f.read_text())["extends"])
