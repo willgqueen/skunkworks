@@ -72,6 +72,7 @@ class CiFiles(unittest.TestCase):
                 self.assertIn("concurrency:", text)
 
     def test_every_stack_has_a_shared_workflow(self):
+        self.assertIn("/ci-STACK.yml@SHA", (ROOT / "ci/templates/ci.yml").read_text())
         for stack in STACKS:
             with self.subTest(stack=stack):
                 self.assertTrue((ROOT / f".github/workflows/ci-{stack}.yml").exists())

@@ -1,4 +1,4 @@
-# CI for a STACK repo (docs/ci.md). /ci fills in STACK, OWNER, SHA, VERSION and DEFAULT_BRANCH.
+# CI caller (docs/ci.md). /ci fills in its placeholders.
 name: CI
 on:
   pull_request:
