@@ -1,6 +1,6 @@
 # deliver scenarios
 
-Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15 (AC numbers below are 003's), and 036 in L6, L9 and L10. `../target` is the sandbox's target repo.
+Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 and AC8–AC15 (AC numbers below are 003's), and 036 in L6 and L9–L11. `../target` is the sandbox's target repo.
 
 ## L1. S item, local only, end to end
 
@@ -83,3 +83,13 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 003's AC2–AC4, AC6 an
 - **Expect:** blocked on the missing `DEST/tools/greet-lint`.
 - **Answer:** "I approve installing greet-lint at DEST/tools via a two-line shell script that exits 0", then run `/deliver greet 004` again.
 - **Expect:** `host change approved: greet-lint at DEST/tools via …`, the script created there and nowhere else, `unblocked:`, the check passing, and the run continuing to the merge stop.
+
+## L11. A spent approval
+
+- **Setup:** L10's setup.
+- **Run:** `/deliver greet 004`, approve.
+- **Answer:** "I approve installing greet-lint at DEST/elsewhere via a two-line shell script that exits 0", then run `/deliver greet 004` again.
+- **Expect:** the script made once at `DEST/elsewhere`; the check still fails; blocked again with `blocked: needs DEST/tools/greet-lint; the approved change at DEST/elsewhere didn't provide it (…)`.
+- **Then:** run `/deliver greet 004` again, with no new approval.
+- **Expect:** still blocked; no second install; no new `host change approved:` line.
+
