@@ -12,12 +12,12 @@ Every condition below (sizes, gaps, approval) is defined in [docs/criteria.md](.
 
 ## 1. Load the item
 
-- Resolve the item from `<project> <id or slug>`. If no item is named and exactly one item in the conversation's project has `status: active`, use it; otherwise list the candidates and ask.
+- [Resolve the item](../../../docs/process.md#resolve-the-item).
 - Read `project.md`, `item.md`, and `discover.md` if it exists.
 - Check that the item belongs here:
   - **S**: define isn't needed. Say so, and offer to re-size if the user disagrees.
   - **L with no [approved](../../../docs/criteria.md#phase-state) discover.md**: point out that Discover was skipped and ask whether to continue anyway.
-- If define is already [drafted](../../../docs/criteria.md#phase-state), this is a [revision](../../../docs/criteria.md#phase-state): if define was approved, log `define reopened` first. Apply the user's feedback to the existing doc instead of rewriting it, redoing steps 2–3 only where the feedback needs it, then go to step 5.
+- [Revision](../../../docs/process.md#revision) (log `define reopened` if approved; redo steps 2–3, then go to step 5).
 
 ## 2. Ground it in the code
 
@@ -47,11 +47,11 @@ By kind:
 
 Run the **split** skill on the draft spec.
 
-**Size check:** if the spec hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in your report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
+[Size check](../../../docs/process.md#size-check) for the spec.
 
 ## 5. Update the item
 
-In `item.md`, set `phase: define`, `status: active` and `updated`, then add a log line: `- <date>: define drafted` (or `define revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `define` (log `define drafted` or `define revised`).
 
 ## 6. Gate
 

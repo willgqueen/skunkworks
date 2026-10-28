@@ -12,13 +12,13 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
 
 ## 1. Load the item
 
-- Resolve the item from `<project> <id or slug>`. If no item is named and exactly one item in the conversation's project has `status: active`, use it; otherwise list the candidates and ask.
+- [Resolve the item](../../../docs/process.md#resolve-the-item).
 - Read `project.md`, `item.md`, `discover.md` if it exists, and `define.md`.
 - Check that the item belongs here:
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- If develop is already [drafted](../../../docs/criteria.md#phase-state), this is a [revision](../../../docs/criteria.md#phase-state): if develop was approved, log `develop reopened` first. Apply the user's feedback to the existing doc, redoing steps 2–4 only where the feedback needs it, then go to step 6. If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
+- [Revision](../../../docs/process.md#revision) (log `develop reopened` if approved; redo steps 2–4, then go to step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 
@@ -52,11 +52,11 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 
 Run the **split** skill on the task list.
 
-**Size check:** if the design hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in your report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
+[Size check](../../../docs/process.md#size-check) for the design.
 
 ## 6. Update the item
 
-In `item.md`, set `phase: develop`, `status: active` and `updated`, then add a log line: `- <date>: develop drafted` (or `develop revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `develop` (log `develop drafted` or `develop revised`).
 
 ## 7. Gate
 

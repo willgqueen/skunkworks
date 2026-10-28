@@ -12,12 +12,12 @@ Every condition below (sizes, approval, Explore use, re-size) is defined in [doc
 
 ## 1. Load the item
 
-- Resolve the item from `<project> <id or slug>`. If no item is named and exactly one item in the conversation's project has `status: active`, use it; otherwise list the candidates and ask.
+- [Resolve the item](../../../docs/process.md#resolve-the-item).
 - Read `project.md`, `item.md`, and anything in the item's `notes/` folder.
 - Check that the item belongs here:
   - **Any investigation, or any L item** (including initiatives, which are always L): continue.
   - **S or M feature or task**: Discover isn't needed. Say so, and offer to re-size if the user disagrees.
-- If discover is already [drafted](../../../docs/criteria.md#phase-state), this is a [revision](../../../docs/criteria.md#phase-state): if discover was approved, log `discover reopened` first. Apply the user's feedback to the existing doc, redoing steps 2–3 only where the feedback needs it, then go to step 5. A discover.md that only holds template text isn't drafted, so start at step 2.
+- [Revision](../../../docs/process.md#revision) (log `discover reopened` if approved; redo steps 2–3, then go to step 5). A discover.md that only holds template text isn't drafted, so start at step 2.
 
 ## 2. Ground it
 
@@ -36,7 +36,7 @@ Run the **split** skill with what Discover found.
 
 Work that turns up and is outside this item becomes a new item through the **new-item** skill. Mention it in the report; it doesn't become extra scope here.
 
-**Size check:** if Discover hits a [re-size trigger](../../../docs/criteria.md#size), recommend re-sizing in the report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
+[Size check](../../../docs/process.md#size-check) for Discover.
 
 ## 4. Write discover.md
 
@@ -44,7 +44,7 @@ Start from [the template](../../../templates/workspace/discover.md) if the file 
 
 ## 5. Update the item
 
-In `item.md`, set `phase: discover`, `status: active` and `updated`, then add a log line: `- <date>: discover drafted` (or `discover revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `discover` (log `discover drafted` or `discover revised`).
 
 ## 6. Gate
 
