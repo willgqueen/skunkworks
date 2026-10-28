@@ -57,7 +57,7 @@ Two overrides: an item whose `depends_on` items aren't done or dropped waits on 
 - A file per phase gives agents a stable handoff: each phase reads the previous file instead of relying on chat history.
 - Sizing keeps the process from slowing down routine work.
 
-Other methods considered: Shape Up (its *appetite* idea may be borrowed later as an effort budget per item), and RFC/ADR-only flows (ADRs are kept inside `develop.md`).
+Other methods considered: Shape Up (its *appetite* idea may be borrowed later as an effort budget per item), and RFC/ADR-only flows (ADRs are kept inside `develop.md`, and each project indexes its significant decisions in `architecture/decisions.md`).
 
 ## Building blocks
 

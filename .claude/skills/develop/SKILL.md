@@ -64,4 +64,5 @@ Report the path to develop.md, the approach in two or three lines, each decision
 
 When the user approves:
 - Add the log line `- <date>: develop approved` and set `phase: deliver`.
+- Update `workspace/projects/<project>/architecture/` (create it from [templates/workspace/architecture/](../../../templates/workspace/architecture/) if missing): set this item's rows in `decisions.md` to one per [significant decision](../../../docs/criteria.md#decisions) (Date, Decision, Choice, and Item: this item's id), replacing its earlier rows; and make `overview.md`'s *Context* and *Containers* match the approved design, adding any quality attributes it ranked to *Quality attributes* (existing ones kept unless the design re-ranks them).
 - Ask whether to start Deliver.

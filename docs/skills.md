@@ -72,7 +72,7 @@ Sets up the [standard CI](ci.md) in a GitHub repo.
 
 ## repo-context
 
-Builds or refreshes a project's `project.md` from a target repo, read-only.
+Builds or refreshes a project's `project.md` and `architecture/` folder from a target repo, read-only.
 
 | | |
 |---|---|

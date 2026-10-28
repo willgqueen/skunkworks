@@ -30,7 +30,7 @@ A walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 | `/split` | Proposes splitting work that's too big into right-sized items |
 | `/integrate` | Adds an MCP server or API with credentials, access and guards |
 | `/ci` | Sets up the standard CI, with one required `ci-ok` check |
-| `/repo-context` | Maps a target repo into its project.md, read-only |
+| `/repo-context` | Maps a target repo into its project.md and architecture overview, read-only |
 | `/discover` | Maps the problem: context, options, open questions |
 | `/define` | Writes the spec: goal, scope, acceptance criteria |
 | `/develop` | Designs L items with you: decisions, ordered tasks, risks |
