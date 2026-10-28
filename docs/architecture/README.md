@@ -1,6 +1,6 @@
 # Architecture references
 
-Shared references for architecture decisions (and for `/architect`, item 021).
+Shared references for architecture decisions; develop's decision step points here.
 
 - [quality-attributes.md](quality-attributes.md): name, rank and specify qualities
 - [decision-matrix.md](decision-matrix.md): compare options; state a recommendation; record it as an ADR

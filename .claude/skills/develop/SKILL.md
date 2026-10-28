@@ -36,7 +36,7 @@ For a broad design, a Plan subagent may draft the options, and, when research is
 
 ## 4. Decide with the user
 
-- **Significant decisions:** put each one to the user with 2–3 options. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
+- **Significant decisions:** put each one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
 - **Minor decisions:** decide, following existing repo patterns, and record them. The user can still change them at the gate.
 
 For every decision, record whether the user took the recommendation (`n/a` for minor ones). This feeds [calibration](../../../docs/criteria.md#calibration).
