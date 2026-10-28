@@ -19,7 +19,7 @@ new-item creates only the starting phase's doc. Later phase skills create theirs
 
 ## CI templates
 
-[`ci/templates/`](../ci/templates/) holds the caller workflows and Renovate config that `/ci` copies into target repos ([docs/ci.md](ci.md)). Their placeholders are `OWNER`, `SHA`, `VERSION` and `DEFAULT_BRANCH`.
+[`ci/templates/`](../ci/templates/) holds the caller workflow and Renovate config that `/ci` copies into target repos ([docs/ci.md](ci.md)). The caller's placeholders are `STACK`, `OWNER`, `SHA`, `VERSION` and `DEFAULT_BRANCH`.
 
 ## Repo templates
 

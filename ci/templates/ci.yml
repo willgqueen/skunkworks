@@ -1,4 +1,4 @@
-# CI for a go repo (docs/ci.md). /ci fills in OWNER, SHA, VERSION and DEFAULT_BRANCH.
+# CI caller (docs/ci.md). /ci fills in its placeholders.
 name: CI
 on:
   pull_request:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   checks:
-    uses: OWNER/skunkworks/.github/workflows/ci-go.yml@SHA # VERSION
+    uses: OWNER/skunkworks/.github/workflows/ci-STACK.yml@SHA # VERSION
   workflow-lint:
     uses: OWNER/skunkworks/.github/workflows/ci-workflow-lint.yml@SHA # VERSION
   ci-ok:
