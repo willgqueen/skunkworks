@@ -21,7 +21,7 @@ Every condition below (sizes, approval, Explore use, re-size) is defined in [doc
 
 ## 2. Ground it
 
-For each repo in `repos`, read its `CLAUDE.md`, then the code and docs around the problem (read-only): what exists today, how it behaves, prior attempts, constraints. Use an Explore subagent when [criteria.md](../../../docs/criteria.md#context) says to. When the research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), split it into independent questions (separate code areas, external docs) and give each to a `researcher` or Explore agent, each with the list of what it must cover; check each researcher's *Coverage* line and re-run gaps ([complete coverage](../../../docs/criteria.md#complete-coverage)). Run them in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Never write into a target repo in this phase.
+For each repo in `repos`, read its `CLAUDE.md`, then the code and docs around the problem (read-only): what exists today, how it behaves, prior attempts, constraints. Use an Explore subagent when [criteria.md](../../../docs/criteria.md#context) says to. When the research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), split it into independent questions (separate code areas, external docs). Give each to a `researcher` or Explore agent with the list of what it must cover. Check each researcher's *Coverage* line and re-run gaps ([complete coverage](../../../docs/criteria.md#complete-coverage)). Run them in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Never write into a target repo in this phase.
 
 ## 3. Map, don't decide
 
