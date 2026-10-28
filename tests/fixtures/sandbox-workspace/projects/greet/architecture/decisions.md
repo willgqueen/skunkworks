@@ -4,4 +4,3 @@ Each row is a significant decision (`docs/criteria.md#decisions`), recorded in t
 
 | Date | Decision | Choice | Item |
 |---|---|---|---|
-| 2026-10-20 | CLI parser | argparse, from the standard library | 006 |
