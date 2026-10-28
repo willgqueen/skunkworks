@@ -12,7 +12,10 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MODELS = re.compile(r"\b(opus|sonnet|haiku|fable)\b", re.I)
 LOGGED = re.compile(r"`- <date>: ([^`]+)`|\b[Ll]og `([^`]+)`")
-PHASES = "(?:discover|define|develop|deliver)"
+PHASES = {
+    "<phase>": "(?:discover|define|develop|deliver)",
+    "<planning phase>": "(?:discover|define|develop)",
+}
 
 
 def frontmatter(path):
@@ -24,10 +27,10 @@ def frontmatter(path):
 
 
 def pattern(entry):
-    """A vocabulary entry as a full-match regex: <phase> is a phase name, any other <placeholder> is any text."""
+    """A vocabulary entry as a full-match regex: <phase> is any phase name, <planning phase> a planning one, any other <placeholder> is any text."""
     out = ""
     for i, part in enumerate(re.split(r"(<[^>]+>)", entry)):
-        out += (PHASES if part == "<phase>" else ".+") if i % 2 else re.escape(part)
+        out += PHASES.get(part, ".+") if i % 2 else re.escape(part)
     return re.compile(out)
 
 
@@ -37,8 +40,8 @@ def vocabulary(root=ROOT):
 
 
 def in_vocabulary(line, vocab):
-    """Placeholders in a skill's line stand for any value: <phase> for a phase name, the rest for text."""
-    line = re.sub(r"^- <date>: ", "", line).replace("<phase>", "define")
+    """Placeholders in a skill's line stand for any value: (planning) phases for a phase name, the rest for text."""
+    line = re.sub(r"^- <date>: ", "", line).replace("<phase>", "define").replace("<planning phase>", "define")
     line = re.sub(r"<[^<>]*>", "x", line)
     return any(v.fullmatch(line) for v in vocab)
 

@@ -81,7 +81,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | Line | Written by |
 |---|---|
 | `created` | new-item |
-| `<phase> drafted` / `<phase> revised` | discover, define, develop |
+| `<planning phase> drafted` / `<planning phase> revised` | discover, define, develop |
 | `<phase> reopened` | the phase skill, when revising an approved phase |
 | `<phase> waived: <reason>` | hq, only when the user explicitly waives a gate |
 | `discover answers: <summary>` | discover, whenever the user answers open questions |
@@ -92,7 +92,7 @@ Each phase writes one file, and the next phase reads it. See [process.md](proces
 | `blocked: <cause>` / `unblocked: <how>` | deliver |
 | `check deferred to <NNN>: <check>` | deliver, in both items |
 | `PR opened <url>` | deliver |
-| `review: passed @<sha> · coverage <covered>/<total>` / `review: failed: <n> blocking @<sha> · coverage <covered>/<total>` / `review: incomplete @<sha> · coverage <covered>/<total>` | review |
+| `review: <verdict>` | review; the [verdict](review-rubric.md#verdict) line |
 | `merged <sha>` | deliver |
 | `split: <choice>` / `re-kinded <old>→initiative: <signal>` | split |
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
