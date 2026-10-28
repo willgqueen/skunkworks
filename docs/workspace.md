@@ -16,6 +16,9 @@ workspace/
   projects/
     <project>/                # one per repo or idea; slug matches the repo folder name
       project.md              # what it is, repo path(s), stack, learned conventions
+      architecture/
+        overview.md           # what it is, C4 context and containers, top quality attributes
+        decisions.md          # index of significant decisions, linking each item's develop.md
       items/
         <NNN>-<slug>/         # one unit of work, numbered per project
           item.md             # metadata, summary, status log
