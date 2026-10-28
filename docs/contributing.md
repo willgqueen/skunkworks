@@ -19,7 +19,7 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
    - `name`: the command name
    - `description`: what it does and when to use it. Claude matches requests against this, so name the situations.
    - `argument-hint`: for example `<project> <item id or slug>`
-2. Follow the shape of the existing phase skills: load → ground → work → write → update item → gate. Copy their wording for shared steps (resolving an item, revision mode, the gate).
+2. Follow the shape of the existing phase skills: load → ground → work → write → update item → gate. Link to the [shared steps](process.md#phase-skill-steps) (resolving an item, revision, size check, updating the item) instead of copying their wording.
 3. Link every condition to criteria.md with relative links (`../../../docs/criteria.md#<section>`). Never write a threshold into a skill.
 4. Use the [log vocabulary](workspace.md#log-vocabulary). If the skill needs a new log line, add it to that table in the same change.
 5. Spawn only roster agents, and apply the [model policy](criteria.md#agents-and-parallelism).
