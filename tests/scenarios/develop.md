@@ -19,7 +19,7 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 001's behavioral checks
 - **Run:** `/develop greet 003` with "switch the first significant decision to its second option".
 - **Expect:** the existing develop.md revised, not rewritten: that decision now records `Recommendation taken: no`, and every task it affects is updated; `develop revised` logged (AC7, AC11).
 - **Answer:** approve.
-- **Expect:** `develop approved`, `phase: deliver`, a row in `workspace/projects/greet/architecture/decisions.md` for the switched decision with Item `003` (022 AC3), and a question about starting deliver; answer "not now" (AC13).
+- **Expect:** `develop approved`, `phase: deliver`, in `workspace/projects/greet/architecture/decisions.md`, one row per significant decision with Item `003` (the switched one showing its second option), and the seeded row kept; `overview.md`'s *Quality attributes* matching the design's ranking and *Containers* unchanged, since greet stays one script (022 AC3); and a question about starting deliver; answer "not now" (AC13).
 
 ## V3. L item without an approved define
 

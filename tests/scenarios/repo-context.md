@@ -10,6 +10,6 @@ Run per [docs/testing.md](../../docs/testing.md).
 
 ## C2. Refresh keeps what's learned
 
-- **Setup:** `python3 -I scripts/sandbox.py --seed`; add "- Keep `greet()` pure." under *Conventions learned* and set `Merge policy` to `auto` in `workspace/projects/greet/project.md`; add a line under *Containers* in `workspace/projects/greet/architecture/overview.md`.
+- **Setup:** `python3 -I scripts/sandbox.py --seed`; add "- Keep `greet()` pure." under *Conventions learned* and set `Merge policy` to `auto` in `workspace/projects/greet/project.md`; add a line under *Containers* in `workspace/projects/greet/architecture/overview.md`. The seeded `decisions.md` has one row and *Quality attributes* one entry.
 - **Run:** `/repo-context ../target greet`
-- **Expect:** factual sections rewritten; the convention and `auto` kept; the *Containers* line kept in overview.md and `decisions.md` untouched.
+- **Expect:** factual sections rewritten; the convention and `auto` kept; only *What it is* rewritten in overview.md (the *Containers* line and *Quality attributes* kept); `decisions.md`'s row untouched.

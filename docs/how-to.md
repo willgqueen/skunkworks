@@ -16,7 +16,7 @@ Open its folder: `workspace/projects/<project>/items/<NNN>-<slug>/`. `item.md` h
 ## Starting work
 
 ### Map a repo before working on it
-`/repo-context <repo folder name or path>`. Writes `workspace/projects/<repo>/project.md`. Re-run it when the file is [stale](criteria.md#context).
+`/repo-context <repo folder name or path>`. Writes `workspace/projects/<repo>/project.md` and its `architecture/` folder. Re-run it when the file is [stale](criteria.md#context).
 
 ### Start new work
 `/hq <description>` or `/new-item <project> <description>`. You get a numbered item with its kind, size and first phase, and Claude asks before starting.

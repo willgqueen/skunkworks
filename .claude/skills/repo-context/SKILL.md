@@ -1,12 +1,12 @@
 ---
 name: repo-context
-description: Build or refresh a project's project.md in the workspace from a target repo. Use when starting work on a repo for the first time, when project.md is missing or stale, or when the user asks to learn, map or summarize a repo.
+description: Build or refresh a project's project.md and architecture overview in the workspace from a target repo. Use when starting work on a repo for the first time, when project.md is missing or stale, or when the user asks to learn, map or summarize a repo.
 argument-hint: <repo folder name or path> [project slug]
 ---
 
 # repo-context
 
-Read a target repo and record what future work needs to know in `workspace/projects/<project>/project.md`. The target repo is **read-only** for this skill.
+Read a target repo and record what future work needs to know in `workspace/projects/<project>/project.md` and its `architecture/` folder. The target repo is **read-only** for this skill.
 
 ## 1. Resolve the repo and project
 
@@ -29,11 +29,11 @@ When [criteria.md](../../../docs/criteria.md#context) says to use an Explore sub
 
 Never install dependencies, run builds or tests, or modify anything in the target repo.
 
-## 3. Write project.md
+## 3. Write project.md and the architecture folder
 
 - **New project:** create `workspace/projects/<project>/` and `items/`, then fill [templates/workspace/project.md](../../../templates/workspace/project.md).
 - **Existing project** (refresh it when it's [stale](../../../docs/criteria.md#context) or the user asks): rewrite the factual sections from what you just gathered, but keep every entry under *Conventions learned* and the existing *Merge policy*. New projects start with `manual`; only the user changes it. Add new conventions there only when the repo states them (for example, in CLAUDE.md or lint config).
-- **Architecture:** also write `workspace/projects/<project>/architecture/` from [templates/workspace/architecture/](../../../templates/workspace/architecture/). New project: create `overview.md` and `decisions.md`, filling *What it is* and, only as far as the repo shows, *Context* and *Containers* (services in docker-compose, external APIs named in config). Refresh: rewrite only the factual parts of `overview.md`; keep its diagrams and *Quality attributes* unless the repo contradicts them. Never touch `decisions.md` rows.
+- **Architecture:** if `workspace/projects/<project>/architecture/` is missing (a new project, or one made before it existed), create `overview.md` and `decisions.md` from [templates/workspace/architecture/](../../../templates/workspace/architecture/), filling *What it is* and, only as far as the repo shows, *Context* and *Containers* (services in docker-compose, external APIs named in config). If it exists, rewrite only *What it is*; keep the other sections, which develop writes from approved designs that may not be built yet. Never touch `decisions.md` rows.
 
 Guidelines:
 - **Commands** are exact and copied from the repo (scripts, Makefile targets, CI steps). If a command is inferred rather than stated, mark it `(inferred)`.
@@ -42,4 +42,4 @@ Guidelines:
 
 ## 4. Report
 
-Give the path to project.md, a two-line summary of the repo, and anything notable: no tests found, no CI, uncommitted changes, an unclear entry point.
+Give the paths to project.md and the architecture folder, a two-line summary of the repo, and anything notable: no tests found, no CI, uncommitted changes, an unclear entry point.

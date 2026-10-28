@@ -10,4 +10,4 @@ A command-line greeter: one Python script, no services.
 <!-- Mermaid C4 container diagram: the runnable units and how they talk. See `docs/architecture/c4-diagrams.md`. -->
 
 ## Quality attributes
-<!-- The top 3-5, ranked. See `docs/architecture/quality-attributes.md`. -->
+1. Simplicity: standard library only.

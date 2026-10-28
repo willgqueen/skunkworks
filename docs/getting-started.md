@@ -16,7 +16,7 @@ On a fresh clone, create the workspace first ([README](../README.md#setup)). Rep
 
 ## 3. Map a repo
 
-`/repo-context my-api` reads `~/repos/my-api` without changing it and writes `workspace/projects/my-api/project.md`, which every later step reads.
+`/repo-context my-api` reads `~/repos/my-api` without changing it and writes `workspace/projects/my-api/project.md` (and an architecture overview), which every later step reads.
 
 ## 4. Start the work
 
