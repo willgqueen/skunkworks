@@ -33,6 +33,7 @@ Never install dependencies, run builds or tests, or modify anything in the targe
 
 - **New project:** create `workspace/projects/<project>/` and `items/`, then fill [templates/workspace/project.md](../../../templates/workspace/project.md).
 - **Existing project** (refresh it when it's [stale](../../../docs/criteria.md#context) or the user asks): rewrite the factual sections from what you just gathered, but keep every entry under *Conventions learned* and the existing *Merge policy*. New projects start with `manual`; only the user changes it. Add new conventions there only when the repo states them (for example, in CLAUDE.md or lint config).
+- **Architecture:** also write `workspace/projects/<project>/architecture/` from [templates/workspace/architecture/](../../../templates/workspace/architecture/). New project: create `overview.md` and `decisions.md`, filling *What it is* and, only as far as the repo shows, *Context* and *Containers* (services in docker-compose, external APIs named in config). Refresh: rewrite only the factual parts of `overview.md`; keep its diagrams and *Quality attributes* unless the repo contradicts them. Never touch `decisions.md` rows.
 
 Guidelines:
 - **Commands** are exact and copied from the repo (scripts, Makefile targets, CI steps). If a command is inferred rather than stated, mark it `(inferred)`.
