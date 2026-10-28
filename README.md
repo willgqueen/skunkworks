@@ -18,7 +18,7 @@ Then:
 - `/repo-context <repo>` maps a repo you'll work on
 - `/hq <description>` starts new work and walks it through its phases
 
-The full walkthrough is in [docs/getting-started.md](docs/getting-started.md).
+A walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 
 ## Skills
 
