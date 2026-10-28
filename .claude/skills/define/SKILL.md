@@ -17,7 +17,7 @@ Every condition below (sizes, gaps, approval) is defined in [docs/criteria.md](.
 - Check that the item belongs here:
   - **S**: define isn't needed. Say so, and offer to re-size if the user disagrees.
   - **L with no [approved](../../../docs/criteria.md#phase-state) discover.md**: point out that Discover was skipped and ask whether to continue anyway.
-- If define is already drafted, it's a [revision](../../../docs/process.md#revision) (log `define reopened` if it was approved; edit the existing doc, redoing steps 2–3 only where the feedback needs it, then go to step 5).
+- If define is already drafted, it's a [revision](../../../docs/process.md#revision) (log `define reopened` if it was approved; grounding and drafting are steps 2–3, update the item is step 5).
 
 ## 2. Ground it in the code
 
@@ -51,7 +51,7 @@ Run the **split** skill on the draft spec.
 
 ## 5. Update the item
 
-[Update the item](../../../docs/process.md#update-the-item) with phase `define`, `status: active` (log `define drafted` or `define revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `define` (log `define drafted` or `define revised`).
 
 ## 6. Gate
 

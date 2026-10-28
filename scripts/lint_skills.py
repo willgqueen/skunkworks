@@ -62,7 +62,10 @@ def lint(root=ROOT):
             line = full or short
             if not in_vocabulary(line, vocab):
                 problems.append(f"{name}: log line not in the vocabulary: {line}")
-    shared = (root / "docs/process.md").read_text().split("## Phase skill steps", 1)[-1].split("\n## ", 1)[0]
+    _, found, shared = (root / "docs/process.md").read_text().partition("\n## Phase skill steps\n")
+    if not found:
+        problems.append("process.md: no ## Phase skill steps section")
+    shared = shared.split("\n## ", 1)[0]
     for full, short in LOGGED.findall(shared):
         if not in_vocabulary(full or short, vocab):
             problems.append(f"process.md#phase-skill-steps: log line not in the vocabulary: {full or short}")

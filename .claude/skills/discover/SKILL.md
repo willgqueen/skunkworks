@@ -17,7 +17,7 @@ Every condition below (sizes, approval, Explore use, re-size) is defined in [doc
 - Check that the item belongs here:
   - **Any investigation, or any L item** (including initiatives, which are always L): continue.
   - **S or M feature or task**: Discover isn't needed. Say so, and offer to re-size if the user disagrees.
-- If discover is already drafted, it's a [revision](../../../docs/process.md#revision) (log `discover reopened` if it was approved; edit the existing doc, redoing steps 2–3 only where the feedback needs it, then go to step 5). A discover.md that only holds template text isn't drafted, so start at step 2.
+- If discover is already drafted, it's a [revision](../../../docs/process.md#revision) (log `discover reopened` if it was approved; grounding and drafting are steps 2–3, update the item is step 5). A discover.md that only holds template text isn't drafted, so start at step 2.
 
 ## 2. Ground it
 
@@ -44,7 +44,7 @@ Start from [the template](../../../templates/workspace/discover.md) if the file 
 
 ## 5. Update the item
 
-[Update the item](../../../docs/process.md#update-the-item) with phase `discover`, `status: active` (log `discover drafted` or `discover revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `discover` (log `discover drafted` or `discover revised`).
 
 ## 6. Gate
 
