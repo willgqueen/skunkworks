@@ -61,11 +61,11 @@ Resolve the item from `<project> <id or slug>`. If no item is named and exactly 
 
 ### Revision
 
-If `<phase>` is already [drafted](criteria.md#phase-state), this is a [revision](criteria.md#phase-state): if it was approved, log `<phase> reopened` first. Apply the user's feedback to the existing doc instead of rewriting it, redoing the skill's grounding and drafting steps only where the feedback needs it, then go to the skill's update-the-item step.
+If `<phase>` is already [drafted](criteria.md#phase-state), this is a [revision](criteria.md#phase-state), which says when to log `<phase> reopened`. Apply the user's feedback to the existing doc instead of rewriting it, redoing the skill's grounding and drafting steps only where the feedback needs it, then go to the skill's update-the-item step.
 
 ### Size check
 
-If the phase's work hits a [re-size trigger](criteria.md#size), recommend re-sizing in your report and name the condition. Don't change the size without the user's agreement; when they agree, log it in the format criteria.md gives.
+If the phase's work hits a [re-size trigger](criteria.md#size), recommend re-sizing in your report, naming the condition, and follow that rule for the user's agreement and the log line.
 
 ### Update the item
 

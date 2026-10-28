@@ -1,5 +1,5 @@
 """Static lint for skills and agents: required frontmatter, no model names in
-skills, every log line a skill writes is in the log vocabulary
+skills, every log line a skill (or process.md's shared phase skill steps) writes is in the log vocabulary
 (docs/workspace.md#log-vocabulary), and every skill has a manual test scenario
 (tests/scenarios/<skill>.md, docs/testing.md).
 
@@ -62,6 +62,10 @@ def lint(root=ROOT):
             line = full or short
             if not in_vocabulary(line, vocab):
                 problems.append(f"{name}: log line not in the vocabulary: {line}")
+    shared = (root / "docs/process.md").read_text().split("## Phase skill steps", 1)[-1].split("\n## ", 1)[0]
+    for full, short in LOGGED.findall(shared):
+        if not in_vocabulary(full or short, vocab):
+            problems.append(f"process.md#phase-skill-steps: log line not in the vocabulary: {full or short}")
     for path in sorted((root / ".claude/agents").glob("*.md")):
         if not {"name", "description", "model", "effort", "tools"} <= set(frontmatter(path)):
             problems.append(f"agent {path.stem}: frontmatter needs name, description, model, effort, tools")

@@ -60,6 +60,11 @@ class LintSkills(unittest.TestCase):
         self.assertTrue(self.found("badlog: log line not in the vocabulary: deliver drafted"))
         self.assertFalse(self.found("discover drafted"))
 
+    def test_shared_steps_log_lines(self):
+        self.assertTrue(self.found("process.md#phase-skill-steps: log line not in the vocabulary: <phase> written"))
+        self.assertFalse(self.found("<phase> drafted"))
+        self.assertFalse(self.found("outside the section"))
+
 
 if __name__ == "__main__":
     unittest.main()

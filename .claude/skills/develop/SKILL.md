@@ -18,7 +18,7 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- [Revision](../../../docs/process.md#revision) (log `develop reopened` if approved; redo steps 2–4, then go to step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
+- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; edit the existing doc, redoing steps 2–4 only where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 
@@ -52,11 +52,11 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 
 Run the **split** skill on the task list.
 
-[Size check](../../../docs/process.md#size-check) for the design.
+**Size check:** if the design hits a re-size trigger, follow [Size check](../../../docs/process.md#size-check).
 
 ## 6. Update the item
 
-[Update the item](../../../docs/process.md#update-the-item) with phase `develop` (log `develop drafted` or `develop revised`).
+[Update the item](../../../docs/process.md#update-the-item) with phase `develop`, `status: active` (log `develop drafted` or `develop revised`).
 
 ## 7. Gate
 
