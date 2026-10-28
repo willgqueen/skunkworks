@@ -23,10 +23,10 @@ PHASE_EVENT = re.compile(r"^(discover|define|develop|deliver) (drafted|revised|r
 ORDER = {"blocked": 0, "you": 1, "active": 2, "proposed": 3}
 
 
-def item_paths(workspace, open_only=False):
-    """Every item.md in the workspace: open items, plus archived ones unless open_only."""
+def item_paths(workspace, archived=True):
+    """Every item.md under projects/, then archive/ unless archived is False."""
     paths = list(workspace.glob("projects/*/items/*/item.md"))
-    return paths if open_only else paths + list(workspace.glob("archive/*/*/item.md"))
+    return paths + list(workspace.glob("archive/*/*/item.md")) if archived else paths
 
 
 def phases_for(kind, size):
@@ -179,7 +179,7 @@ def collect(workspace, today=None, criteria_path=ROOT / "docs/criteria.md"):
     days = stale_days(criteria_path)
     statuses = all_statuses(workspace)
     closed = ("done", "dropped")
-    for path in sorted(item_paths(workspace, open_only=True)):
+    for path in sorted(item_paths(workspace, archived=False)):
         project = path.parts[-4]
         try:
             meta, log = parse_item(path)

@@ -27,8 +27,7 @@ def section(text, name):
 
 def entries(workspace):
     items = []
-    paths = board.item_paths(workspace)
-    for path in paths:
+    for path in board.item_paths(workspace):
         project = path.parts[-4] if path.parts[-3] == "items" else path.parts[-3]
         try:
             meta, log = board.parse_item(path)
