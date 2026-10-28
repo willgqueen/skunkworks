@@ -7,7 +7,7 @@ How to change this repo: its skills, agents, templates, rules, scripts and docs.
 Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](../CLAUDE.md#rules)).
 
 1. **Track it.** Every change starts as an item (`/new-item skunkworks <description>`), sized by [criteria.md](criteria.md#size), and goes through its phases and gates.
-2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing lives in [process.md](process.md). Skills, agents and docs link to them and never restate them.
+2. **One source for each rule.** Conditions and thresholds live in [criteria.md](criteria.md); routing and the phase skills' shared steps live in [process.md](process.md). Skills, agents and docs link to them and never restate them.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.
 4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the checks (see [Testing](#testing)).
 5. **Reach `main` through a PR.** A ruleset requires `ci-ok / ok` on `main`, with no bypass; deliver opens the PR and you merge it.
@@ -19,7 +19,7 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
    - `name`: the command name
    - `description`: what it does and when to use it. Claude matches requests against this, so name the situations.
    - `argument-hint`: for example `<project> <item id or slug>`
-2. Follow the shape of the existing phase skills: load → ground → work → write → update item → gate. Copy their wording for shared steps (resolving an item, revision mode, the gate).
+2. Follow the shape of the existing phase skills: load → ground → work → write → update item → gate. Link to the [shared steps](process.md#phase-skill-steps) (resolving an item, revision, size check, updating the item) instead of copying their wording.
 3. Link every condition to criteria.md with relative links (`../../../docs/criteria.md#<section>`). Never write a threshold into a skill.
 4. Use the [log vocabulary](workspace.md#log-vocabulary). If the skill needs a new log line, add it to that table in the same change.
 5. Spawn only roster agents, and apply the [model policy](criteria.md#agents-and-parallelism).

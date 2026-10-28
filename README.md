@@ -51,7 +51,7 @@ Details for each: [docs/skills.md](docs/skills.md).
 | [architecture/](docs/architecture/) | Architecture reference guides |
 | [templates.md](docs/templates.md) | Every template and who uses it |
 | [review-rubric.md](docs/review-rubric.md) | What reviews check, severities, verdict |
-| [process.md](docs/process.md) | The method: phases, gates, sizing, next actions |
+| [process.md](docs/process.md) | The method: phases, gates, sizing, next actions, the phase skills' shared steps |
 | [criteria.md](docs/criteria.md) | Every rule and threshold, and how they're calibrated |
 | [workspace.md](docs/workspace.md) | The local planning workspace and the log vocabulary |
 | [contributing.md](docs/contributing.md) | How to change this repo |
