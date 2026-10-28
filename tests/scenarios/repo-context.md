@@ -10,7 +10,7 @@ Run per [docs/testing.md](../../docs/testing.md).
 
 ## C2. Refresh keeps what's learned
 
-- **Setup:** `python3 -I scripts/sandbox.py --seed`; add "- Keep `greet()` pure." under *Conventions learned* and set `Merge policy` to `auto` in `workspace/projects/greet/project.md`; add a line under *Containers* in `workspace/projects/greet/architecture/overview.md`. Add a row to `decisions.md` (`| 2026-10-20 | Example | Kept | 003 |`); *Quality attributes* is seeded with one entry.
+- **Setup:** `python3 -I scripts/sandbox.py --seed`; add "- Keep `greet()` pure." under *Conventions learned* and set `Merge policy` to `auto` in `workspace/projects/greet/project.md`; add a line under *Containers* in `workspace/projects/greet/architecture/overview.md`. Add a row to `decisions.md` (`| 2026-10-20 | Example | Kept | 999 |`); *Quality attributes* is seeded with one entry.
 - **Run:** `/repo-context ../target greet`
 - **Expect:** factual sections rewritten; the convention and `auto` kept; only *What it is* rewritten in overview.md (the *Containers* line and *Quality attributes* kept); `decisions.md`'s row untouched.
 

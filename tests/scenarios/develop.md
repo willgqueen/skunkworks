@@ -15,11 +15,11 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 001's behavioral checks
 
 ## V2. Revise a draft
 
-- **Setup:** V1 done.
+- **Setup:** V1 done; add rows `| 2026-10-20 | Old | Old | 003 |` and `| 2026-10-20 | Example | Kept | 999 |` to `workspace/projects/greet/architecture/decisions.md`.
 - **Run:** `/develop greet 003` with "switch the first significant decision to its second option".
 - **Expect:** the existing develop.md revised, not rewritten: that decision now records `Recommendation taken: no`, and every task it affects is updated; `develop revised` logged (AC7, AC11).
 - **Answer:** approve.
-- **Expect:** `develop approved`, `phase: deliver`, in `workspace/projects/greet/architecture/decisions.md`, one row per significant decision with Item `003` (the switched one showing its second option); `overview.md`'s *Context* and *Containers* unchanged (greet stays one script), and *Quality attributes* keeping Simplicity plus any the design ranked (022 AC3); and a question about starting deliver; answer "not now" (AC13).
+- **Expect:** `develop approved`, `phase: deliver`, in `workspace/projects/greet/architecture/decisions.md`, one row per significant decision with Item `003` (the switched one showing its second option), the `Old` row gone and the `999` row kept; `overview.md`'s *Context* showing no new external systems and *Containers* unchanged (greet stays one script), and *Quality attributes* keeping Simplicity plus any the design ranked (022 AC3); and a question about starting deliver; answer "not now" (AC13).
 
 ## V3. L item without an approved define
 
