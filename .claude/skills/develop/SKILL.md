@@ -18,7 +18,7 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; grounding and drafting are steps 2–4, update the item is step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
+- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 

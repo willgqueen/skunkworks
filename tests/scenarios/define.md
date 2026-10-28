@@ -23,7 +23,7 @@ Run per [docs/testing.md](../../docs/testing.md). Setup for all: `python3 -I scr
 
 ## F3. Re-size trigger
 
-- **Run:** `/define greet 002` with "also load the greeting from a YAML file using PyYAML".
-- **Expect:** it recommends re-sizing to L, naming the condition (a new dependency), and asks; `size` unchanged until the user agrees (028 AC5).
-- **Answer:** to any scope question, "a `greeting.yaml` next to the script, optional"; then "keep it M".
+- **Run:** `/define greet 002` with "also switch the tests to pytest".
+- **Expect:** it recommends re-sizing to L, naming the condition (a new dependency; the target uses unittest), and asks; `size` unchanged until the user agrees (028 AC5).
+- **Answer:** to any scope question, "pytest only as the runner; keep the tests as they are"; to a split question, "keep it whole"; then "keep it M".
 - **Expect:** no `re-sized` line; size still M.
