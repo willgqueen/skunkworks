@@ -5,7 +5,7 @@ kind: feature          # initiative | feature | task | investigation
 status: proposed       # proposed | active | blocked | done | dropped
 phase: discover        # discover | define | develop | deliver
 size: M                # S | M | L: decides which phases run
-parent:                # id of the parent initiative, if any
+parent:
 depends_on: []       # ids that must be done first
 repos: []             # repo folders this item touches
 created: {{date}}
