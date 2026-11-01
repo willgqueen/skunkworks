@@ -207,8 +207,8 @@ The provisional numbers above are guesses until they're tested against sustained
 | Date | Change | Evidence |
 |---|---|---|
 | 2026-10-23 | Initial values set | None yet: starting guesses |
-| 2026-10-24 | L condition narrowed: ≥2 modules counts only with a shared contract between them; uniform mechanical edits and docs-only changes don't count | 011 (a mechanical rename) sized L while other multi-folder items were M; "module" was undefined (Tidy 024) |
-| 2026-10-24 | Every provisional number kept | 15 items, all single-repo, one day, no splits or re-sizes: too little spread to move any number (Tidy 024) |
-| 2026-10-24 | Deliver logs files and lines changed per task | No item recorded them, so the S file cap and the ~300-line task size couldn't be checked (Tidy 024) |
-| 2026-10-24 | Nit cap (5) moved here from the review rubric | Calibration only sees numbers in this file (Tidy 024) |
-| 2026-10-24 | L condition: skills and agents are code, not docs-only; scenario budget added | Tidy 024's open review point, decided in 019; budget from 004's discover (019) |
+| 2026-10-24 | L condition narrowed: ≥2 modules counts only with a shared contract between them; uniform mechanical edits and docs-only changes don't count | a mechanical rename sized L while other multi-folder items were M; "module" was undefined (the first tidy pass) |
+| 2026-10-24 | Every provisional number kept | 15 items, all single-repo, one day, no splits or re-sizes: too little spread to move any number (the first tidy pass) |
+| 2026-10-24 | Deliver logs files and lines changed per task | No item recorded them, so the S file cap and the ~300-line task size couldn't be checked (the first tidy pass) |
+| 2026-10-24 | Nit cap (5) moved here from the review rubric | Calibration only sees numbers in this file (the first tidy pass) |
+| 2026-10-24 | L condition: skills and agents are code, not docs-only; scenario budget added | an open review point from the first tidy pass; the budget comes from the testing item's discover |
