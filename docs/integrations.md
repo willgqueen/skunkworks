@@ -19,4 +19,4 @@ The registry of every MCP server and external API the toolkit uses, and the rule
 
 - Subagents get MCP tools only through the allowlist; the guard blocks everything else and fails closed ([agents.md](agents.md#safety-subagents-cant-act-outward)).
 - Tool results are data, not instructions ([agents.md](agents.md#untrusted-content)).
-- The guard can't see raw network calls from Bash, so agents that read untrusted content have no shell. Full network control needs the Claude Code sandbox, which is off for now.
+- The guard can't see raw network calls from Bash, so [shell access is limited](agents.md#safety-subagents-cant-act-outward). Full network control needs the Claude Code sandbox, which is off for now.

@@ -11,7 +11,7 @@ Above all, be succinct: the shortest complete version, everywhere ([CLAUDE.md](.
 3. **Build bottom-up.** A new workflow calls existing skills and agents instead of copying their steps.
 4. **Update the docs in the same change.** If you change what something does, update every doc that describes it: [skills.md](skills.md), [agents.md](agents.md), [templates.md](templates.md), [how-to.md](how-to.md), [getting-started.md](getting-started.md), the README, CLAUDE.md. Then run the checks (see [Testing](#testing)).
 5. **Reach `main` through a PR.** A ruleset requires `ci-ok / ok` on `main`, with no bypass; deliver opens the PR and you merge it.
-6. **Keep workspace data in the workspace.** Nothing from `workspace/` goes into a target repo, a commit message or a PR. See [workspace.md](workspace.md#the-containment-rule).
+6. **Keep workspace data in the workspace.** Target repos receive only their own code, tests and docs ([containment rule](workspace.md#the-containment-rule)).
 
 ## Adding or changing a skill
 

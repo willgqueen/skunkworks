@@ -78,12 +78,3 @@ In `item.md`, set `phase: <phase>`, `status: active` and `updated`, then add a l
 - Sizing keeps the process from slowing down routine work.
 
 Other methods considered: Shape Up (its *appetite* idea may be borrowed later as an effort budget per item), and RFC/ADR-only flows (ADRs are kept inside `develop.md`, and each project indexes its significant decisions in `architecture/decisions.md`).
-
-## Building blocks
-
-The toolkit is built bottom-up:
-
-1. **Foundation**: project `.claude/` setup, workspace, templates, this process. *(done)*
-2. **Atomic skills**: one job each, e.g. understand a repo, write a spec, plan, implement a task, test, review, open a PR.
-3. **Phase commands**: chain atomic skills for one phase and stop at its gate.
-4. **Orchestrator**: `/hq`, one entry point that shows the board, creates or resumes an item, and routes it through its phases.

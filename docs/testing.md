@@ -58,19 +58,19 @@ Each scenario starts in a new sandbox, made by its own sandbox command or the fi
 
 Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too. Refuse any [host change](criteria.md#building-blocks) a skill proposes (installing tools, changing system or user config), unless the scenario's Answer approves that change inside `DEST`; a run that makes any other is recorded as `failed`.
 
-| Skill | Scenarios | Covers deferred checks from |
-|---|---|---|
-| hq | [hq.md](../tests/scenarios/hq.md) | 010, 015 |
-| new-item | [new-item.md](../tests/scenarios/new-item.md) | |
-| split | [split.md](../tests/scenarios/split.md) | 016 |
-| discover | [discover.md](../tests/scenarios/discover.md) | 009, 016 |
-| define | [define.md](../tests/scenarios/define.md) | 016 |
-| develop | [develop.md](../tests/scenarios/develop.md) | 001, 016 |
-| deliver | [deliver.md](../tests/scenarios/deliver.md) | 003, 036 |
-| review | [review.md](../tests/scenarios/review.md) | 005, 023 |
-| repo-context | [repo-context.md](../tests/scenarios/repo-context.md) | |
-| ci | [ci.md](../tests/scenarios/ci.md) | |
-| integrate | [integrate.md](../tests/scenarios/integrate.md) | 013 |
+| Skill | Scenarios |
+|---|---|
+| hq | [hq.md](../tests/scenarios/hq.md) |
+| new-item | [new-item.md](../tests/scenarios/new-item.md) |
+| split | [split.md](../tests/scenarios/split.md) |
+| discover | [discover.md](../tests/scenarios/discover.md) |
+| define | [define.md](../tests/scenarios/define.md) |
+| develop | [develop.md](../tests/scenarios/develop.md) |
+| deliver | [deliver.md](../tests/scenarios/deliver.md) |
+| review | [review.md](../tests/scenarios/review.md) |
+| repo-context | [repo-context.md](../tests/scenarios/repo-context.md) |
+| ci | [ci.md](../tests/scenarios/ci.md) |
+| integrate | [integrate.md](../tests/scenarios/integrate.md) |
 
 ### 4. Record the result
 

@@ -4,7 +4,7 @@ The workspace is the local, gitignored planning area at `workspace/`. Every skil
 
 ## The containment rule
 
-**Nothing from the workspace is ever written into another repo.** When working on `~/repos/foo`, skills read foo's code and may change foo's code, but specs, plans, notes, findings and logs go to `workspace/projects/foo/`. Target repos only receive the deliverable itself: code, tests, and the docs that belong to that codebase.
+**Nothing from the workspace is ever written into another repo**, including its commit messages, PR text and branch names; item slugs and plain descriptions of the work are fine ([sensitive content](criteria.md#building-blocks)). When working on `~/repos/foo`, skills read foo's code and may change foo's code, but specs, plans, notes, findings and logs go to `workspace/projects/foo/`. Target repos only receive the deliverable itself: code, tests, and the docs that belong to that codebase.
 
 Claude Code always runs from the skunkworks root, so skills refer to the workspace by the relative path `workspace/`. Target repos are reached as additional directories.
 
@@ -39,43 +39,13 @@ A project doesn't need a repo yet. An idea can become a project first and gain a
 
 ## Items
 
-Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` replaces the corporate epic/feature/ticket/spike split. Kind is the type of work, regardless of size; the exact rules are in [criteria.md](criteria.md#kind).
+Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` (`initiative`, `feature`, `task` or `investigation`, in place of epic, feature, ticket and spike) is set by [criteria.md](criteria.md#kind). Nesting is done with the `parent` field, not nested folders, so items stay flat and easy to find.
 
-| Kind | Use for | Usually ends with |
-|---|---|---|
-| `initiative` | A multi-item effort; groups child items | All children done |
-| `feature` | New capability or a meaningful change in behavior | Merged code |
-| `task` | No new intended behavior: a bug fix, chore, refactor or dependency bump | Merged code |
-| `investigation` | A question to answer before committing to work | Findings and a recommendation |
-
-Nesting is done with the `parent` field, not nested folders, so items stay flat and easy to find.
-
-### `item.md` frontmatter
-
-```yaml
-id: "007"
-title: Short imperative title
-kind: feature          # initiative | feature | task | investigation
-status: active         # proposed | active | blocked | done | dropped
-phase: define          # discover | define | develop | deliver
-size: M                # S | M | L — decides which phases run (see process.md)
-parent:                # id of the parent initiative, if any
-depends_on: []         # ids that must be done first (keep rare)
-repos: []              # repo folder names this item touches
-created: 2026-10-21
-updated: 2026-10-21
-```
+The `item.md` frontmatter is defined by [templates/workspace/item.md](../templates/workspace/item.md).
 
 ## Phase docs
 
-Each phase writes one file, and the next phase reads it. See [process.md](process.md) for what each phase does. Templates live in [templates/workspace/](../templates/workspace/).
-
-| File | Phase | Contains |
-|---|---|---|
-| `discover.md` | Discover | Problem, context, constraints, open questions, options seen |
-| `define.md` | Define | Spec: goal, scope, non-goals, acceptance criteria |
-| `develop.md` | Develop | Approach, design decisions (ADR-style), task breakdown |
-| `deliver.md` | Deliver | Task checklist, progress log, PR links, outcome |
+Each phase writes one file, and the next phase reads it. [templates.md](templates.md) lists what each holds; [process.md](process.md) says what each phase does.
 
 ## Log vocabulary
 

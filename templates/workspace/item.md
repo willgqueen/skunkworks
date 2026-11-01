@@ -4,10 +4,10 @@ title: {{title}}
 kind: feature          # initiative | feature | task | investigation
 status: proposed       # proposed | active | blocked | done | dropped
 phase: discover        # discover | define | develop | deliver
-size: M                # S | M | L
+size: M                # S | M | L: decides which phases run
 parent:
 depends_on: []       # ids that must be done first
-repos: []
+repos: []             # repo folders this item touches
 created: {{date}}
 updated: {{date}}
 ---
