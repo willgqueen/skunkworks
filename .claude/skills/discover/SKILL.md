@@ -50,7 +50,7 @@ Start from [the template](../../../templates/workspace/discover.md) if the file 
 
 ## 6. Gate
 
-Report the path to discover.md, starting with the *In plain terms* text, then the problem in one or two lines, the options, and the numbered open questions. Ask the user to answer the questions and approve, or to request changes. **Stop here.**
+Open with the *In plain terms* text, then report the path to discover.md, the problem in one or two lines, the options, and the numbered open questions. Ask the user to answer the questions and approve, or to request changes. **Stop here.**
 
 **Whenever the user answers open questions** (all or some, with or without approval, alongside requested changes): write each answer next to its question in discover.md (`<question> → <answer>`) and log `- <date>: discover answers: <short summary>`. Answers never live only in chat.
 

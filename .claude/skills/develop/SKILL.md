@@ -61,7 +61,7 @@ Run the **split** skill on the task list.
 
 ## 7. Gate
 
-Report the path to develop.md, starting with the *In plain terms* text, then the approach in two or three lines, each decision with its choice, the number of tasks, and the risks. Ask the user to approve the design or request changes. **Stop here.**
+Open with the *In plain terms* text, then report the path to develop.md, the approach in two or three lines, each decision with its choice, the number of tasks, and the risks. Ask the user to approve the design or request changes. **Stop here.**
 
 When the user approves:
 - Add the log line `- <date>: develop approved` and set `phase: deliver`.
