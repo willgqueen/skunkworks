@@ -115,6 +115,18 @@ The Develop phase for L items: the design and the task list.
 | **Agents** | researcher and Plan |
 | **Gate** | Approve the design. Next: deliver |
 
+## architect
+
+Answers one architecture question with options, a weighted matrix and a sourced recommendation, using the [architecture references](architecture/README.md).
+
+| | |
+|---|---|
+| **Use when** | develop meets an [architectural decision](criteria.md#decisions), or you have a stack, datastore, service boundary or infrastructure question |
+| **Arguments** | `<project> [<item>] <question>` |
+| **Asks** | Only the constraints and quality attributes it can't find |
+| **Agents** | architect (drafts), then researcher, one per option, in parallel |
+| **Gate** | You choose an option (or "explain more"); nothing is recorded before. Within an item it's a develop.md decision entry; standalone, `architecture/decisions/<date>-<slug>.md` and a decisions.md row |
+
 ## deliver
 
 The Deliver phase: builds, verifies, publishes and closes. Resumable.
