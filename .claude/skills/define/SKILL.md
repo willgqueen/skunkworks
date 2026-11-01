@@ -36,6 +36,7 @@ Never invent requirements the user didn't ask for. If something would be nice to
 Start from [the template](../../../templates/workspace/define.md) if the file doesn't exist.
 
 - **Goal:** the outcome in one or two sentences, from the user's point of view.
+- **In plain terms:** a few sentences a non-specialist can follow: what changes and why. No jargon or item ids.
 - **In / Out of scope:** concrete bullets. *Out of scope* is where tempting adjacent work goes, so later phases don't pick it up.
 - **Acceptance criteria:** observable behavior, each one a [checkable criterion](../../../docs/criteria.md#work-units). Cover the main path, the important error and edge cases, and "existing behavior X is unchanged" where there's regression risk. Avoid vague words like "fast", "clean" or "robust" unless they come with a measure.
 - **Assumptions:** see step 3.
@@ -55,7 +56,7 @@ Run the **split** skill on the draft spec.
 
 ## 6. Gate
 
-Report the path to define.md, the goal, how many acceptance criteria there are, the main scope decisions, and every assumption. Ask the user to approve the spec or request changes. **Stop here.**
+Report the path to define.md, starting with the *In plain terms* text, then the goal, how many acceptance criteria there are, the main scope decisions, and every assumption. Ask the user to approve the spec or request changes. **Stop here.**
 
 When the user approves:
 - Add the log line `- <date>: define approved` and set `phase` to the next phase: **develop** for L features and tasks, **deliver** for M items, investigations and initiatives.

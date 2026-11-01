@@ -42,13 +42,15 @@ Work that turns up and is outside this item becomes a new item through the **new
 
 Start from [the template](../../../templates/workspace/discover.md) if the file doesn't exist, and fill the four sections from step 3.
 
+- **In plain terms:** a few sentences a non-specialist can follow: what changes and why. No jargon or item ids.
+
 ## 5. Update the item
 
 [Update the item](../../../docs/process.md#update-the-item) with phase `discover` (log `discover drafted` or `discover revised`).
 
 ## 6. Gate
 
-Report the path to discover.md, the problem in one or two lines, the options, and the numbered open questions. Ask the user to answer the questions and approve, or to request changes. **Stop here.**
+Report the path to discover.md, starting with the *In plain terms* text, then the problem in one or two lines, the options, and the numbered open questions. Ask the user to answer the questions and approve, or to request changes. **Stop here.**
 
 **Whenever the user answers open questions** (all or some, with or without approval, alongside requested changes): write each answer next to its question in discover.md (`<question> → <answer>`) and log `- <date>: discover answers: <short summary>`. Answers never live only in chat.
 
