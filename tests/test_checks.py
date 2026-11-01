@@ -1,5 +1,7 @@
 import pathlib
+import shutil
 import sys
+import tempfile
 import unittest
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -59,6 +61,20 @@ class LintSkills(unittest.TestCase):
     def test_planning_phase_placeholder(self):
         self.assertTrue(self.found("badlog: log line not in the vocabulary: deliver drafted"))
         self.assertFalse(self.found("discover drafted"))
+
+    def test_shared_steps_log_lines(self):
+        self.assertTrue(self.found("process.md#phase-skill-steps: log line not in the vocabulary: <phase> written"))
+        self.assertFalse(self.found("<phase> drafted"))
+        self.assertFalse(self.found("outside the section"))
+
+    def test_shared_steps_section_required(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp) / "lint"
+            shutil.copytree(self.root, root)
+            (root / "docs/process.md").write_text("# Process\n\n## Other\n\nLog `bogus written`.\n")
+            problems = lint_skills.lint(root)
+        self.assertIn("process.md: no ## Phase skill steps section", problems)
+        self.assertFalse(any("bogus written" in p for p in problems))
 
 
 if __name__ == "__main__":

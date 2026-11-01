@@ -51,6 +51,26 @@ Every open item's next step follows from its `item.md`: the frontmatter, plus th
 
 Two overrides: an item whose `depends_on` items aren't done or dropped waits on **items**, and an initiative's row adds `children: <done>/<total>`. The board orders items blocked → waiting on you → active → proposed, with children nested under their initiative.
 
+## Phase skill steps
+
+Steps shared by `/discover`, `/define` and `/develop` (`/deliver` uses *Resolve the item*); each skill links here and names its own steps. `<phase>` is the skill's phase.
+
+### Resolve the item
+
+Resolve the item from `<project> <id or slug>`. If no item is named and exactly one item in the conversation's project has `status: active`, use it; otherwise list the candidates and ask.
+
+### Revision
+
+If `<phase>` is already [drafted](criteria.md#phase-state), this is a [revision](criteria.md#phase-state), which says when to log `<phase> reopened`. Apply the user's feedback to the existing doc instead of rewriting it, redoing the skill's grounding and drafting steps only where the feedback needs it, then go to the skill's update-the-item step.
+
+### Size check
+
+If the phase's work hits a [re-size trigger](criteria.md#size), recommend re-sizing in your report, naming the condition, and follow that rule for the user's agreement and the log line.
+
+### Update the item
+
+In `item.md`, set `phase: <phase>`, `status: active` and `updated`, then add a log line: `- <date>: <phase> drafted` (or `<phase> revised`).
+
 ## Why this combination
 
 - Double Diamond keeps problem exploration apart from solution work, which matters most for ambiguous items.

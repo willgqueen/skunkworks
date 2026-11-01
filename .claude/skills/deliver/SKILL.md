@@ -14,7 +14,7 @@ The target repo receives only code, tests and docs that belong to it. Nothing fr
 
 ## 1. Load and check readiness
 
-- Resolve the item from `<project> <id or slug>`. If no item is named and exactly one item in the conversation's project has `status: active`, use it; otherwise list the candidates and ask.
+- [Resolve the item](../../../docs/process.md#resolve-the-item).
 - Read `project.md`, `item.md`, `define.md`, `develop.md` and `deliver.md`, where they exist.
 - **Ready** means:
   - S: always

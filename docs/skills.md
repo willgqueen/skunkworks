@@ -2,7 +2,7 @@
 
 A reference for every skill in [`.claude/skills/`](../.claude/skills/). Each one is invoked as `/<name>`, and Claude also picks one up on its own when a request matches its description. For task-based recipes, see [how-to.md](how-to.md). For the rules skills apply, see [process.md](process.md) and [criteria.md](criteria.md).
 
-Every phase skill follows the same shape: **load → ground → work → write → update item → gate.** It stops at its gate until you approve.
+Every phase skill follows the same shape: **load → ground → work → write → update item → gate**, with its [shared steps](process.md#phase-skill-steps) written once. It stops at its gate until you approve.
 
 ## hq
 

@@ -14,7 +14,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - `.github/workflows/`, `ci/templates/`, `renovate.json`: the shared CI workflows, caller templates and Renovate config (docs/ci.md)
 - `templates/repo/`: templates for what goes into target repos (commit messages, PR descriptions)
 - `docs/vision.md`: what this repo is for
-- `docs/process.md`: the method (phases, gates, sizing)
+- `docs/process.md`: the method (phases, gates, sizing, shared phase skill steps)
 - `docs/criteria.md`: every condition skills branch on, with calibration rules
 - `docs/agents.md`: the agent roster, parallelism and the guard on subagents
 - `docs/workspace.md`: the workspace layout and item schema
