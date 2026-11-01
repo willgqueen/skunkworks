@@ -10,7 +10,7 @@ Carry the item to its [definition of done](../../../docs/criteria.md#definitions
 
 Every condition below (readiness, definitions of done, merge rule, deferral, sensitive content, host change, tasks, re-size) is defined in [docs/criteria.md](../../../docs/criteria.md). Apply those definitions exactly.
 
-Nothing from the workspace goes into the target repo, including commits, PRs, branches and code ([containment rule](../../../docs/workspace.md#the-containment-rule)).
+The target repo receives only its own code, tests and docs; nothing else from the workspace goes into its commits, PRs or branches ([containment rule](../../../docs/workspace.md#the-containment-rule)).
 
 ## 1. Load and check readiness
 

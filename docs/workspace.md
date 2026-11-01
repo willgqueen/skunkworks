@@ -4,7 +4,7 @@ The workspace is the local, gitignored planning area at `workspace/`. Every skil
 
 ## The containment rule
 
-**Nothing from the workspace is ever written into another repo**, including its commit messages, PR text and branch names. When working on `~/repos/foo`, skills read foo's code and may change foo's code, but specs, plans, notes, findings and logs go to `workspace/projects/foo/`. Target repos only receive the deliverable itself: code, tests, and the docs that belong to that codebase.
+**Nothing from the workspace is ever written into another repo**, including its commit messages, PR text and branch names; item slugs and plain descriptions of the work are fine ([sensitive content](criteria.md#building-blocks)). When working on `~/repos/foo`, skills read foo's code and may change foo's code, but specs, plans, notes, findings and logs go to `workspace/projects/foo/`. Target repos only receive the deliverable itself: code, tests, and the docs that belong to that codebase.
 
 Claude Code always runs from the skunkworks root, so skills refer to the workspace by the relative path `workspace/`. Target repos are reached as additional directories.
 
@@ -39,7 +39,7 @@ A project doesn't need a repo yet. An idea can become a project first and gain a
 
 ## Items
 
-Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` (`initiative`, `feature`, `task` or `investigation`) is the type of work, regardless of size; the rules are in [criteria.md](criteria.md#kind). Nesting is done with the `parent` field, not nested folders, so items stay flat and easy to find.
+Every unit of work is an **item**, with the same folder shape whatever its size. Its `kind` (`initiative`, `feature`, `task` or `investigation`, in place of epic, feature, ticket and spike) is set by [criteria.md](criteria.md#kind). Nesting is done with the `parent` field, not nested folders, so items stay flat and easy to find.
 
 The `item.md` frontmatter is defined by [templates/workspace/item.md](../templates/workspace/item.md).
 

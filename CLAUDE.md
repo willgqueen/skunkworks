@@ -17,13 +17,13 @@ The control center for orchestrating software work (ideation → planning → ar
 - `docs/process.md`: the method (phases, gates, sizing, shared phase skill steps)
 - `docs/criteria.md`: every condition skills branch on, with calibration rules
 - `docs/agents.md`: the agent roster, parallelism and the guard on subagents
-- `docs/workspace.md`: the workspace layout and item schema
+- `docs/workspace.md`: the workspace layout and log vocabulary
 - `workspace/`: **gitignored** local planning data
 
 ## Rules
 
 - **Be succinct and direct in everything.** Write the shortest complete version of code, comments, docs, specs and replies. Comment only where the code isn't self-explanatory. No restating, hedging or filler.
-- Nothing from `workspace/` is ever written into a target repo ([containment rule](docs/workspace.md#the-containment-rule)).
+- Specs, plans, notes and logs live only in `workspace/`; target repos receive only their own code, tests and docs ([containment rule](docs/workspace.md#the-containment-rule)).
 - When working in a target repo, use absolute paths (`git -C <repo>`, or `cd` in the same command), and follow that repo's own `CLAUDE.md`. Read it explicitly, because files in additional directories may not load automatically.
 - Build bottom-up: a new composite workflow should call existing skills, not duplicate them.
 - Skills that create workspace files start from `templates/workspace/`.
