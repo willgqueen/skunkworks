@@ -45,7 +45,7 @@ For every decision, record whether the user took the recommendation (`n/a` for m
 
 Start from [the template](../../../templates/workspace/develop.md) if the file doesn't exist.
 
-- **In plain terms:** a few sentences a non-specialist can follow: what changes and why. No jargon or item ids.
+- **[In plain terms](../../../docs/process.md#in-plain-terms)**.
 - **Approach:** the design as decided: what changes where, and how the pieces fit together.
 - **Decisions:** one entry per decision, significant and minor, with its kind, context, options considered, choice, whether the recommendation was taken, and consequences.
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
@@ -61,7 +61,7 @@ Run the **split** skill on the task list.
 
 ## 7. Gate
 
-Open with the *In plain terms* text, then report the path to develop.md, the approach in two or three lines, each decision with its choice, the number of tasks, and the risks. Ask the user to approve the design or request changes. **Stop here.**
+Open with [In plain terms](../../../docs/process.md#in-plain-terms), then report the path to develop.md, the approach in two or three lines, each decision with its choice, the number of tasks, and the risks. Ask the user to approve the design or request changes. **Stop here.**
 
 When the user approves:
 - Add the log line `- <date>: develop approved` and set `phase: deliver`.
