@@ -9,7 +9,8 @@ The roster of agents that skills hand work to, and how they run in parallel. The
 | [implementer](../.claude/agents/implementer.md) | custom | Builds one deliver task in a worktree, runs its checks, reports. Never commits. | sonnet · high | Read, Grep, Glob, Edit, Write, Bash | deliver |
 | [reviewer](../.claude/agents/reviewer.md) | custom | Finds or refutes review findings against the [rubric](review-rubric.md), per its brief. | opus · high | Read, Grep, Glob | review (finders and the refute pass) |
 | [verifier](../.claude/agents/verifier.md) | custom | Checks assigned ACs from check output and the code; reports each as verified, failed or pending. | sonnet · medium | Read, Grep, Glob | deliver, in parallel groups |
-| [researcher](../.claude/agents/researcher.md) | custom | Answers one research question from code, docs and the web, with sources. | sonnet · medium | Read, Grep, Glob, WebFetch, WebSearch | discover, develop, integrate, hq tidy |
+| [researcher](../.claude/agents/researcher.md) | custom | Answers one research question from code, docs and the web, with sources. | sonnet · medium | Read, Grep, Glob, WebFetch, WebSearch | discover, develop, integrate, hq tidy, architect |
+| [architect](../.claude/agents/architect.md) | custom | Drafts architecture options with a boring baseline, the weighted matrix and the recommendation per [decision-matrix.md](architecture/decision-matrix.md); lists the facts to check. | opus · high | Read, Grep, Glob | architect |
 | Explore | built-in | Fast read-only search across a codebase; returns conclusions. | built-in default | read-only | define, discover, develop, repo-context |
 | Plan | built-in | Drafts implementation options for a broad design. | built-in default | read-only | develop |
 
@@ -21,6 +22,7 @@ Skills fan work out to parallel agents only when the [fan-out rule](criteria.md#
 |---|---|---|
 | discover | Research questions (researcher, Explore) | The gate |
 | develop | Research questions; Plan drafts | Decisions with the user, the gate |
+| architect | Fact checks (one researcher per option) | The draft (architect agent), the user's choice, recording |
 | deliver | AC verification (verifier groups) | Tasks (one commit each, in order), push, PR, merge |
 
 Agents started from the main session run in the background, and their results come back as notifications. The main session merges the results and owns every gate.
