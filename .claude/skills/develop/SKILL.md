@@ -1,6 +1,6 @@
 ---
 name: develop
-description: Run the Develop phase for an L workspace item. Turn its approved spec into develop.md, with a plain-terms summary, the approach, design decisions made together with the user, an ordered task list that covers every acceptance criterion, and the risks. Then stop for approval. Use when an L item is in or entering the develop phase, when the user asks to design, architect or plan the implementation of an item, or to revise an existing develop.md.
+description: Run the Develop phase for an L workspace item. Turn its approved spec into develop.md, with a plain-terms summary, the approach, design decisions made together with the user (architectural ones through /architect), an ordered task list that covers every acceptance criterion, and the risks. Then stop for approval. Use when an L item is in or entering the develop phase, when the user asks to design, architect or plan the implementation of an item, or to revise an existing develop.md.
 argument-hint: <project> <item id or slug>
 ---
 
@@ -18,7 +18,7 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record and every task it affects, so the doc stays consistent.
+- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record (an architectural one through `/architect` again) and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 
@@ -36,7 +36,7 @@ For a broad design, a Plan subagent may draft the options. When research is big 
 
 ## 4. Decide with the user
 
-- **Significant decisions:** put each one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
+- **Significant decisions:** an [architectural](../../../docs/criteria.md#decisions) one goes through `/architect <project> <item> <question>`, which puts it to the user and writes its develop.md entry. Put each other one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
 - **Minor decisions:** decide, following existing repo patterns, and record them. The user can still change them at the gate.
 
 For every decision, record whether the user took the recommendation (`n/a` for minor ones). This feeds [calibration](../../../docs/criteria.md#calibration).
@@ -47,7 +47,7 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 
 - **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **Approach:** the design as decided: what changes where, and how the pieces fit together.
-- **Decisions:** one entry per decision, significant and minor, with its kind, context, options considered, choice, whether the recommendation was taken, and consequences.
+- **Decisions:** one entry per decision, significant and minor (keeping the entries `/architect` wrote), with its kind, context, options considered, choice, whether the recommendation was taken, and consequences.
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
 - **Risks:** what could go wrong, each with how it's mitigated or how we'll notice.
 
