@@ -112,6 +112,7 @@ The Develop phase for L items: the design and the task list.
 | **Use when** | An L feature or task has an approved spec |
 | **Arguments** | `<project> <item>` |
 | **Asks** | Every [significant decision](criteria.md#decisions), with options and a recommendation |
+| **Calls** | architect, for each [architectural decision](criteria.md#decisions) |
 | **Agents** | researcher and Plan |
 | **Gate** | Approve the design. Next: deliver |
 

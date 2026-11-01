@@ -21,6 +21,9 @@ Open its folder: `workspace/projects/<project>/items/<NNN>-<slug>/`. `item.md` h
 ### Start new work
 `/hq <description>` or `/new-item <project> <description>`. You get a numbered item with its kind, size and first phase, and Claude asks before starting.
 
+### Decide an architecture question
+`/architect <project> [<item>] <question>`. You get options with a boring baseline, a matrix and a recommendation; your choice goes into the item's develop.md or, without an item, `architecture/decisions/`.
+
 ### Start a project that has no repo yet
 `/new-item <new-project-name> <description>`. It creates the project with "Repos: none yet". Run `/repo-context` once the repo exists.
 

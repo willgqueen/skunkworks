@@ -34,6 +34,7 @@ A walkthrough is in [docs/getting-started.md](docs/getting-started.md).
 | `/discover` | Maps the problem: context, options, open questions |
 | `/define` | Writes the spec: goal, scope, acceptance criteria |
 | `/develop` | Designs L items with you: decisions, ordered tasks, risks |
+| `/architect` | Answers an architecture question: options with a boring baseline, a matrix, a recommendation you choose from |
 | `/deliver` | Builds in a worktree, verifies, opens the PR, reviews, merges per the rules, closes |
 
 Details for each: [docs/skills.md](docs/skills.md).

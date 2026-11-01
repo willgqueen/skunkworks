@@ -66,6 +66,7 @@ Give the answers as written. Anything the skill does that the scenario doesn't e
 | discover | [discover.md](../tests/scenarios/discover.md) |
 | define | [define.md](../tests/scenarios/define.md) |
 | develop | [develop.md](../tests/scenarios/develop.md) |
+| architect | [architect.md](../tests/scenarios/architect.md) |
 | deliver | [deliver.md](../tests/scenarios/deliver.md) |
 | review | [review.md](../tests/scenarios/review.md) |
 | repo-context | [repo-context.md](../tests/scenarios/repo-context.md) |
