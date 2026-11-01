@@ -61,11 +61,15 @@ Resolve the item from `<project> <id or slug>`. If no item is named and exactly 
 
 ### Revision
 
-If `<phase>` is already [drafted](criteria.md#phase-state), this is a [revision](criteria.md#phase-state), which says when to log `<phase> reopened`. Apply the user's feedback to the existing doc instead of rewriting it, redoing the skill's grounding and drafting steps only where the feedback needs it, then go to the skill's update-the-item step.
+If `<phase>` is already [drafted](criteria.md#phase-state), this is a [revision](criteria.md#phase-state), which says when to log `<phase> reopened`. Apply the user's feedback to the existing doc instead of rewriting it, redoing the skill's grounding and drafting steps only where the feedback needs it and keeping [In plain terms](#in-plain-terms) current, then go to the skill's update-the-item step.
 
 ### Size check
 
 If the phase's work hits a [re-size trigger](criteria.md#size), recommend re-sizing in your report, naming the condition, and follow that rule for the user's agreement and the log line.
+
+### In plain terms
+
+Each phase doc's *In plain terms* section, where its template puts it: a few sentences a non-specialist can follow, with no jargon or item ids. Discover says what's wrong and what's being explored, deciding nothing; define and develop say what changes and why. Keep it current whenever the doc changes, and open the gate report with it.
 
 ### Update the item
 

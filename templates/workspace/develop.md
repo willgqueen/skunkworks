@@ -1,5 +1,8 @@
 # Develop: {{title}}
 
+## In plain terms
+<!-- docs/process.md#in-plain-terms: what changes and why, in everyday words. -->
+
 ## Approach
 <!-- The overall design in a few paragraphs or bullets: what changes where, and how the pieces fit. -->
 

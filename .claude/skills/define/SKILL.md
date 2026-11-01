@@ -1,6 +1,6 @@
 ---
 name: define
-description: Run the Define phase for a workspace item. Turn its intent (and discover.md, if any) into a spec in define.md with goal, scope, acceptance criteria and assumptions, then stop for approval. Use when an item is in or entering the define phase, when the user asks to spec, scope or define a piece of work, or to revise an existing define.md.
+description: Run the Define phase for a workspace item. Turn its intent (and discover.md, if any) into a spec in define.md with goal, a plain-terms summary, scope, acceptance criteria and assumptions, then stop for approval. Use when an item is in or entering the define phase, when the user asks to spec, scope or define a piece of work, or to revise an existing define.md.
 argument-hint: <project> <item id or slug>
 ---
 
@@ -36,6 +36,7 @@ Never invent requirements the user didn't ask for. If something would be nice to
 Start from [the template](../../../templates/workspace/define.md) if the file doesn't exist.
 
 - **Goal:** the outcome in one or two sentences, from the user's point of view.
+- **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **In / Out of scope:** concrete bullets. *Out of scope* is where tempting adjacent work goes, so later phases don't pick it up.
 - **Acceptance criteria:** observable behavior, each one a [checkable criterion](../../../docs/criteria.md#work-units). Cover the main path, the important error and edge cases, and "existing behavior X is unchanged" where there's regression risk. Avoid vague words like "fast", "clean" or "robust" unless they come with a measure.
 - **Assumptions:** see step 3.
@@ -55,7 +56,7 @@ Run the **split** skill on the draft spec.
 
 ## 6. Gate
 
-Report the path to define.md, the goal, how many acceptance criteria there are, the main scope decisions, and every assumption. Ask the user to approve the spec or request changes. **Stop here.**
+Open with [In plain terms](../../../docs/process.md#in-plain-terms), then report the path to define.md, the goal, how many acceptance criteria there are, the main scope decisions, and every assumption. Ask the user to approve the spec or request changes. **Stop here.**
 
 When the user approves:
 - Add the log line `- <date>: define approved` and set `phase` to the next phase: **develop** for L features and tasks, **deliver** for M items, investigations and initiatives.
