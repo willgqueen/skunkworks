@@ -36,7 +36,7 @@ Never invent requirements the user didn't ask for. If something would be nice to
 Start from [the template](../../../templates/workspace/define.md) if the file doesn't exist.
 
 - **Goal:** the outcome in one or two sentences, from the user's point of view.
-- **[In plain terms](../../../docs/process.md#in-plain-terms)**.
+- **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **In / Out of scope:** concrete bullets. *Out of scope* is where tempting adjacent work goes, so later phases don't pick it up.
 - **Acceptance criteria:** observable behavior, each one a [checkable criterion](../../../docs/criteria.md#work-units). Cover the main path, the important error and edge cases, and "existing behavior X is unchanged" where there's regression risk. Avoid vague words like "fast", "clean" or "robust" unless they come with a measure.
 - **Assumptions:** see step 3.

@@ -1,6 +1,6 @@
 ---
 name: develop
-description: Run the Develop phase for an L workspace item. Turn its approved spec into develop.md, with the approach, design decisions made together with the user, an ordered task list that covers every acceptance criterion, and the risks. Then stop for approval. Use when an L item is in or entering the develop phase, when the user asks to design, architect or plan the implementation of an item, or to revise an existing develop.md.
+description: Run the Develop phase for an L workspace item. Turn its approved spec into develop.md, with a plain-terms summary, the approach, design decisions made together with the user, an ordered task list that covers every acceptance criterion, and the risks. Then stop for approval. Use when an L item is in or entering the develop phase, when the user asks to design, architect or plan the implementation of an item, or to revise an existing develop.md.
 argument-hint: <project> <item id or slug>
 ---
 
@@ -45,7 +45,7 @@ For every decision, record whether the user took the recommendation (`n/a` for m
 
 Start from [the template](../../../templates/workspace/develop.md) if the file doesn't exist.
 
-- **[In plain terms](../../../docs/process.md#in-plain-terms)**.
+- **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **Approach:** the design as decided: what changes where, and how the pieces fit together.
 - **Decisions:** one entry per decision, significant and minor, with its kind, context, options considered, choice, whether the recommendation was taken, and consequences.
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
