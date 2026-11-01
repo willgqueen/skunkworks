@@ -12,9 +12,9 @@ In [`templates/workspace/`](../templates/workspace/). These end up in the gitign
 | [overview.md](../templates/workspace/architecture/overview.md) | `projects/<project>/architecture/overview.md` | repo-context (creates; refreshes What it is), develop (creates if missing; matches approved designs) | What the system is, C4 context and container diagrams, top quality attributes |
 | [decisions.md](../templates/workspace/architecture/decisions.md) | `projects/<project>/architecture/decisions.md` | repo-context or develop (creates), develop (sets each item's rows) | One row per significant decision: date, decision, choice, item |
 | [item.md](../templates/workspace/item.md) | `items/<NNN>-<slug>/item.md` | new-item | Frontmatter (kind, status, phase, size, parent, repos, dates), Intent, Log |
-| [discover.md](../templates/workspace/discover.md) | the item's `discover.md` | new-item, discover | Problem, Context, Options seen, Open questions |
-| [define.md](../templates/workspace/define.md) | the item's `define.md` | new-item, define | Goal, scope, acceptance criteria, assumptions, approach (M) |
-| [develop.md](../templates/workspace/develop.md) | the item's `develop.md` | develop | Approach, decisions, tasks with the ACs they serve, risks |
+| [discover.md](../templates/workspace/discover.md) | the item's `discover.md` | new-item, discover | Problem, In plain terms, Context, Options seen, Open questions |
+| [define.md](../templates/workspace/define.md) | the item's `define.md` | new-item, define | Goal, In plain terms, scope, acceptance criteria, assumptions, approach (M) |
+| [develop.md](../templates/workspace/develop.md) | the item's `develop.md` | develop | In plain terms, approach, decisions, tasks with the ACs they serve, risks |
 | [deliver.md](../templates/workspace/deliver.md) | the item's `deliver.md` | new-item (S items), deliver | Plan, tasks, progress, verification per AC, review, CI, outcome |
 
 new-item creates only the starting phase's doc. Later phase skills create theirs when they run.

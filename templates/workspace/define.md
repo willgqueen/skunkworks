@@ -3,6 +3,9 @@
 ## Goal
 <!-- One or two sentences: the outcome, not the implementation. -->
 
+## In plain terms
+<!-- A few sentences a non-specialist can follow: what changes and why. No jargon or item ids. -->
+
 ## In scope
 
 ## Out of scope

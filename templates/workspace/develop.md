@@ -1,5 +1,8 @@
 # Develop: {{title}}
 
+## In plain terms
+<!-- A few sentences a non-specialist can follow: what changes and why. No jargon or item ids. -->
+
 ## Approach
 <!-- The overall design in a few paragraphs or bullets: what changes where, and how the pieces fit. -->
 
