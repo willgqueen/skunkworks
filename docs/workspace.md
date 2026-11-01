@@ -18,7 +18,9 @@ workspace/
       project.md              # what it is, repo path(s), stack, learned conventions
       architecture/
         overview.md           # what it is, C4 context and containers, top quality attributes
-        decisions.md          # index of significant decisions, by item id
+        decisions.md          # index of significant decisions, by item id or standalone record
+        decisions/
+          <date>-<slug>.md    # standalone /architect records
       items/
         <NNN>-<slug>/         # one unit of work, numbered per project
           item.md             # metadata, summary, status log

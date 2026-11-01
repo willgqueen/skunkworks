@@ -89,6 +89,7 @@ Kind is the type of work, regardless of size.
   - there are ≥2 workable options and the choice changes other tasks or what the user sees
   - it brings in a dependency, pattern or abstraction the repo doesn't already use
 - **Minor decision** (decide and record): follows an existing repo pattern, stays inside one task, and is cheap to change later.
+- **Architectural decision:** a significant decision that changes the stack (language, framework, runtime), a datastore, a service boundary or infrastructure. It goes through `/architect`.
 - When it's unclear which applies, treat it as significant.
 
 ## Gaps
