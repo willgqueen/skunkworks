@@ -17,8 +17,9 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
 - Check that the item belongs here:
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
+  - **initiative**: Develop is skipped. Its children carry their own design.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record (an architectural one back through `/architect`, which [re-enters](../architect/SKILL.md#re-runs) where the change needs) and every task it affects, so the doc stays consistent.
+- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision or is an architecture question, update or add the decision's record (an architectural one through `/architect` in step 4, which [re-enters](../architect/SKILL.md#re-runs) where the change needs), the Approach and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 
@@ -47,7 +48,7 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 
 - **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **Approach:** the design as decided: what changes where, and how the pieces fit together.
-- **Decisions:** one entry per decision, significant and minor (keeping the entries `/architect` wrote), with its kind, context, options considered, choice, whether the recommendation was taken, and consequences.
+- **Decisions:** one entry per decision, significant and minor (keeping the entries `/architect` wrote), with its kind, context, options considered, choice, whether the recommendation was taken, and consequences; an architectural one also has its drivers, matrix and sources.
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
 - **Risks:** what could go wrong, each with how it's mitigated or how we'll notice.
 

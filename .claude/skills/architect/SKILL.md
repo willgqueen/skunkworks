@@ -13,7 +13,7 @@ Every condition below (architectural and significant decisions, boring technolog
 ## 1. Load
 
 - Read `workspace/projects/<project>/project.md`, and `architecture/overview.md` and `architecture/decisions.md` if they exist.
-- With an item, [resolve it](../../../docs/process.md#resolve-the-item). It must be an L item whose develop isn't [approved](../../../docs/criteria.md#phase-state); otherwise say so and stop. An M item has no develop.md; an approved design is changed by revising it with `/develop`, which logs `develop reopened`. Read its `define.md` and `develop.md`.
+- Use an item only when one is named, [resolved](../../../docs/process.md#resolve-the-item) without its active-item fallback, so a call without one stays standalone. If develop didn't call this, run the **develop** skill on the item with the question as its feedback, and stop: develop checks the item belongs there and routes the decision back here. When develop calls it, read the item's `define.md` and `develop.md`.
 - If this decision is already recorded (the item's develop.md entry, or a standalone record for the same question), it's a [re-run](#re-runs).
 
 ## 2. Constraints and quality attributes
@@ -22,13 +22,13 @@ From the question, project.md (*Stack* is the boring baseline's starting point),
 - the constraints (stack, team, deadline, budget, hosting, what's out of scope)
 - the quality attributes, ranked, each with a testable scenario ([quality-attributes.md](../../../docs/architecture/quality-attributes.md))
 
-Within one develop run, reuse the constraints and ranked attributes an earlier call recorded for the item (its entries' *Drivers*). Ask the user only for what's still missing.
+With an item, reuse the constraints and ranked attributes its develop.md entries record (their *Drivers*). Ask the user only for what's still missing.
 
 ## 3. Draft
 
 Give the `architect` agent the question, the constraints, the ranked attributes, project.md *Stack* and the docs/architecture/ guides that apply, applying the model policy.
 
-Check its output against [decision-matrix.md](../../../docs/architecture/decision-matrix.md)'s *Required* and *Recommendation*: a boring baseline, 2–4 options, weights summing to 100, the recommendation is the highest total, and its confidence fits the sensitivity result. Check its *Coverage* line. On a gap, re-run it with the gap named, up to the [re-run limit](../../../docs/criteria.md#complete-coverage); then report the result as incomplete.
+Check its output against [decision-matrix.md](../../../docs/architecture/decision-matrix.md)'s [*Required*](../../../docs/architecture/decision-matrix.md#required) and [*Recommendation*](../../../docs/architecture/decision-matrix.md#recommendation) and the [template](../../../docs/architecture/decision-matrix.md#template)'s weights rule, and check its *Coverage* line. On a gap, re-run it with the gap named, up to the [re-run limit](../../../docs/criteria.md#complete-coverage); then report the result as incomplete.
 
 ## 4. Check facts
 
@@ -53,13 +53,11 @@ The user chooses. Nothing is recorded before that. If they choose none, record n
 
 ## 7. Record
 
-If `workspace/projects/<project>/architecture/` is missing, create it with `overview.md` and `decisions.md` from [templates/workspace/architecture/](../../../templates/workspace/architecture/).
-
-- **With an item:** write the decision entry in develop.md (start from [the template](../../../templates/workspace/develop.md) if it doesn't exist), replacing any existing entry for this decision: Kind `significant`, context, *Drivers* (constraints and ranked attributes with their weights), options considered (baseline labelled, each with its total), choice, Recommendation taken yes/no, consequences (confidence, door, tokens and their justification, regret scenario) and *Sources* (each checked fact's citation, unverified ones marked). Write nothing else: develop's gate adds the decisions.md row and updates overview.md when the design is approved.
-- **Standalone:** write `architecture/decisions/<date>-<slug>.md` (slug: kebab-case, at most five words, from the question) from [the template](../../../templates/workspace/architecture/decision.md), mapping the matrix to its sections as [decision-matrix.md](../../../docs/architecture/decision-matrix.md#as-an-adr-madr) says, with [In plain terms](../../../docs/process.md#in-plain-terms), whether the recommendation was taken, and the sources in *More Information*. Add its decisions.md row: Date, Decision, Choice, and Item a link to `decisions/<date>-<slug>.md`. Update overview.md's *Context*, *Containers* or *Quality attributes* where the decision changes them.
+- **With an item:** write the decision's entry in develop.md (start from [the template](../../../templates/workspace/develop.md) if it doesn't exist) as a `### D<n>:` entry in the template's format, with every architectural-decision bullet, and its Kind line written bare (`- **Kind:** significant`), replacing any existing entry for this decision. Write nothing else: develop's gate adds the decisions.md row and updates overview.md when the design is approved.
+- **Standalone:** if `workspace/projects/<project>/architecture/` is missing, create it with `overview.md` and `decisions.md` from [templates/workspace/architecture/](../../../templates/workspace/architecture/). Write `architecture/decisions/<date>-<slug>.md` (slug per [new-item's rule](../new-item/SKILL.md#3-create), from the question) from [the template](../../../templates/workspace/architecture/decision.md), mapping the matrix to its sections as [decision-matrix.md](../../../docs/architecture/decision-matrix.md#as-an-adr-madr) says, with [In plain terms](../../../docs/process.md#in-plain-terms), whether the recommendation was taken, and the sources in *More Information*. Add its decisions.md row: Date, Decision, Choice, and Item a link to `decisions/<date>-<slug>.md`. Update overview.md's *Context*, *Containers* or *Quality attributes* where the decision changes them.
 
 Report the paths written; with an item, say that its decisions.md row comes at develop's approval.
 
 ## Re-runs
 
-A re-run replaces, never appends: with an item, the develop.md entry for the decision; standalone, the same record and its decisions.md row. A changed choice among the recorded options re-enters at step 6 with the recorded options and matrix. Only changed constraints or attributes restart at step 2.
+A re-run replaces, never appends: with an item, the develop.md entry for the decision; standalone, the same record and its decisions.md row. A changed choice among the recorded options re-enters at step 6 with the matrix the entry or record holds. A new option, or facts to re-check, restart at step 3 with the recorded drivers. Only changed constraints or attributes restart at step 2.

@@ -53,7 +53,7 @@ Two overrides: an item whose `depends_on` items aren't done or dropped waits on 
 
 ## Phase skill steps
 
-Steps shared by `/discover`, `/define` and `/develop` (`/deliver` uses *Resolve the item*); each skill links here and names its own steps. `<phase>` is the skill's phase.
+Steps shared by `/discover`, `/define` and `/develop` (`/deliver` and `/architect` use *Resolve the item*); each skill links here and names its own steps. `<phase>` is the skill's phase.
 
 ### Resolve the item
 

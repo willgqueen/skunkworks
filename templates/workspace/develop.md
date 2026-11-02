@@ -11,10 +11,13 @@
 ### D1: <decision>
 - **Kind:** significant | minor
 - **Context:**
+- **Drivers:** (architectural decisions) the constraints, and the ranked quality attributes with their weights
 - **Options considered:**
+- **Matrix:** (architectural decisions) every score with its rationale, the totals, the sensitivity result, and each option's door, innovation tokens (each justified) and regret scenario
 - **Choice:**
 - **Recommendation taken:** yes | no | n/a (minor)
 - **Consequences:**
+- **Sources:** (architectural decisions) each fact as "checked <date> at <URL>", or **unverified**
 
 ## Tasks
 <!-- Ordered by dependency. Each is a task as defined in docs/criteria.md#work-units. ACn = the nth acceptance criterion in define.md. -->
