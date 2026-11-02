@@ -7,17 +7,17 @@
 <!-- The overall design in a few paragraphs or bullets: what changes where, and how the pieces fit. -->
 
 ## Decisions
-<!-- One per decision. Significant decisions are made with the user; minor ones by the skill. -->
+<!-- One per decision. Significant decisions are made with the user; minor ones by the skill. Architectural decisions (/architect) fill Drivers (the constraints, and the ranked quality attributes with their weights), Matrix (every score with its rationale, the totals, the sensitivity result, each option's door and innovation tokens (each justified), and the recommendation's regret scenario) and Sources (each fact as "checked <date> at <URL>", or **unverified**); other entries omit those bullets. -->
 ### D1: <decision>
 - **Kind:** significant | minor
 - **Context:**
-- **Drivers:** (architectural decisions) the constraints, and the ranked quality attributes with their weights
+- **Drivers:**
 - **Options considered:**
-- **Matrix:** (architectural decisions) every score with its rationale, the totals, the sensitivity result, and each option's door, innovation tokens (each justified) and regret scenario
+- **Matrix:**
 - **Choice:**
 - **Recommendation taken:** yes | no | n/a (minor)
 - **Consequences:**
-- **Sources:** (architectural decisions) each fact as "checked <date> at <URL>", or **unverified**
+- **Sources:**
 
 ## Tasks
 <!-- Ordered by dependency. Each is a task as defined in docs/criteria.md#work-units. ACn = the nth acceptance criterion in define.md. -->

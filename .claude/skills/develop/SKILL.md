@@ -16,8 +16,7 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
 - Read `project.md`, `item.md`, `discover.md` if it exists, and `define.md`.
 - Check that the item belongs here:
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
-  - **investigation**: Develop is skipped. It goes from define to deliver.
-  - **initiative**: Develop is skipped. Its children carry their own design.
+  - **investigation** or **initiative**: Develop is skipped ([sizing](../../../docs/process.md#sizing)).
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
 - If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision or is an architecture question, update or add the decision's record (an architectural one through `/architect` in step 4, which [re-enters](../architect/SKILL.md#re-runs) where the change needs), the Approach and every task it affects, so the doc stays consistent.
 
@@ -29,7 +28,7 @@ For each repo in `repos`, read that repo's `CLAUDE.md`, then the code the design
 
 ## 3. Shape the approach
 
-Draft the overall approach, then list every decision it depends on. Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
+Draft the overall approach, then list every decision it depends on, plus any question marked "from /architect" (fresh run or revision). Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
 
 For a broad design, a Plan subagent may draft the options. When research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), independent research questions (how an area works, what a library supports) go to `researcher` agents, each with the list of what it must cover. Check their *Coverage* lines ([complete coverage](../../../docs/criteria.md#complete-coverage)). Run them in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Their output is input to you, not the decision.
 
@@ -37,7 +36,7 @@ For a broad design, a Plan subagent may draft the options. When research is big 
 
 ## 4. Decide with the user
 
-- **Significant decisions:** an [architectural](../../../docs/criteria.md#decisions) one goes through `/architect <project> <item> <question>`, which puts it to the user and writes its develop.md entry. Put each other one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
+- **Significant decisions:** an [architectural](../../../docs/criteria.md#decisions) one goes through `/architect <project> <item> <question>`, saying develop is the caller, which puts it to the user and writes its develop.md entry. Put each other one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
 - **Minor decisions:** decide, following existing repo patterns, and record them. The user can still change them at the gate.
 
 For every decision, record whether the user took the recommendation (`n/a` for minor ones). This feeds [calibration](../../../docs/criteria.md#calibration).
@@ -48,7 +47,7 @@ Start from [the template](../../../templates/workspace/develop.md) if the file d
 
 - **In plain terms:** as [the shared step](../../../docs/process.md#in-plain-terms) says.
 - **Approach:** the design as decided: what changes where, and how the pieces fit together.
-- **Decisions:** one entry per decision, significant and minor (keeping the entries `/architect` wrote), with its kind, context, options considered, choice, whether the recommendation was taken, and consequences; an architectural one also has its drivers, matrix and sources.
+- **Decisions:** one entry per decision, significant and minor (keeping the entries `/architect` wrote), in the template's format.
 - **Tasks:** ordered by dependency. Each one must be a [task](../../../docs/criteria.md#work-units), so split anything larger. Each task lists the ACs it serves. Before finishing, check coverage: every AC must be served by at least one task. If one isn't, add a task or go back to the spec check.
 - **Risks:** what could go wrong, each with how it's mitigated or how we'll notice.
 
