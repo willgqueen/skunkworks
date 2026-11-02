@@ -1,6 +1,6 @@
 ---
 name: researcher
-description: Answers one research question from code, local docs and the web, with sources, so a phase skill can map options or ground a decision. Read-only. Used by discover and develop, often several in parallel on separate questions.
+description: Answers one research question from code, local docs and the web, with sources, so a phase skill can map options or ground a decision. Read-only. Used by discover, develop, architect, integrate and hq tidy, often several in parallel on separate questions.
 model: sonnet
 effort: medium
 tools: Read, Grep, Glob, WebFetch, WebSearch

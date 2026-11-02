@@ -22,7 +22,7 @@ Skills fan work out to parallel agents only when the [fan-out rule](criteria.md#
 |---|---|---|
 | discover | Research questions (researcher, Explore) | The gate |
 | develop | Research questions; Plan drafts | Decisions with the user, the gate |
-| architect | Fact checks (one researcher per option) | The draft (architect agent), the user's choice, recording |
+| architect | Fact checks (one researcher per option with facts to check) | The draft (architect agent), the user's choice, recording |
 | deliver | AC verification (verifier groups) | Tasks (one commit each, in order), push, PR, merge |
 
 Agents started from the main session run in the background, and their results come back as notifications. The main session merges the results and owns every gate.

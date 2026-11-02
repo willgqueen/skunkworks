@@ -18,7 +18,7 @@ Every condition below (sizes, significant vs. minor decisions, tasks, approval, 
   - **S or M**: Develop isn't needed. An M item's approach lives in define.md. Say so, offer to re-size if the user disagrees, and don't write develop.md.
   - **investigation**: Develop is skipped. It goes from define to deliver.
   - **L without an [approved](../../../docs/criteria.md#phase-state) define**: say so and ask whether to continue anyway.
-- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record (an architectural one through `/architect` again) and every task it affects, so the doc stays consistent.
+- If develop is already drafted, it's a [revision](../../../docs/process.md#revision) (log `develop reopened` if it was approved; redo steps 2–4 where the feedback needs it, then go to step 6). If the feedback changes a decision, update the decision's record (an architectural one back through `/architect`, which [re-enters](../architect/SKILL.md#re-runs) where the change needs) and every task it affects, so the doc stays consistent.
 
 Refer to acceptance criteria as **AC1, AC2, …**, numbered by their order in define.md.
 
@@ -65,5 +65,5 @@ Open with [In plain terms](../../../docs/process.md#in-plain-terms), then report
 
 When the user approves:
 - Add the log line `- <date>: develop approved` and set `phase: deliver`.
-- Update `workspace/projects/<project>/architecture/` (create it from [templates/workspace/architecture/](../../../templates/workspace/architecture/) if missing): set this item's rows in `decisions.md` to one per [significant decision](../../../docs/criteria.md#decisions) (Date, Decision, Choice, and Item: this item's id), replacing its earlier rows; and make `overview.md`'s *Context* and *Containers* match the approved design, adding any quality attributes it ranked to *Quality attributes* (existing ones kept unless the design re-ranks them).
+- Update `workspace/projects/<project>/architecture/` (if missing, create it with `overview.md` and `decisions.md` from [templates/workspace/architecture/](../../../templates/workspace/architecture/)): set this item's rows in `decisions.md` to one per [significant decision](../../../docs/criteria.md#decisions) (Date, Decision, Choice, and Item: this item's id), replacing its earlier rows; and make `overview.md`'s *Context* and *Containers* match the approved design, adding any quality attributes it ranked to *Quality attributes* (existing ones kept unless the design re-ranks them).
 - Ask whether to start Deliver.

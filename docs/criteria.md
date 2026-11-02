@@ -196,7 +196,7 @@ The provisional numbers above are guesses until they're tested against sustained
 - Starting size vs. final size, and the `re-sized` log lines with their triggers
 - Actual task count in `deliver.md` against the ~6-task L threshold
 - Files and lines changed per task and per item (from deliver's `task <n> committed` log lines)
-- Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions and the item logs)
+- Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions, standalone records' recommendation taken in `architecture/decisions/`, and the item logs)
 - Explore subagent use, and project.md refreshes that turned out to be needed or not
 - Split proposals: how often a split was proposed, and how often you kept the work whole
 - Agent runs per skill, the model used, and, for agents whose default isn't opus, whether upgraded runs found more (review findings, failed verifications) than default runs

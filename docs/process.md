@@ -81,4 +81,4 @@ In `item.md`, set `phase: <phase>`, `status: active` and `updated`, then add a l
 - A file per phase gives agents a stable handoff: each phase reads the previous file instead of relying on chat history.
 - Sizing keeps the process from slowing down routine work.
 
-Other methods considered: Shape Up (its *appetite* idea may be borrowed later as an effort budget per item), and RFC/ADR-only flows (ADRs are kept inside `develop.md`, and each project indexes its significant decisions in `architecture/decisions.md`).
+Other methods considered: Shape Up (its *appetite* idea may be borrowed later as an effort budget per item), and RFC/ADR-only flows (ADRs are kept inside `develop.md`, or for a standalone `/architect` decision in `architecture/decisions/`, and each project indexes its significant decisions in `architecture/decisions.md`).
