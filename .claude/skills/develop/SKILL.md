@@ -28,7 +28,7 @@ For each repo in `repos`, read that repo's `CLAUDE.md`, then the code the design
 
 ## 3. Shape the approach
 
-Draft the overall approach, then list every decision it depends on, plus any question marked "from /architect" (fresh run or revision). Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
+Draft the overall approach, then list every decision it depends on, plus any question marked "from /architect" (fresh run or revision; one that re-asks a listed decision revises that decision). Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
 
 For a broad design, a Plan subagent may draft the options. When research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), independent research questions (how an area works, what a library supports) go to `researcher` agents, each with the list of what it must cover. Check their *Coverage* lines ([complete coverage](../../../docs/criteria.md#complete-coverage)). Run them in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Their output is input to you, not the decision.
 
@@ -36,7 +36,7 @@ For a broad design, a Plan subagent may draft the options. When research is big 
 
 ## 4. Decide with the user
 
-- **Significant decisions:** an [architectural](../../../docs/criteria.md#decisions) one goes through `/architect <project> <item> <question>`, saying develop is the caller, which puts it to the user and writes its develop.md entry. Put each other one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
+- **Significant decisions:** an [architectural](../../../docs/criteria.md#decisions) one goes through `/architect <project> <item> <question> (from /develop)`, which puts it to the user and writes its develop.md entry. Put each other one to the user with 2–3 options. The [architecture references](../../../docs/architecture/README.md) help structure them (ranking quality attributes, comparing options in a decision matrix); record the result in the decision's entry, not a separate ADR. Give each option its trade-offs, put the recommended option first, and mark it *(Recommended)*. Ask independent decisions together, at most four at a time. A decision that depends on an earlier one waits for that answer. Don't write a significant decision into develop.md until the user has chosen.
 - **Minor decisions:** decide, following existing repo patterns, and record them. The user can still change them at the gate.
 
 For every decision, record whether the user took the recommendation (`n/a` for minor ones). This feeds [calibration](../../../docs/criteria.md#calibration).

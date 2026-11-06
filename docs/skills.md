@@ -123,9 +123,9 @@ Answers one architecture question with options, a weighted matrix and a sourced 
 | | |
 |---|---|
 | **Use when** | develop meets an [architectural decision](criteria.md#decisions), or you have a stack, datastore, service boundary or infrastructure question |
-| **Arguments** | `<project> [<item>] <question>` |
-| **Asks** | Only the constraints and quality attributes it can't find |
-| **Calls** | develop, when an item is named |
+| **Arguments** | `<project> [<item>] <question>` (develop's calls end with `(from /develop)`) |
+| **Asks** | The constraints and quality attributes it can't find, and confirmation of recorded drivers it reuses |
+| **Calls** | develop, when an item is named and develop isn't the caller |
 | **Agents** | architect (drafts), then researcher, one per option with facts to check, in parallel |
 | **Gate** | You choose an option (or "explain more"); nothing is recorded before. Within an item it's a develop.md decision entry (its decisions.md row comes at develop's approval); standalone, `architecture/decisions/<date>-<slug>.md` and a decisions.md row |
 
