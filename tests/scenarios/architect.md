@@ -53,7 +53,7 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 021's live runs (AC num
 
 - **Setup:** A2 done. Start a fresh Claude session in A2's sandbox.
 - **Run:** `/develop greet 003` with "switch the storage decision to an option other than the current choice".
-- **Expect:** `develop reopened`; `/architect` re-enters at the choice from the matrix recorded in develop.md: no new draft, no researchers, no constraint questions (021 AC7).
+- **Expect:** `develop reopened`; `/architect` re-enters at the choice from the matrix recorded in develop.md: no new draft, no researchers, no constraint questions; the report states its sources' check dates (021 AC7; 041 AC6).
 - **Answer:** if asked which, pick any recorded option other than the current choice.
 - **Expect:** develop.md still has one storage entry, replaced: the new option as its choice, Recommendation taken: no, and its consequences rewritten for the new option from the recorded matrix (its door and tokens); the Approach and the tasks it affects updated; `develop revised`; it stops at the gate (021 AC6).
 - **Answer:** approve.
@@ -69,9 +69,9 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 021's live runs (AC num
 ## A7. An item call on an approved design
 
 - **Setup:** A2 done, before A5 (or in a fresh sandbox through A2).
-- **Run:** `/architect greet 003 should added styles be stored in Redis instead?` (if A2's matrix has Redis, name another option it lacks)
-- **Expect:** it hands to develop with the question as feedback marked "from /architect"; develop logs `develop reopened` exactly once and routes the decision through `/architect`, which redrafts at step 3 with the recorded drivers: no constraint questions, and Redis scored in the new matrix (021 AC7).
-- **Answer:** choose Redis.
+- **Run:** `/architect greet 003 should added styles be stored with shelve instead?` (if A2's matrix has `shelve`, name another standard-library option it lacks)
+- **Expect:** it hands to develop with the question as feedback marked "from /architect"; develop logs `develop reopened` exactly once and routes the decision through `/architect`, which redrafts at step 3 with the recorded drivers, shown for confirmation: no other constraint questions, and `shelve` scored in the new matrix (021 AC7; 041 AC6).
+- **Answer:** confirm the drivers; choose `shelve`.
 - **Expect:** develop.md's storage entry replaced, not duplicated, and the Approach and affected tasks updated; `develop revised`; it stops at its gate; decisions.md unchanged until approval (021 AC6).
 
 ## A8. An initiative
@@ -89,6 +89,22 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 021's live runs (AC num
 
 - **Setup:** A2 done.
 - **Run:** `/architect greet 003 should styles come from a separate greeting service rather than greet itself?`
-- **Expect:** it hands to develop, which logs `develop reopened` and routes the question through `/architect`; it asks for this concern's ranking rather than reusing the storage *Drivers* (021 AC7).
-- **Answer:** "one user, installs by copying the file. Ranked: 1. Simplicity: installing is one copy, under a minute; 2. Portability: runs on a fresh Python install with no extra packages". Take the recommendation.
+- **Expect:** it hands to develop, which logs `develop reopened` and routes the question through `/architect`; it shows the storage *Drivers* for confirmation or asks for this concern's ranking, and never reuses them silently (021 AC7; 041 AC1).
+- **Answer:** to every constraint or quality-attribute question: "one user, installs by copying the file. Ranked: 1. Simplicity: installing is one copy, under a minute; 2. Portability: runs on a fresh Python install with no extra packages". Take the recommendation.
 - **Expect:** a new `### D<n>:` entry beside the storage one, which is unchanged; `develop revised`; it stops at its gate; decisions.md unchanged until approval (021 AC6).
+
+## A11. A fresh-run hand-off
+
+- **Setup:** a fresh seed with A2's setup; 003 has no `develop.md`.
+- **Run:** `/architect greet 003 where should added styles persist?`
+- **Expect:** it hands to develop with the question as feedback marked "from /architect"; develop drafts and takes the question up as an architectural decision through `/architect ... (from /develop)`, which doesn't hand back to develop again; it asks A2's constraint and attribute questions (041 AC3).
+- **Answer:** as in A2's answers; take the recommendation.
+- **Expect:** develop.md has the storage decision's `### D<n>:` entry as in A2; `develop drafted` is logged once; it stops at its gate (041 AC3).
+
+## A12. Re-check a recorded fact
+
+- **Setup:** A1 done.
+- **Run:** `/architect greet re-check the facts in the recorded decision on greeting storage`
+- **Expect:** a re-run that re-enters at step 4 with the recorded matrix: no new draft and no constraint questions; `researcher` agents re-check the facts; the report shows the matrix corrected where a fact moved, with new "checked <date> at <URL>" lines (041 AC6).
+- **Answer:** take the recommendation.
+- **Expect:** the same record and decisions.md row replaced, not duplicated.
