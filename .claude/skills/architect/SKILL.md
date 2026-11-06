@@ -13,7 +13,7 @@ Every condition below (architectural and significant decisions, boring technolog
 ## 1. Load
 
 - Read `workspace/projects/<project>/project.md`, and `architecture/overview.md` and `architecture/decisions.md` if they exist.
-- Use an item only when one is named, [resolved](../../../docs/process.md#resolve-the-item) without its active-item fallback, so a call without one stays standalone. Unless develop called this and said so, run the **develop** skill on the item once, with the question as its feedback marked "from /architect", and stop: develop checks the item belongs there and routes the decision back here. When develop calls it, read the item's `define.md` and `develop.md`.
+- Use an item only when one is named, [resolved](../../../docs/process.md#resolve-the-item) without its active-item fallback, so a call without one stays standalone. Unless the call ends with the literal `(from /develop)`, run the **develop** skill on the item once, with the question as its feedback marked "from /architect", and stop: develop checks the item belongs there and routes the decision back here. If its check turns the item away, tell the user to rerun the question without the item. When the call ends with `(from /develop)`, read the item's `define.md` and `develop.md`.
 - If this decision is already recorded (the item's develop.md entry, or a standalone record for the same question), it's a [re-run](#re-runs).
 
 ## 2. Constraints and quality attributes
@@ -22,13 +22,13 @@ From the question, project.md (*Stack* is the boring baseline's starting point),
 - the constraints (stack, team, deadline, budget, hosting, what's out of scope)
 - the quality attributes, ranked, each with a testable scenario ([quality-attributes.md](../../../docs/architecture/quality-attributes.md))
 
-With an item, reuse the *Drivers* of its develop.md entries on the same concern; a different concern asks for its own ranking. Ask the user only for what's still missing.
+With an item, show the *Drivers* of its develop.md entries for the user to confirm or change. Ask the user only for what's still missing.
 
 ## 3. Draft
 
 Give the `architect` agent the question, the constraints, the ranked attributes, project.md *Stack* and the docs/architecture/ guides that apply, applying the model policy.
 
-Check its output against [decision-matrix.md](../../../docs/architecture/decision-matrix.md): 2–4 options, the [template](../../../docs/architecture/decision-matrix.md#template)'s weights rule and one-line rationale per score, [*Required*](../../../docs/architecture/decision-matrix.md#required) and [*Recommendation*](../../../docs/architecture/decision-matrix.md#recommendation); and check its *Coverage* line. On a gap, re-run it with the gap named, up to the [re-run limit](../../../docs/criteria.md#complete-coverage); then report the result as incomplete.
+Check its output against [decision-matrix.md](../../../docs/architecture/decision-matrix.md): 2–4 options, the [template](../../../docs/architecture/decision-matrix.md#template)'s weights rule and one-line rationale per score, the sensitivity result, [*Required*](../../../docs/architecture/decision-matrix.md#required) and [*Recommendation*](../../../docs/architecture/decision-matrix.md#recommendation); and check its *Coverage* line. On a gap, re-run it with the gap named, up to the [re-run limit](../../../docs/criteria.md#complete-coverage); then report the result as incomplete.
 
 ## 4. Check facts
 

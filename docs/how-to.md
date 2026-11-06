@@ -22,7 +22,7 @@ Open its folder: `workspace/projects/<project>/items/<NNN>-<slug>/`. `item.md` h
 `/hq <description>` or `/new-item <project> <description>`. You get a numbered item with its kind, size and first phase, and Claude asks before starting.
 
 ### Decide an architecture question
-`/architect <project> [<item>] <question>`. You get options with a boring baseline, a matrix and a recommendation. With an item, it goes through develop (an L item in design) and your choice goes into its develop.md; otherwise run it without the item, and your choice goes into `architecture/decisions/`.
+`/architect <project> [<item>] <question>`. You get options with a boring baseline, a matrix and a recommendation. With an item, it goes through develop (an L item past define) and your choice goes into its develop.md; otherwise run it without the item, and your choice goes into `architecture/decisions/`.
 
 ### Start a project that has no repo yet
 `/new-item <new-project-name> <description>`. It creates the project with "Repos: none yet". Run `/repo-context` once the repo exists.
