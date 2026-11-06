@@ -13,19 +13,44 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 
 ## I2. Own the CI
 
-- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`, then in `../target` add `.github/workflows/ci.yml` from `ci/templates/ci.yml` with `STACK` python, `OWNER` skunkworks' GitHub owner, `SHA` ci-v2's commit (`git rev-parse ci-v2` here), `VERSION` ci-v2 and `DEFAULT_BRANCH` main, plus `with:` on `checks` overriding `lint: "ruff check ."`, `test: "python -m unittest"` and `audit: ""`; commit and push.
+- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`, then in `../target` add `.github/workflows/ci.yml` from `ci/templates/ci.yml` with `STACK` python, `OWNER` skunkworks' GitHub owner, `SHA` ci-v2's commit (`git rev-parse 'ci-v2^{commit}'` in your real skunkworks checkout; the sandbox copy has no tags), `VERSION` ci-v2 and `DEFAULT_BRANCH` main, plus `with:` on `checks` overriding `lint: "ruff check ."`, `test: "python -m unittest"` and `audit: ""`; commit and push.
 - **Run:** `/ci ../target own`
-- **Expect:** a read-only inspection that finds the standard caller pinned at ci-v2 and its SHA; a report that the "overrides most stage commands" [signal](../../docs/criteria.md#building-blocks) holds and the other two don't; a question whether to own CI in target.
+- **Expect:** a read-only inspection that finds the standard caller pinned at ci-v2 and its SHA, and no Renovate or Dependabot; questions on the two [signals](../../docs/criteria.md#building-blocks) the repo shows no evidence for (a stage the shared workflows can't host; its own CI maintainers).
+- **Answer:** "no" to each
+- **Expect:** a report that the stage-commands signal holds and the other two don't; a question whether to own CI in target.
 - **Answer:** "yes"
-- **Expect:** an item through new-item in `greet` whose Intent names ci-v2 and its SHA, the files to copy into `.github/workflows/` (`ci-python.yml`, `ci-workflow-lint.yml`, `ci-gate.yml`), each of the three `uses:` lines to rewire to `./.github/workflows/<file>`, and that the ruleset is unchanged. It's sized L, so it starts in discover. Nothing changes in target, and no ruleset call is made.
+- **Expect:** an item through new-item in `greet` whose Intent names the ci-v2 pin, the latest `ci-v<n>` and its commit from `git ls-remote`, the Releases entries since ci-v2, the files to copy into `.github/workflows/` (`ci-python.yml`, `ci-workflow-lint.yml`, `ci-gate.yml`), each of the three `uses:` lines to rewire to `./.github/workflows/<file>`, that neither Renovate nor Dependabot covers `.github/workflows`, and that the ruleset is unchanged. It's sized L, so it starts in discover. Nothing changes in target, and no ruleset call is made.
 - **Answer:** new-item's "start the first phase?": "not now".
 
 ## I3. Own with no signal
 
 - **Setup:** I2's Setup without the `with:` overrides.
 - **Run:** `/ci ../target own`
+- **Expect:** I2's signal questions.
+- **Answer:** "no" to each
 - **Expect:** the report says no signal holds and asks whether to proceed anyway.
 - **Answer:** "no"
 - **Expect:** no item; nothing changes in target.
+
+## I4. Adopt with an ownership signal
+
+- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`, then in `../target` add `.github/workflows/deploy.yml` with one job that has `environment: production`, `runs-on: ubuntu-latest` and a `run: echo deploy` step; commit and push.
+- **Run:** `/ci ../target`
+- **Expect:** I1's inspection, plus the deploy workflow; a question on its own CI maintainers.
+- **Answer:** "no"
+- **Expect:** the stage-the-shared-workflows-can't-host [signal](../../docs/criteria.md#building-blocks) named (the deploy's `environment`), with a pointer to `/ci ../target own` for after adoption; then I1's item, its Intent also recording the deploy workflow.
+- **Answer:** new-item's "start the first phase?": "not now".
+
+## I5. Own without the standard CI
+
+- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`
+- **Run:** `/ci ../target own`
+- **Expect:** says target isn't on the standard CI and offers Adopt; no signal questions, no item, nothing changes in target.
+
+## I6. Own when it already owns
+
+- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`, then in `../target` add `.github/workflows/ci.yml` from `ci/templates/ci.yml` with `STACK` python and `DEFAULT_BRANCH` main, each `uses:` set to `./.github/workflows/<file>` (no `@SHA # VERSION`), and copy `ci-python.yml`, `ci-workflow-lint.yml` and `ci-gate.yml` from `.github/workflows/` beside it; commit and push.
+- **Run:** `/ci ../target own`
+- **Expect:** says target already owns its CI; no signal questions, no item, nothing changes in target.
 
 Delivering I2's item needs a GitHub remote, as I1's ruleset does.
