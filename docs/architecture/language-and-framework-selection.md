@@ -4,7 +4,7 @@ For choosing, or challenging, a language, framework or runtime. Decide against t
 
 ## Check facts live, never recall them
 
-Versions, LTS and EOL dates, licenses, download and maintainer counts, and release cadence all change. Look them up at decision time and record "checked <date> at <URL>"; if you couldn't check, write "unverified".
+Versions, LTS and EOL dates, licenses, download and maintainer counts, release cadence, and prices, limits and quotas all change. Look them up at decision time and record "checked <date> at <URL>"; if you couldn't check, write "unverified".
 
 | Fact | Check at |
 |---|---|
@@ -12,6 +12,7 @@ Versions, LTS and EOL dates, licenses, download and maintainer counts, and relea
 | Latest version, license, downloads, dependencies | The package registry (npm, PyPI, crates.io, Maven Central, pkg.go.dev) |
 | Maintainers, activity, releases, governance | The project repo and its governance and SECURITY files |
 | Known vulnerabilities | GitHub Advisories, OSV, the language's own advisory database |
+| Prices, limits, quotas | The vendor's pricing and limits pages |
 
 ## Criteria
 

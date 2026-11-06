@@ -112,8 +112,22 @@ The Develop phase for L items: the design and the task list.
 | **Use when** | An L feature or task has an approved spec |
 | **Arguments** | `<project> <item>` |
 | **Asks** | Every [significant decision](criteria.md#decisions), with options and a recommendation |
+| **Calls** | architect, for each [architectural decision](criteria.md#decisions) |
 | **Agents** | researcher and Plan |
 | **Gate** | Approve the design. Next: deliver |
+
+## architect
+
+Answers one architecture question with options, a weighted matrix and a sourced recommendation, using the [architecture references](architecture/README.md).
+
+| | |
+|---|---|
+| **Use when** | develop meets an [architectural decision](criteria.md#decisions), or you have a stack, datastore, service boundary or infrastructure question |
+| **Arguments** | `<project> [<item>] <question>` |
+| **Asks** | Only the constraints and quality attributes it can't find |
+| **Calls** | develop, when an item is named |
+| **Agents** | architect (drafts), then researcher, one per option with facts to check, in parallel |
+| **Gate** | You choose an option (or "explain more"); nothing is recorded before. Within an item it's a develop.md decision entry (its decisions.md row comes at develop's approval); standalone, `architecture/decisions/<date>-<slug>.md` and a decisions.md row |
 
 ## deliver
 

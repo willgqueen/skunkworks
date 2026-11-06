@@ -8,6 +8,7 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 001's behavioral checks
 - **Expect:**
   - develop.md has In plain terms, an Approach grounded in `greet.py` (read only; `git -C ../target status` clean), Decisions, an ordered task list, and Risks (AC6, AC8)
   - at least one significant decision (for example a registry dict or subclasses) is asked with options and a recommendation before it's written; minor ones are recorded with `Kind: minor` (AC7)
+  - no `/architect` run: none of 003's decisions is [architectural](../../docs/criteria.md#decisions) (021 AC7)
   - every AC of 003 (1–4) is served by a task (`Serves: AC<n>`) (AC9)
   - the split check runs (016 AC2); `develop drafted` logged; it stops at the gate, and the gate report opens with In plain terms (AC12)
 - **Answer:** take each recommendation. Don't approve yet.
