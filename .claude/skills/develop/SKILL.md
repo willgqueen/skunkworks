@@ -28,7 +28,7 @@ For each repo in `repos`, read that repo's `CLAUDE.md`, then the code the design
 
 ## 3. Shape the approach
 
-Draft the overall approach, then list every decision it depends on, plus any question marked "from /architect" (fresh run or revision; merged with a decision it already lists). Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
+Draft the overall approach, then list every decision it depends on, plus any question marked "from /architect" (fresh run or revision; one that re-asks a listed decision revises that decision). Classify each one as [significant or minor](../../../docs/criteria.md#decisions); when it's unclear, treat it as significant.
 
 For a broad design, a Plan subagent may draft the options. When research is big enough for a subagent ([criteria.md](../../../docs/criteria.md#context)), independent research questions (how an area works, what a library supports) go to `researcher` agents, each with the list of what it must cover. Check their *Coverage* lines ([complete coverage](../../../docs/criteria.md#complete-coverage)). Run them in parallel when the [fan-out rule](../../../docs/criteria.md#agents-and-parallelism) allows, applying the model policy. Their output is input to you, not the decision.
 
