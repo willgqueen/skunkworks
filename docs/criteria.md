@@ -14,12 +14,13 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
   - One: installing into a shared interpreter or bin directory, a tool fetched on the fly (`npx -y`, `uvx`), or a toolchain the repo pins. Checks run with every tool or toolchain auto-fetch off that the tooling allows (for example `RUSTUP_AUTO_INSTALL=0`, `GOTOOLCHAIN=local`, `UV_PYTHON_DOWNLOADS=never`, `COREPACK_ENABLE_NETWORK=0`, `npm_config_yes=false`); a fetch that can't be turned off, such as `./gradlew`'s, is a host change to ask about.
   - It needs the user's explicit approval of that change (what, where, and how it's installed); deliver's per-item authorization never covers one.
 - **Boring technology first:** a language, datastore, framework or runtime not already in the project's stack (project.md *Stack*) spends an innovation token, of about three per project *(provisional)*. Each one must be justified by the product's real differentiator and recorded in the decision ([guide](architecture/language-and-framework-selection.md#boring-technology)).
+- **Owns its CI:** its CI caller's `ci-ok` job calls `ci-gate.yml` by local path (`uses: ./.github/workflows/ci-gate.yml`).
 - **CI ownership:** a repo should [own its CI](ci.md#owning-your-ci) when any of these holds:
-  - it needs a stage the shared workflows can't host: an existing or planned workflow needing `environment`, a release, or secrets the called workflow can't receive (seen in the repo, or the user says so)
-  - it overrides more than half of its stack's [stage commands](ci.md#shared-workflows) *(provisional)*, setting one to empty included
-  - it has its own maintainers who change CI on their own schedule: CODEOWNERS covers `.github/`, or the user says so
+  - a CI stage needs secrets or an `environment` that the shared workflows can't receive; deploy and release stages always go in a separate workflow and don't count
+  - it overrides more than half of its stack's [stage commands](ci.md#shared-workflows) *(provisional)*; setting one to empty counts, unless its default is already empty
+  - it has its own maintainers who change CI on their own schedule: CODEOWNERS covers `.github/`
 
-  When the repo doesn't show the evidence for the first or third, ask the user. Never automatic: `/ci` recommends it and the user approves per repo.
+  When a signal's evidence isn't in the repo, `/ci <repo> own` asks the user; adopt only names the signals it can see and never asks. Never automatic: `/ci` recommends it and the user approves per repo.
 - **Sensitive content:** never allowed in commit messages, PR text, branch names or code comments in a target repo:
   - secrets: keys, tokens, passwords, connection strings
   - personal data about anyone other than the author's own attribution

@@ -41,10 +41,12 @@ A repo calls them from a thin workflow made from [`ci/templates/ci.yml`](../ci/t
 
 A repo that has outgrown the shared workflows ([when](criteria.md#building-blocks)) takes them over with `/ci <repo> own`:
 
-- Copy the stack workflow, `ci-workflow-lint.yml` and `ci-gate.yml` at the latest `ci-v<n>` tag, not the repo's old pin, into its `.github/workflows/`. Resolve the tag to its commit with `git ls-remote` against skunkworks' GitHub repo (the peeled `refs/tags/ci-v<n>^{}`); the item lists the [Releases](#releases) entries since the repo's pin.
-- In each copy, the header `# From skunkworks ci-v<n> (<sha>)` replaces its link to docs/ci.md.
-- Call them by local path (`uses: ./.github/workflows/<file>`, which needs no SHA) and keep the `ci-ok` job: the check stays `ci-ok / ok` from GitHub Actions, so the ruleset doesn't change.
-- These [rules](#rules) carry over: pin actions and tools, least privilege, `persist-credentials: false`, no `pull_request_target`, timeouts and the gate. Deploy and release stages stay out of `ci-ok`'s `needs` (or go in a separate workflow), so the 10-minute budget holds.
+- The latest release is the highest `ci-v<n>` by number from `git ls-remote --tags` against skunkworks' own `origin`, not the caller's `OWNER` (a caller whose owner differs isn't on the standard CI). Its commit is the peeled `^{}` line if there is one, else the tag's own line. If the command fails or finds no tag, stop.
+- Fetch that commit and copy the stack workflow, `ci-workflow-lint.yml` and `ci-gate.yml` from it, not from the local checkout or the repo's old pin, into the repo's `.github/workflows/`. The item lists the [Releases](#releases) entries since the pin, also read at that commit.
+- In each copy and in the rewired caller, the first-line comment becomes `# From skunkworks ci-v<n> (<sha>)`.
+- Call them by local path (`uses: ./.github/workflows/<file>`) and keep the `ci-ok` job: the check stays `ci-ok / ok` from GitHub Actions, so the ruleset doesn't change. The other [rules](#rules) carry over; a local `uses: ./` path needs no SHA.
+- Deploy and release stages go in a separate workflow with its own concurrency group, never in `ci.yml`.
+- Add Renovate (from [`ci/templates/renovate.json`](../ci/templates/renovate.json)) when neither Renovate nor Dependabot covers `.github/workflows`.
 
 From then on the repo maintains its own CI: its tool pins and checksums (Renovate only bumps actions), fixes from [Releases](#releases) ported by hand from its base, and the rules, enforced by its own review. skunkworks' releases no longer reach it.
 
