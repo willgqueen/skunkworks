@@ -37,6 +37,16 @@ A repo calls them from a thin workflow made from [`ci/templates/ci.yml`](../ci/t
 - **Use each language's standard tools**, exposed as the repo's own commands where it has them.
 - `python3 -I scripts/test.py` checks these rules on the files here (pins, downloads, timeouts, permissions, the gate).
 
+## Owning your CI
+
+A repo that has outgrown the shared workflows ([when](criteria.md#building-blocks)) takes them over with `/ci <repo> own`:
+
+- Copy the stack workflow, `ci-workflow-lint.yml` and `ci-gate.yml` from the repo's pinned `ci-v<n>` tag into its `.github/workflows/`, and call them by local path (`uses: ./.github/workflows/<file>`).
+- Keep the `ci-ok` job and every rule here; Renovate still pins the actions.
+- The check stays `ci-ok / ok` from GitHub Actions, so the ruleset doesn't change.
+
+From then on the repo changes its own CI, and skunkworks' releases no longer reach it.
+
 ## Limits
 
 GitHub only. Other repos call the shared workflows from the public skunkworks repo, so a fork made private must allow access from repositories owned by the same user in its Actions settings.
