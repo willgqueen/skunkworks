@@ -65,8 +65,8 @@ Sets up the [standard CI](ci.md) in a GitHub repo.
 
 | | |
 |---|---|
-| **Use when** | A repo has no CI or non-standard CI; run again after adoption to require `ci-ok` |
-| **Arguments** | `<repo>` |
+| **Use when** | A repo has no CI or non-standard CI; run again after adoption to require `ci-ok`; `own` when a repo meets the [CI ownership](criteria.md#building-blocks) signals, to copy the shared workflows into it |
+| **Arguments** | `<repo> [own]` |
 | **Calls** | repo-context, new-item |
 | **Gate** | The item's own gates, plus your approval per repo for the ruleset |
 
