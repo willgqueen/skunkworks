@@ -7,7 +7,7 @@
 <!-- The overall design in a few paragraphs or bullets: what changes where, and how the pieces fit. -->
 
 ## Decisions
-<!-- One per decision. Significant decisions are made with the user; minor ones by the skill. Architectural decisions (/architect) fill Drivers, Matrix and Sources; others omit them. See docs/architecture/decision-matrix.md. -->
+<!-- One per decision. Significant decisions are made with the user; minor ones by the skill. Architectural decisions (/architect) also fill Drivers (constraints, ranked attributes, weights), Matrix (as docs/architecture/decision-matrix.md, with each option's door and tokens) and Sources ("checked <date> at <URL>" or unverified); others omit them. -->
 ### D1: <decision>
 - **Kind:** significant | minor
 - **Context:**

@@ -13,7 +13,7 @@ Every condition below (architectural and significant decisions, boring technolog
 ## 1. Load
 
 - Read `workspace/projects/<project>/project.md`, and `architecture/overview.md` and `architecture/decisions.md` if they exist.
-- Use an item only when one is named, [resolved](../../../docs/process.md#resolve-the-item) without its active-item fallback, so a call without one stays standalone. Unless the call ends with the literal `(from /develop)`, run the **develop** skill on the item once, with the question as its feedback marked "from /architect", and stop: develop checks the item belongs there and routes the decision back here. If its check turns the item away, tell the user to rerun the question without the item. When the call ends with `(from /develop)`, read the item's `define.md` and `develop.md`.
+- Use an item only when one is named, [resolved](../../../docs/process.md#resolve-the-item) without its active-item fallback, so a call without one stays standalone. Unless the call ends with the literal `(from /develop)`, run the **develop** skill on the item once, with the question as its feedback marked "from /architect", and stop: develop checks the item belongs there and routes the decision back here. If its check turns the item away, tell the user to rerun the question without the item. When the call ends with `(from /develop)`, drop the marker from the question and read the item's `define.md` and `develop.md`.
 - If this decision is already recorded (the item's develop.md entry, or a standalone record for the same question), it's a [re-run](#re-runs).
 
 ## 2. Constraints and quality attributes
@@ -60,4 +60,4 @@ Report the paths written; with an item, say that its decisions.md row comes at d
 
 ## Re-runs
 
-A re-run replaces, never appends: with an item, the develop.md entry for the decision; standalone, the same record (its original path, even on a later date) and its decisions.md row. A changed choice among the recorded options re-enters at step 6 with the matrix the entry or record holds, stating its sources' check dates. Facts to re-check re-enter at step 4 with the recorded matrix. A new option restarts at step 3 with the recorded drivers. Only changed constraints or attributes restart at step 2.
+A re-run replaces, never appends: with an item, the develop.md entry for the decision; standalone, the same record (its original path, even on a later date) and its decisions.md row. A changed choice among the recorded options re-enters at step 6 with the matrix the entry or record holds, stating its sources' check dates. Facts to re-check re-enter at step 4 with the recorded matrix. A new option restarts at step 3 with the recorded drivers, shown for the user to confirm or change. Only changed constraints or attributes restart at step 2.

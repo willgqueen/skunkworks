@@ -64,20 +64,20 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 021's live runs (AC num
 - **Run:** `/architect greet 002 where should the test fixtures be stored?`
 - **Expect:** it hands to develop, which says Develop isn't needed for an M item and offers to re-size.
 - **Answer:** "keep it M".
-- **Expect:** it stops; nothing written: no `develop.md` in 002, `workspace/projects/greet/architecture/` unchanged (021 AC6).
+- **Expect:** it tells the user to rerun the question without the item, and stops; nothing written: no `develop.md` in 002, `workspace/projects/greet/architecture/` unchanged (021 AC6).
 
 ## A7. An item call on an approved design
 
 - **Setup:** A2 done, before A5 (or in a fresh sandbox through A2).
-- **Run:** `/architect greet 003 should added styles be stored with shelve instead?` (if A2's matrix has `shelve`, name another standard-library option it lacks)
-- **Expect:** it hands to develop with the question as feedback marked "from /architect"; develop logs `develop reopened` exactly once and routes the decision through `/architect`, which redrafts at step 3 with the recorded drivers, shown for confirmation: no other constraint questions, and `shelve` scored in the new matrix (021 AC7; 041 AC6).
-- **Answer:** confirm the drivers; choose `shelve`.
+- **Run:** `/architect greet 003 should added styles be stored with shelve instead?` (if A2's matrix has `shelve`, name another standard-library option it lacks; "the named option" below)
+- **Expect:** it hands to develop with the question as feedback marked "from /architect"; develop logs `develop reopened` exactly once and routes the decision through `/architect`, which redrafts at step 3 with the recorded drivers, shown for confirmation: no other constraint questions, and the named option scored in the new matrix (021 AC7; 041 AC6).
+- **Answer:** confirm the drivers; choose the named option.
 - **Expect:** develop.md's storage entry replaced, not duplicated, and the Approach and affected tasks updated; `develop revised`; it stops at its gate; decisions.md unchanged until approval (021 AC6).
 
 ## A8. An initiative
 
 - **Run:** `/architect greet 006 should the CLI use a terminal UI framework?`
-- **Expect:** it hands to develop, whose check says Develop is skipped for an initiative, and stops; nothing written: no `develop.md` in 006, `workspace/projects/greet/architecture/` unchanged (021 AC6).
+- **Expect:** it hands to develop, whose check says Develop is skipped for an initiative; it tells the user to rerun the question without the item, and stops; nothing written: no `develop.md` in 006, `workspace/projects/greet/architecture/` unchanged (021 AC6).
 
 ## A9. One active item, no item named
 
@@ -89,8 +89,8 @@ Run per [docs/testing.md](../../docs/testing.md). Covers 021's live runs (AC num
 
 - **Setup:** A2 done.
 - **Run:** `/architect greet 003 should styles come from a separate greeting service rather than greet itself?`
-- **Expect:** it hands to develop, which logs `develop reopened` and routes the question through `/architect`; it shows the storage *Drivers* for confirmation or asks for this concern's ranking, and never reuses them silently (021 AC7; 041 AC1).
-- **Answer:** to every constraint or quality-attribute question: "one user, installs by copying the file. Ranked: 1. Simplicity: installing is one copy, under a minute; 2. Portability: runs on a fresh Python install with no extra packages". Take the recommendation.
+- **Expect:** it hands to develop, which logs `develop reopened` and routes the question through `/architect`; it shows the storage *Drivers* for confirmation, never reusing them silently (021 AC7; 041 AC1).
+- **Answer:** to the confirmation: "different concern, rank it fresh"; to every constraint or quality-attribute question: "one user, installs by copying the file. Ranked: 1. Simplicity: installing is one copy, under a minute; 2. Portability: runs on a fresh Python install with no extra packages". Take the recommendation.
 - **Expect:** a new `### D<n>:` entry beside the storage one, which is unchanged; `develop revised`; it stops at its gate; decisions.md unchanged until approval (021 AC6).
 
 ## A11. A fresh-run hand-off
