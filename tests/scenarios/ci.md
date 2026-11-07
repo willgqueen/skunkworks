@@ -61,7 +61,7 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 
   ```python
       def test_token(self):
-          self.assertIsInstance(os.environ.get("GREET_API_TOKEN", ""), str)
+          self.assertTrue(os.environ["GREET_API_TOKEN"])
   ```
 
   These are the repo's only unit tests. Commit and push.
@@ -113,7 +113,7 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 
 ## I11. Adopt with a separate deploy workflow
 
-- **Setup:** I4's Setup, but the `test` job has no `env`, and add `.github/workflows/deploy.yml` (commit and push):
+- **Setup:** I4's Setup with only its `ci.yml` (no `test_greet.py` edit), but the `test` job has no `env`, and add `.github/workflows/deploy.yml` (commit and push):
 
   ```yaml
   name: Deploy
@@ -152,12 +152,10 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 - **Setup:** I2's Setup, with `checks` in `ci.yml` set to `uses: ./.github/workflows/ci-python.yml` (no `@SHA # VERSION`, no `with:`), `ci-python.yml` copied from `.github/workflows/` beside it, and `workflow-lint` and `ci-ok` left calling skunkworks; commit and push.
 - **Run:** `/ci ../target own`
 - **Expect:** a report that `checks` is local and `workflow-lint` and `ci-ok` call skunkworks, and a stop: no signal questions, no item; nothing changes in target.
-- **Run:** `/ci ../target`
-- **Expect:** the same report and stop: no signal questions, no item, no ruleset question; nothing changes in target.
 
 ## I14. Adopt with a deploy job inside ci.yml
 
-- **Setup:** I4's Setup, but the `test` job has no `env`, and `ci.yml` also has, under `jobs:` (commit and push):
+- **Setup:** I4's Setup with only its `ci.yml` (no `test_greet.py` edit), but the `test` job has no `env`, and `ci.yml` also has, under `jobs:` (commit and push):
 
   ```yaml
     deploy:
@@ -174,6 +172,31 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
   ```
 - **Run:** `/ci ../target`
 - **Expect:** I1's inspection, plus the existing `ci.yml` and its `test` and `deploy` jobs; no signal questions and no signal named (the `environment` is on a deploy job, not inside a shared stage), so no pointer to Own; then I1's item, its Intent also recording that the `deploy` job moves to a separate workflow per [docs/ci.md](../../docs/ci.md#rules) and what happens to `test`.
+- **Answer:** new-item's "start the first phase?": "not now".
+
+## I15. Adopt when partly owned
+
+- **Setup:** I13's Setup.
+- **Run:** `/ci ../target`
+- **Expect:** the report and stop of I13: no signal questions, no item, no ruleset question; nothing changes in target.
+
+## I16. Partly owned with a missing line
+
+- **Setup:** I2's Setup, with `checks` and `ci-ok` in `ci.yml` set to `uses: ./.github/workflows/ci-python.yml` and `uses: ./.github/workflows/ci-gate.yml` (no `@SHA # VERSION`, no `with:`), `ci-python.yml` and `ci-gate.yml` copied from `.github/workflows/` beside it, and the `workflow-lint` job deleted; commit and push.
+- **Run:** `/ci ../target`
+- **Expect:** a report that `checks` and `ci-ok` are local and the `workflow-lint` line is missing, and a stop: no signal questions, no item, no ruleset question; nothing changes in target.
+
+## I17. Partly owned with another owner's lines
+
+- **Setup:** I2's Setup, with `checks` in `ci.yml` set to `uses: ./.github/workflows/ci-python.yml` (no `@SHA # VERSION`, no `with:`), `ci-python.yml` copied from `.github/workflows/` beside it, and the `OWNER` in the `workflow-lint` and `ci-ok` lines set to an owner other than origin's; commit and push.
+- **Run:** `/ci ../target`
+- **Expect:** a report that target is partly owned (`checks` is local, `workflow-lint` and `ci-ok` call skunkworks' workflows from another owner), and a stop: no signal questions, no item, no ruleset question; nothing changes in target.
+
+## I18. Adopt with a lone skunkworks line
+
+- **Setup:** I2's Setup, with `ci.yml` holding only the `checks` job (the `workflow-lint` and `ci-ok` jobs deleted) and no local `./.github/workflows/` lines; commit and push.
+- **Run:** `/ci ../target`
+- **Expect:** no partly-owned report: I1's inspection, plus the existing `ci.yml` and its lone `checks` line; no signal questions; then I1's item, its Intent also recording the existing `ci.yml` and what happens to it.
 - **Answer:** new-item's "start the first phase?": "not now".
 
 Delivering I2's item needs a GitHub remote, as I1's ruleset does.
