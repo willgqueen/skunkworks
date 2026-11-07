@@ -16,7 +16,7 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
 - **Boring technology first:** a language, datastore, framework or runtime not already in the project's stack (project.md *Stack*) spends an innovation token, of about three per project *(provisional)*. Each one must be justified by the product's real differentiator and recorded in the decision ([guide](architecture/language-and-framework-selection.md#boring-technology)).
 - **On the standard CI:** the CI caller's three `uses:` lines (stack, `ci-workflow-lint.yml`, `ci-gate.yml`) call skunkworks' workflows from the owner of skunkworks' `origin`.
 - **Owns its CI:** all three of those `uses:` lines call local `./.github/workflows/` files.
-- **Partly owned:** a caller mixing local and skunkworks `uses:` lines. `/ci` reports it and asks before any change: Adopt doesn't re-adopt and Own doesn't proceed.
+- **Partly owned:** a caller mixing local `./.github/workflows/` `uses:` lines with skunkworks' (from any owner), or with fewer than three of the standard lines.
 - **CI ownership:** a repo should [own its CI](ci.md#owning-your-ci) when any of these holds:
   - a stage the shared workflows must host needs secrets or an `environment` they can't receive, because it has to run inside their lint, test or audit stage itself; a separate caller job (as [`integration.yml`](../ci/templates/extras/integration.yml) adds) and deploy and release stages, which go in a [separate workflow](ci.md#rules), don't count
   - it overrides more than half of its stack's [stage commands](ci.md#shared-workflows) *(provisional)*; setting one to empty counts, unless its default is already empty
@@ -141,7 +141,7 @@ An item is done when the rule for its **kind** is met, finished the way its **re
 | Remote, no CI | Push, open PR, review, local checks green, merge per the merge rule |
 | Local only | No push or PR; review the branch diff, local checks green, merge locally per the merge rule |
 
-- **CI green:** every required check on the PR passes, and, in a repo [on the standard CI or owning it](#building-blocks) (both keep `ci-ok / ok`), `ci-ok / ok` passes whether or not a ruleset requires it.
+- **CI green:** every required check on the PR passes, and, in a repo whose CI has the `ci-ok` job, `ci-ok / ok` passes whether or not a ruleset requires it.
 - **Local checks:** the test, lint and build commands listed in project.md's *Commands*, where they exist.
 
 ### Merge rule

@@ -45,7 +45,7 @@ A repo that has outgrown the shared workflows ([when](criteria.md#building-block
 
 - Find the [latest release](#rules).
 - Fetch that commit and copy the stack workflow, `ci-workflow-lint.yml` and `ci-gate.yml` from it, not from the local checkout or the repo's old pin, into the repo's `.github/workflows/`. The item lists the [Releases](#releases) entries since the pin, also read at that commit.
-- In each copied file and the rewired caller, the first-line docs/ci.md link becomes `From skunkworks ci-v<n> (<sha>)`; the rest of that line's description stays.
+- In each copied workflow, the first line's docs/ci.md link becomes `From skunkworks ci-v<n> (<sha>)` and the rest stays. The rewired caller's first line is replaced whole with `# CI (owned). From skunkworks ci-v<n> (<sha>); rules: docs/ci.md#rules in skunkworks.`
 - Call them by local path (`uses: ./.github/workflows/<file>`) and keep the `ci-ok` job: the check stays `ci-ok / ok` from GitHub Actions, so the ruleset doesn't change. The other [rules](#rules) carry over; a local `uses: ./` path needs no SHA.
 - Keep deploy and release stages [separate](#rules).
 - Add Renovate (from [`ci/templates/renovate.json`](../ci/templates/renovate.json)) when neither Renovate nor Dependabot covers `.github/workflows`.

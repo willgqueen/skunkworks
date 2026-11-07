@@ -13,7 +13,7 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 
 ## I2. Own the CI
 
-- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`; then, from `DEST/skunkworks`, `git remote add origin <url>` with your real skunkworks checkout's origin (`git -C <checkout> remote get-url origin`; the sandbox copy has none) and `git -C DEST/skunkworks remote set-url --push origin DISABLED`, which blocks pushes through git; refuse any `gh` write in `DEST/skunkworks`. Then in `../target` add `.github/workflows/ci.yml` from `ci/templates/ci.yml` with `STACK` python, `OWNER` that URL's owner, `SHA` ci-v1's commit (`git rev-parse 'ci-v1^{commit}'` in your real checkout), `VERSION` ci-v1 and `DEFAULT_BRANCH` main, plus `with:` on `checks` overriding `lint: "ruff check ."`, `test: "python -m unittest"` and `audit: ""`; commit and push.
+- **Setup:** `python3 -I scripts/sandbox.py --seed --remote`; then, from `DEST/skunkworks`, `git remote add origin <url>` with your real skunkworks checkout's origin (`git -C <checkout> remote get-url origin`; the sandbox copy has none) and `git -C DEST/skunkworks remote set-url --push origin DISABLED`, which blocks pushes through git; refuse any `gh` write. Then in `../target` add `.github/workflows/ci.yml` from `ci/templates/ci.yml` with `STACK` python, `OWNER` that URL's owner, `SHA` ci-v1's commit (`git rev-parse 'ci-v1^{commit}'` in your real checkout), `VERSION` ci-v1 and `DEFAULT_BRANCH` main, plus `with:` on `checks` overriding `lint: "ruff check ."`, `test: "python -m unittest"` and `audit: ""`; commit and push.
 - **Run:** `/ci ../target own`
 - **Expect:** a read-only inspection that finds the standard caller pinned at ci-v1 and its SHA, and no Renovate or Dependabot; a question on each of the two [signals](../../docs/criteria.md#building-blocks) the repo shows no evidence for.
 - **Answer:** "no" to the stage needing secrets or an `environment`; "no" to its own CI maintainers.
@@ -57,7 +57,14 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
             GREET_API_TOKEN: ${{ secrets.GREET_API_TOKEN }}
   ```
 
-  Commit and push.
+  Also in `../target/test_greet.py` add `import os` after `import unittest` and, in `class Greet` after `test_shout`:
+
+  ```python
+      def test_token(self):
+          self.assertIsInstance(os.environ.get("GREET_API_TOKEN", ""), str)
+  ```
+
+  These are the repo's only unit tests. Commit and push.
 - **Run:** `/ci ../target`
 - **Expect:** I1's inspection, plus the existing `ci.yml` and its `test` job; no signal questions. The stage-needing-secrets [signal](../../docs/criteria.md#building-blocks) named (`test` runs `python -m unittest` with `GREET_API_TOKEN` in its env), with a pointer to `/ci ../target own` for after adoption; then I1's item, its Intent also recording the existing `ci.yml` and what happens to it.
 - **Answer:** new-item's "start the first phase?": "not now".
@@ -91,7 +98,7 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 
 ## I9. Own when the latest-release lookup fails or finds no tag
 
-- **Setup:** I2's Setup, except origin is your real origin URL with `-missing` appended to the repo name (a repo that doesn't exist, so the lookup fails; `git remote add origin <that URL>` from `DEST/skunkworks`, then the same push-disabling `set-url`), with `OWNER` the real origin's owner so the owner check passes, and `SHA` any commit. For the no-tag case, use a GitHub repo you own without `ci-v*` tags instead.
+- **Setup:** I2's Setup, except origin is `https://github.invalid/<origin's owner>/skunkworks.git` (the lookup fails before any auth; `git remote add origin <that URL>` from `DEST/skunkworks`, then the same push-disabling `set-url`), with `OWNER` origin's owner so the owner check passes, and `SHA` any commit. For the no-tag variant, use a GitHub repo you own without `ci-v*` tags as origin instead, with `OWNER` that repo's owner.
 - **Run:** `/ci ../target own`
 - **Answer:** I2's answers through the "own CI?" question.
 - **Expect:** the latest-release lookup (`git ls-remote --tags` against origin) fails or finds no tag, so it stops and says so; no item; nothing changes in target.
@@ -139,5 +146,34 @@ Requiring `ci-ok` in a ruleset and a real CI run need a GitHub remote (item 038)
 - **Expect:** I7's report, then Require ci-ok's question about the ruleset.
 - **Answer:** "no"
 - **Expect:** no ruleset call; the result reported (there's no item to log in); nothing changes in target.
+
+## I13. Partly owned
+
+- **Setup:** I2's Setup, with `checks` in `ci.yml` set to `uses: ./.github/workflows/ci-python.yml` (no `@SHA # VERSION`, no `with:`), `ci-python.yml` copied from `.github/workflows/` beside it, and `workflow-lint` and `ci-ok` left calling skunkworks; commit and push.
+- **Run:** `/ci ../target own`
+- **Expect:** a report that `checks` is local and `workflow-lint` and `ci-ok` call skunkworks, and a stop: no signal questions, no item; nothing changes in target.
+- **Run:** `/ci ../target`
+- **Expect:** the same report and stop: no signal questions, no item, no ruleset question; nothing changes in target.
+
+## I14. Adopt with a deploy job inside ci.yml
+
+- **Setup:** I4's Setup, but the `test` job has no `env`, and `ci.yml` also has, under `jobs:` (commit and push):
+
+  ```yaml
+    deploy:
+      needs: test
+      if: github.ref == 'refs/heads/main'
+      runs-on: ubuntu-latest
+      timeout-minutes: 8
+      environment: production
+      steps:
+        - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+          with:
+            persist-credentials: false
+        - run: python greet.py deploy
+  ```
+- **Run:** `/ci ../target`
+- **Expect:** I1's inspection, plus the existing `ci.yml` and its `test` and `deploy` jobs; no signal questions and no signal named (the `environment` is on a deploy job, not inside a shared stage), so no pointer to Own; then I1's item, its Intent also recording that the `deploy` job moves to a separate workflow per [docs/ci.md](../../docs/ci.md#rules) and what happens to `test`.
+- **Answer:** new-item's "start the first phase?": "not now".
 
 Delivering I2's item needs a GitHub remote, as I1's ruleset does.
