@@ -94,7 +94,7 @@ A verifier's `failed` result is a failing check: fix it with an extra task throu
 
 ## 6. Publish and review
 
-- **skunkworks items that change `.github/workflows/ci-*.yml`:** after the merge, tag the merge commit `ci-v<n+1>` (`git tag -a -m 'ci-v<n+1>'`) and push the tag; include that in the item's authorized actions ([docs/ci.md](../../../docs/ci.md#rules)).
+- **skunkworks items that change `.github/workflows/ci-*.yml`:** after the merge, tag the merge commit `ci-v<n+1>` (`git tag -a ci-v<n+1> -m 'ci-v<n+1>' <merge sha>`) and push the tag; include that in the item's authorized actions ([docs/ci.md](../../../docs/ci.md#rules)).
 - **skunkworks items:** before every push (including re-pushes after fixes), regenerate the changelog in the worktree (`python3 -I scripts/ledger.py --changelog`) and commit it as part of the item.
 - **Remote:**
   - push: `git -C <worktree> push -u origin <branch>`
