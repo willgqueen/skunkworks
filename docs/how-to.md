@@ -79,7 +79,10 @@ The board shows the cause. Fix it, then run `/deliver <project> <NNN>`. Deliver 
 ## CI
 
 ### Set up CI in a repo
-`/ci <repo>`. It creates an item that adds the [standard CI](ci.md), ending in one required check, `ci-ok`, and asks before requiring it on the default branch.
+`/ci <repo>`. It creates an item that adds the [standard CI](ci.md), ending in one required check, `ci-ok`, and asks before requiring it on the default branch. On a repo that already [owns its CI](criteria.md#building-blocks), it goes straight to that question.
+
+### Own a repo's CI
+`/ci <repo> own`. It reports which [CI ownership](criteria.md#building-blocks) signals hold, asks you, and creates an item that [copies the shared workflows](ci.md#owning-your-ci) into the repo at the latest tag, keeping `ci-ok / ok` and the ruleset.
 
 ## Integrations
 

@@ -27,7 +27,7 @@ A repo calls them from a thin workflow made from [`ci/templates/ci.yml`](../ci/t
 
 ## Rules
 
-- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own pip is the exception; govulncheck, which has no prebuilt releases, runs with `go run` and is verified by Go's checksum database); a downloaded tool is checked with `sha256sum -c` against its release's checksum. skunkworks tags each release of its shared workflows `ci-v<n>` (starting from `ci-v1`; deliver tags the merge commit of any item that changes them, and that item adds the release's entry under [Releases](#releases)), and callers pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
+- **Pin everything:** actions and shared workflows to full commit SHAs with the version in a comment; tools and toolchains to exact versions (the runner's own pip is the exception; govulncheck, which has no prebuilt releases, runs with `go run` and is verified by Go's checksum database); a downloaded tool is checked with `sha256sum -c` against its release's checksum. skunkworks tags each release of its shared workflows `ci-v<n>` (starting from `ci-v1`; deliver tags the merge commit of any item that changes them, and that item adds the release's entry under [Releases](#releases)), and callers of the shared workflows pin that tag's SHA; [Renovate](../ci/templates/renovate.json) (`helpers:pinGitHubActionDigests`) opens update PRs, in skunkworks itself too ([`renovate.json`](../renovate.json)).
 - **Least privilege:** `permissions: contents: read` by default; the gate adds `actions: read`.
 - **`persist-credentials: false`** on checkout; never `pull_request_target`.
 - **`timeout-minutes`** on every job (8 for stage jobs, 2 for the gate, so the critical path stays within 10); **`concurrency`** cancels superseded PR runs.
@@ -37,13 +37,26 @@ A repo calls them from a thin workflow made from [`ci/templates/ci.yml`](../ci/t
 - **Use each language's standard tools**, exposed as the repo's own commands where it has them.
 - `python3 -I scripts/test.py` checks these rules on the files here (pins, downloads, timeouts, permissions, the gate).
 
+## Owning your CI
+
+A repo that has outgrown the shared workflows ([when](criteria.md#building-blocks)) takes them over with `/ci <repo> own`:
+
+- The latest release is the highest `ci-v<n>` by number from `git ls-remote --tags` against skunkworks' own `origin`, not the caller's `OWNER` (a caller whose owner differs isn't on the standard CI). Its commit is the peeled `^{}` line if there is one, else the tag's own line. If the command fails or finds no tag, stop.
+- Fetch that commit and copy the stack workflow, `ci-workflow-lint.yml` and `ci-gate.yml` from it, not from the local checkout or the repo's old pin, into the repo's `.github/workflows/`. The item lists the [Releases](#releases) entries since the pin, also read at that commit.
+- In each copy and in the rewired caller, the first-line comment becomes `# From skunkworks ci-v<n> (<sha>)`.
+- Call them by local path (`uses: ./.github/workflows/<file>`) and keep the `ci-ok` job: the check stays `ci-ok / ok` from GitHub Actions, so the ruleset doesn't change. The other [rules](#rules) carry over; a local `uses: ./` path needs no SHA.
+- Deploy and release stages go in a separate workflow with its own concurrency group, never in `ci.yml`.
+- Add Renovate (from [`ci/templates/renovate.json`](../ci/templates/renovate.json)) when neither Renovate nor Dependabot covers `.github/workflows`.
+
+From then on the repo maintains its own CI: its tool pins and checksums (Renovate only bumps actions), fixes from [Releases](#releases) ported by hand from its base, and the rules, enforced by its own review. skunkworks' releases no longer reach it.
+
 ## Limits
 
 GitHub only. Other repos call the shared workflows from the public skunkworks repo, so a fork made private must allow access from repositories owned by the same user in its Actions settings.
 
 ## Releases
 
-Callers move to a release by changing the SHA and the `# ci-v<n>` comment on their three `uses:` lines.
+Callers of the shared workflows move to a release by changing the SHA and the `# ci-v<n>` comment on their three `uses:` lines.
 
 - **ci-v2:** stage jobs with no stage command show as skipped (an install-only job no longer runs); actionlint comes from its checksum-verified release binary; the time budget counts only jobs the attempt ran, so skipped jobs and partial re-runs don't trip it.
 
