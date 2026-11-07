@@ -14,9 +14,10 @@ Numbers marked *(provisional)* are starting guesses. They must be calibrated aga
   - One: installing into a shared interpreter or bin directory, a tool fetched on the fly (`npx -y`, `uvx`), or a toolchain the repo pins. Checks run with every tool or toolchain auto-fetch off that the tooling allows (for example `RUSTUP_AUTO_INSTALL=0`, `GOTOOLCHAIN=local`, `UV_PYTHON_DOWNLOADS=never`, `COREPACK_ENABLE_NETWORK=0`, `npm_config_yes=false`); a fetch that can't be turned off, such as `./gradlew`'s, is a host change to ask about.
   - It needs the user's explicit approval of that change (what, where, and how it's installed); deliver's per-item authorization never covers one.
 - **Boring technology first:** a language, datastore, framework or runtime not already in the project's stack (project.md *Stack*) spends an innovation token, of about three per project *(provisional)*. Each one must be justified by the product's real differentiator and recorded in the decision ([guide](architecture/language-and-framework-selection.md#boring-technology)).
-- **Owns its CI:** its CI caller's `ci-ok` job calls `ci-gate.yml` by local path (`uses: ./.github/workflows/ci-gate.yml`).
+- **On the standard CI:** the CI caller's three `uses:` lines (stack, `ci-workflow-lint.yml`, `ci-gate.yml`) call skunkworks' workflows from the owner of skunkworks' `origin`.
+- **Owns its CI:** all three of those `uses:` lines call local `./.github/workflows/` files.
 - **CI ownership:** a repo should [own its CI](ci.md#owning-your-ci) when any of these holds:
-  - a CI stage needs secrets or an `environment` that the shared workflows can't receive; deploy and release stages always go in a separate workflow and don't count
+  - a stage the shared workflows must host needs secrets or an `environment` they can't receive, because it has to run inside their lint, test or audit stage itself; a separate caller job (as [`integration.yml`](../ci/templates/extras/integration.yml) adds) and deploy and release stages, which go in a [separate workflow](ci.md#rules), don't count
   - it overrides more than half of its stack's [stage commands](ci.md#shared-workflows) *(provisional)*; setting one to empty counts, unless its default is already empty
   - it has its own maintainers who change CI on their own schedule: CODEOWNERS covers `.github/`
 
