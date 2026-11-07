@@ -56,7 +56,7 @@ Each file in [tests/scenarios/](../tests/scenarios/) has numbered scenarios with
 
 Each scenario starts in a new sandbox, made by its own sandbox command or the file's "Setup for all", then runs any other Setup steps. A Setup that says "X done" instead continues in X's sandbox and session.
 
-Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too. Refuse any [host change](criteria.md#building-blocks) a skill proposes (installing tools, changing system or user config), unless the scenario's Answer approves that change inside `DEST`; a run that makes any other is recorded as `failed`. Read-only network calls a scenario expects (such as `git ls-remote` against skunkworks' GitHub repo) are fine.
+Give the answers as written. Anything the skill does that the scenario doesn't expect is a result too. Refuse any [host change](criteria.md#building-blocks) a skill proposes (installing tools, changing system or user config), unless the scenario's Answer approves that change inside `DEST`; a run that makes any other is recorded as `failed`. Read-only network calls a scenario expects (such as `git ls-remote` and `git fetch` against skunkworks' GitHub repo) are fine.
 
 | Skill | Scenarios |
 |---|---|
