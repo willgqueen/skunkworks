@@ -12,7 +12,7 @@ python3 -I scripts/test.py
 
 It runs:
 - the unit tests in `tests/` (board, ledger, manifests, sandbox, docs check, skills lint, guard hook), with fixtures in `tests/fixtures/`
-- `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary, a scenario for every skill
+- `scripts/lint_skills.py`: frontmatter, no model names in skills, log lines in the vocabulary, a scenario for every skill, the [context size budgets](criteria.md#context)
 - `scripts/check_docs.py`: links, anchors, and that every skill, agent and template is documented
 
 `scripts/install-hooks.sh` installs it as a git pre-commit hook (optional).

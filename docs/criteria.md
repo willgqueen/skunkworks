@@ -163,6 +163,7 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 - **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*.
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
+- **Size budgets** for what sessions load: `CLAUDE.md` at most **200 lines**, each `SKILL.md` at most **500 lines**, each skill description at most **1,536 characters**, `docs/criteria.md` at most **20,000 characters** *(provisional)*. Vendor guidance: CLAUDE.md under 200 lines, SKILL.md under 500, descriptions truncated at 1,536; criteria.md at its size when set. Enforced by `scripts/lint_skills.py`.
 
 ## Testing
 

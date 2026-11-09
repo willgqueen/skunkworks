@@ -1,7 +1,8 @@
 """Static lint for skills and agents: required frontmatter, no model names in
 skills, every log line a skill (or process.md's shared phase skill steps) writes is in the log vocabulary
 (docs/workspace.md#log-vocabulary), and every skill has a manual test scenario
-(tests/scenarios/<skill>.md, docs/testing.md).
+(tests/scenarios/<skill>.md, docs/testing.md), and the context size budgets read from
+docs/criteria.md#context (CLAUDE.md and SKILL.md lines, skill description and criteria.md characters).
 
 Usage: python3 -I scripts/lint_skills.py
 """
@@ -46,8 +47,32 @@ def in_vocabulary(line, vocab):
     return any(v.fullmatch(line) for v in vocab)
 
 
+BUDGETS = {
+    "claude_lines": r"`CLAUDE\.md` at most \*\*([\d,]+) lines",
+    "skill_lines": r"`SKILL\.md` at most \*\*([\d,]+) lines",
+    "description_chars": r"skill description at most \*\*([\d,]+) characters",
+    "criteria_chars": r"`docs/criteria\.md` at most \*\*([\d,]+) characters",
+}
+
+
+def budgets(root=ROOT):
+    """docs/criteria.md#context: the size budgets, as ({name: limit}, [unreadable names])."""
+    path = root / "docs/criteria.md"
+    text = path.read_text() if path.exists() else ""
+    found = {k: re.search(p, text) for k, p in BUDGETS.items()}
+    return {k: int(m.group(1).replace(",", "")) for k, m in found.items() if m}, [k for k, m in found.items() if not m]
+
+
 def lint(root=ROOT):
     problems, vocab = [], vocabulary(root)
+    limits, unreadable = budgets(root)
+    problems += [f"docs/criteria.md#context: can't read the {k} budget" for k in unreadable]
+    claude = root / "CLAUDE.md"
+    if "claude_lines" in limits and claude.is_file() and len(claude.read_text().splitlines()) > limits["claude_lines"]:
+        problems.append(f"CLAUDE.md: over {limits['claude_lines']} lines")
+    criteria = root / "docs/criteria.md"
+    if "criteria_chars" in limits and len(criteria.read_text()) > limits["criteria_chars"]:
+        problems.append(f"docs/criteria.md: over {limits['criteria_chars']} characters")
     for path in sorted((root / ".claude/skills").glob("*/SKILL.md")):
         name = path.parent.name
         if not {"name", "description", "argument-hint"} <= set(frontmatter(path)):
@@ -55,6 +80,10 @@ def lint(root=ROOT):
         if not (root / "tests/scenarios" / f"{name}.md").is_file():
             problems.append(f"{name}: no scenario in tests/scenarios/{name}.md")
         text = path.read_text()
+        if "skill_lines" in limits and len(text.splitlines()) > limits["skill_lines"]:
+            problems.append(f"{name}: SKILL.md over {limits['skill_lines']} lines")
+        if "description_chars" in limits and len(frontmatter(path).get("description", "")) > limits["description_chars"]:
+            problems.append(f"{name}: description over {limits['description_chars']} characters")
         model = MODELS.search(text)
         if model:
             problems.append(f"{name}: names a model ({model.group(0)}); apply the model policy instead")

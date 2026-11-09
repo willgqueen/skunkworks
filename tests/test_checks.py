@@ -10,6 +10,7 @@ import check_docs  # noqa: E402
 import lint_skills  # noqa: E402
 
 FIXTURES = ROOT / "tests/fixtures"
+GOOD = (FIXTURES / "lint/.claude/skills/good/SKILL.md").read_text()
 
 
 class CheckDocs(unittest.TestCase):
@@ -75,6 +76,48 @@ class LintSkills(unittest.TestCase):
             problems = lint_skills.lint(root)
         self.assertIn("process.md: no ## Phase skill steps section", problems)
         self.assertFalse(any("bogus written" in p for p in problems))
+
+    def lint_with(self, **files):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp) / "lint"
+            shutil.copytree(self.root, root)
+            for name, text in files.items():
+                (root / name.replace("__", "/")).write_text(text)
+            return lint_skills.lint(root)
+
+    def test_fixture_within_budgets(self):
+        self.assertFalse(self.found("budget"))
+        self.assertFalse(self.found("over"))
+
+    def test_skill_over_line_budget(self):
+        problems = self.lint_with(**{".claude__skills__good__SKILL.md": GOOD + "x\n" * 5})
+        self.assertIn("good: SKILL.md over 8 lines", problems)
+
+    def test_description_over_char_budget(self):
+        problems = self.lint_with(**{".claude__skills__good__SKILL.md": GOOD.replace("description: d", "description: " + "d" * 21)})
+        self.assertIn("good: description over 20 characters", problems)
+
+    def test_claude_md_over_line_budget(self):
+        problems = self.lint_with(**{"CLAUDE.md": "x\n" * 4})
+        self.assertIn("CLAUDE.md: over 3 lines", problems)
+
+    def test_criteria_over_char_budget(self):
+        problems = self.lint_with(**{"docs__criteria.md": (self.root / "docs/criteria.md").read_text() + "x" * 500})
+        self.assertIn("docs/criteria.md: over 500 characters", problems)
+
+    def test_unreadable_budget(self):
+        problems = self.lint_with(**{"docs__criteria.md": "- **Size budgets:** none.\n"})
+        for name in lint_skills.BUDGETS:
+            self.assertIn(f"docs/criteria.md#context: can't read the {name} budget", problems)
+
+    def test_budget_numbers_come_from_criteria(self):
+        text = (self.root / "docs/criteria.md").read_text().replace("**3 lines**", "**30 lines**")
+        problems = self.lint_with(**{"docs__criteria.md": text, "CLAUDE.md": "x\n" * 4})
+        self.assertFalse(any(p.startswith("CLAUDE.md") for p in problems))
+
+    def test_budget_with_thousands_separator(self):
+        text = (self.root / "docs/criteria.md").read_text().replace("**500 characters**", "**1,500 characters**")
+        self.assertFalse(any("criteria.md: over" in p for p in self.lint_with(**{"docs__criteria.md": text + "x" * 600})))
 
 
 if __name__ == "__main__":
