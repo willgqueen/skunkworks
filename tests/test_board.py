@@ -159,6 +159,8 @@ class NextActionTable(unittest.TestCase):
         self.assertEqual([l for l in out if l.startswith("Problem: ")], [f"Problem: {p}" for p in problems])
         self.assertTrue(problems and out[-1].startswith("Problem: "))
         self.assertNotIn("↳", "\n".join(out))
+        nested = {**items[0], "waiting_on": "you", "depth": 2}
+        self.assertNotIn("↳", board.render_waiting([nested]))
         self.assertEqual(board.render_waiting([], ["x: bad"]), "Nothing is waiting on you.\nProblem: x: bad")
 
     def test_order_within_project(self):

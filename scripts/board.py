@@ -8,7 +8,7 @@ Usage:
     python3 -I scripts/board.py                      markdown board
     python3 -I scripts/board.py --json               the same, as JSON
     python3 -I scripts/board.py --item <project>/<id or slug>  one item, as JSON
-    python3 -I scripts/board.py --waiting            only the rows waiting on you
+    python3 -I scripts/board.py --waiting            the rows waiting on you, plus parse problems
     python3 -I scripts/board.py --workspace <path>   use another workspace (tests)
 """
 import argparse
@@ -274,7 +274,7 @@ def main():
     parser.add_argument("--workspace", type=pathlib.Path, default=find_workspace())
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--item", help="<project>/<id>")
-    parser.add_argument("--waiting", action="store_true", help="only rows waiting on you")
+    parser.add_argument("--waiting", action="store_true", help="print the rows waiting on you, plus parse problems")
     args = parser.parse_args()
     workspace = args.workspace.resolve()
     items, problems = collect(workspace)
