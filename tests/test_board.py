@@ -142,6 +142,17 @@ class NextActionTable(unittest.TestCase):
         stale_line = next(l for l in board.render(items, problems, 0, []).splitlines() if l.startswith("Stale: "))
         self.assertIn("p/002", stale_line)
 
+    def test_waiting_only_rows_waiting_on_you(self):
+        items = board.collect(FIXTURE, self.TODAY, self.CRITERIA)[0]
+        out = board.render_waiting(items)
+        self.assertIn("| ID | Title |", out)
+        self.assertIn("| 001 |", out)
+        self.assertNotIn("| 002 |", out)
+        self.assertEqual(sum(l.startswith("| ") for l in out.splitlines()) - 1,
+                         sum(i["waiting_on"] == "you" for i in items))
+        self.assertEqual(board.render_waiting([i for i in items if i["waiting_on"] != "you"]),
+                         "Nothing is waiting on you.")
+
     def test_order_within_project(self):
         groups = [i["group"] for i in board.collect(FIXTURE, self.TODAY, self.CRITERIA)[0] if i["depth"] == 0]
         self.assertEqual(groups, sorted(groups, key=board.ORDER.get))

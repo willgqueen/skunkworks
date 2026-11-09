@@ -30,3 +30,7 @@ The control center for orchestrating software work (ideation → planning → ar
 - Every change updates the docs it affects, in the same change, and passes `python3 -I scripts/test.py` (unit tests, skills lint, docs check) before it's committed. [docs/contributing.md](docs/contributing.md) is the guide.
 - **Reviews are exhaustive.** Any review, audit or verification covers its whole scope and reports coverage; partial work is reported as incomplete ([criteria.md](docs/criteria.md#complete-coverage)).
 - Skills never define their own thresholds or conditions. They link to [docs/criteria.md](docs/criteria.md), so calibrating it updates every skill.
+
+## Compact instructions
+
+When compacting, keep: the active item and its phase, unmerged PRs, decisions pending with the user, whether the user asked to skip approvals (their exact words), and any outward action authorized but not yet taken. A SessionStart hook re-adds what is waiting on the user (`board.py --waiting`).

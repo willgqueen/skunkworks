@@ -38,6 +38,8 @@ Agents started from the main session run in the background, and their results co
 - **Files:** `.env*` files (except `.env.local.example`) can't be read; the live checkout's `.claude/hooks/`, `.claude/agents/` and `.claude/settings*.json`, and any `.git/config` or `.git/hooks/`, can't be written. Worktree copies stay editable, so deliver can build skunkworks itself.
 - Unreadable input, a missing python3, or any hook error blocks.
 
+A second hook in `settings.json`, SessionStart on `compact`, runs `board.py --waiting` so the items waiting on the user survive compaction (what else to keep: [CLAUDE.md](../CLAUDE.md#compact-instructions)).
+
 Main-session calls exit immediately, so deliver can still push and merge after its per-item approval.
 
 **It's a safety net, not a security boundary.** A shell can't be fully contained by checking commands (four review rounds kept finding new forms: comments, shell keywords, wrapper options, nested substitution, interpreters). So the real boundary is which agents have a shell at all: only `implementer`, which never sees web pages, MCP results or PR text. The guard catches its mistakes. Full containment would need the Claude Code sandbox, which is off.
