@@ -16,6 +16,17 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -I \"$CLAUDE_PROJECT_DIR\"/scripts/board.py --waiting"
+          }
+        ]
+      }
     ]
   }
 }

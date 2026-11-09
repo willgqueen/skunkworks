@@ -8,6 +8,7 @@ Usage:
     python3 -I scripts/board.py                      markdown board
     python3 -I scripts/board.py --json               the same, as JSON
     python3 -I scripts/board.py --item <project>/<id or slug>  one item, as JSON
+    python3 -I scripts/board.py --waiting            the rows waiting on you, plus parse problems
     python3 -I scripts/board.py --workspace <path>   use another workspace (tests)
 """
 import argparse
@@ -234,7 +235,7 @@ def inbox_count(workspace):
     return sum(1 for line in inbox.read_text().splitlines() if line.startswith("- ")) if inbox.exists() else 0
 
 
-def render(items, problems, inbox, calibration):
+def tables(items):
     out = []
     for project in sorted({i["project"] for i in items}):
         out += [f"## {project}", "", "| ID | Title | Kind | Size | Phase | Status | Next action | Waiting on |",
@@ -243,6 +244,18 @@ def render(items, problems, inbox, calibration):
             out.append(f"| {'↳ ' * i['depth']}{i['id']} | {i['title']} | {i['kind']} | {i['size']} | {i['phase']} | {i['status']} "
                        f"| {i['next']} | {i['waiting_on']} |")
         out.append("")
+    return out
+
+
+def render_waiting(items, problems=()):
+    """Only the rows waiting on you, then the problems (kept after compaction by a SessionStart hook)."""
+    waiting = [{**i, "depth": 0} for i in items if i["waiting_on"] == "you"]
+    out = ["\n".join(tables(waiting)).rstrip() if waiting else "Nothing is waiting on you."]
+    return "\n".join(out + [f"Problem: {p}" for p in problems])
+
+
+def render(items, problems, inbox, calibration):
+    out = tables(items)
     if not items:
         out += ["No open items.", ""]
     out.append(f"Inbox: {inbox} {'entry' if inbox == 1 else 'entries'}")
@@ -261,6 +274,7 @@ def main():
     parser.add_argument("--workspace", type=pathlib.Path, default=find_workspace())
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--item", help="<project>/<id>")
+    parser.add_argument("--waiting", action="store_true", help="print the rows waiting on you, plus parse problems")
     args = parser.parse_args()
     workspace = args.workspace.resolve()
     items, problems = collect(workspace)
@@ -272,6 +286,9 @@ def main():
             print(json.dumps({"error": f"no open item {args.item}"}))
             return 1
         print(json.dumps(match[0], indent=2))
+        return 0
+    if args.waiting:
+        print(render_waiting(items, problems))
         return 0
     calibration = calibration_due(workspace, ROOT / "docs/criteria.md")
     if stale_days(ROOT / "docs/criteria.md") is None:
