@@ -153,6 +153,14 @@ class NextActionTable(unittest.TestCase):
         self.assertEqual(board.render_waiting([i for i in items if i["waiting_on"] != "you"]),
                          "Nothing is waiting on you.")
 
+    def test_waiting_lists_problems_and_flat_rows(self):
+        items, problems = board.collect(FIXTURE, self.TODAY, self.CRITERIA)
+        out = board.render_waiting(items, problems).splitlines()
+        self.assertEqual([l for l in out if l.startswith("Problem: ")], [f"Problem: {p}" for p in problems])
+        self.assertTrue(problems and out[-1].startswith("Problem: "))
+        self.assertNotIn("↳", "\n".join(out))
+        self.assertEqual(board.render_waiting([], ["x: bad"]), "Nothing is waiting on you.\nProblem: x: bad")
+
     def test_order_within_project(self):
         groups = [i["group"] for i in board.collect(FIXTURE, self.TODAY, self.CRITERIA)[0] if i["depth"] == 0]
         self.assertEqual(groups, sorted(groups, key=board.ORDER.get))

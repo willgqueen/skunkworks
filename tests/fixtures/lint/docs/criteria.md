@@ -1,1 +1,1 @@
-- **Size budgets:** `CLAUDE.md` at most **3 lines**, each `SKILL.md` at most **8 lines**, each skill description at most **20 characters**, `docs/criteria.md` at most **500 characters**.
+- **Size budgets:** `CLAUDE.md` at most **3 lines** *(provisional)*, each `SKILL.md` at most **8 lines** *(provisional)*, each skill description at most **20 characters** *(provisional)*, `docs/criteria.md` at most **500 characters** *(provisional)*.

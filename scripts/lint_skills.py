@@ -2,7 +2,7 @@
 skills, every log line a skill (or process.md's shared phase skill steps) writes is in the log vocabulary
 (docs/workspace.md#log-vocabulary), and every skill has a manual test scenario
 (tests/scenarios/<skill>.md, docs/testing.md), and the context size budgets read from
-docs/criteria.md#context (CLAUDE.md and SKILL.md lines, skill description and criteria.md characters).
+docs/criteria.md#context.
 
 Usage: python3 -I scripts/lint_skills.py
 """

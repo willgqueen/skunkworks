@@ -247,10 +247,11 @@ def tables(items):
     return out
 
 
-def render_waiting(items):
-    """Only the rows waiting on you (kept after compaction by a SessionStart hook)."""
-    waiting = [i for i in items if i["waiting_on"] == "you"]
-    return "\n".join(tables(waiting)).rstrip() if waiting else "Nothing is waiting on you."
+def render_waiting(items, problems=()):
+    """Only the rows waiting on you, then the problems (kept after compaction by a SessionStart hook)."""
+    waiting = [{**i, "depth": 0} for i in items if i["waiting_on"] == "you"]
+    out = ["\n".join(tables(waiting)).rstrip() if waiting else "Nothing is waiting on you."]
+    return "\n".join(out + [f"Problem: {p}" for p in problems])
 
 
 def render(items, problems, inbox, calibration):
@@ -287,7 +288,7 @@ def main():
         print(json.dumps(match[0], indent=2))
         return 0
     if args.waiting:
-        print(render_waiting(items))
+        print(render_waiting(items, problems))
         return 0
     calibration = calibration_due(workspace, ROOT / "docs/criteria.md")
     if stale_days(ROOT / "docs/criteria.md") is None:
