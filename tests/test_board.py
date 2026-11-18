@@ -51,6 +51,10 @@ class NextActionTable(unittest.TestCase):
     def test_waived_counts_as_approved(self):
         self.expect("009", "Run /deliver", "claude")
 
+    def test_handoff_line_ignored(self):
+        self.expect("008", "Resume /deliver", "claude")
+        self.expect("009", "Run /deliver", "claude")
+
     def test_waiting_on_you(self):
         self.expect("012", "AC3 pending (needs a GPU)", "you")
 
