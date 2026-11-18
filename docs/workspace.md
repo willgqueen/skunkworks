@@ -13,7 +13,7 @@ Claude Code always runs from the skunkworks root, so skills refer to the workspa
 ```
 workspace/
   inbox.md                    # raw ideas, not yet triaged
-  handoff.md                  # latest handoff note, overwritten each time; read and removed by /hq
+  handoff.md                  # latest handoff note, overwritten each time; shown by /hq, removed by a fresh session's /hq
   projects/
     <project>/                # one per repo or idea; slug matches the repo folder name
       project.md              # what it is, repo path(s), stack, learned conventions

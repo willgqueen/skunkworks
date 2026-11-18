@@ -10,7 +10,7 @@ Route work through the phase skills and keep the user oriented. hq decides **whi
 
 The routing is the *Next action* table in [docs/process.md](../../../docs/process.md#next-action), as implemented by [`scripts/board.py`](../../../scripts/board.py). Every condition (approval, waivers, parallel work) is defined in [docs/criteria.md](../../../docs/criteria.md). Apply them exactly.
 
-In every mode, first: if `workspace/handoff.md` exists, show it, then delete it (it's consumed; item logs keep the history). Its standing instructions are the user's earlier words: confirm they still apply before relying on them.
+In every mode, first: if `workspace/handoff.md` exists, show it; delete it only if this session didn't write it (a fresh session consumes it). Its standing instructions are the user's earlier words: confirm they still apply before relying on them.
 
 ## No arguments: the board
 

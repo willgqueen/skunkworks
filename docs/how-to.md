@@ -5,7 +5,7 @@ Short recipes for everyday tasks. Each one names the command and what to expect.
 ## Seeing what's going on
 
 ### See all open work and what's next
-`/hq`. The board lists every open item with its next action and who it's waiting on, items waiting on you first. It ends with the inbox count, any stale items, and, when due, a calibration reminder. If a [handoff note](process.md#hand-off) is waiting, `/hq` shows it first and removes it. Outside a session: `python3 -I scripts/board.py`.
+`/hq`. The board lists every open item with its next action and who it's waiting on, items waiting on you first. It ends with the inbox count, any stale items, and, when due, a calibration reminder. If a [handoff note](process.md#hand-off) is waiting, `/hq` shows it first; a fresh session's `/hq` also removes it. Outside a session: `python3 -I scripts/board.py`.
 
 ### See what changed
 `/hq ledger` (or `python3 -I scripts/ledger.py --since YYYY-MM-DD --project <p>`): one entry per committed task or merge. skunkworks' own changes are also in [CHANGELOG.md](../CHANGELOG.md).
