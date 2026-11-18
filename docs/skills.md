@@ -14,7 +14,7 @@ The front door: shows the board and routes work to the other skills.
 | **Arguments** | none (board), `<project> <item>`, `<description of new work>`, `inbox`, `tidy`, or `ledger [range] [project]` |
 | **Calls** | new-item, discover, define, develop, deliver |
 | **Agents** | researcher and Explore, in parallel, when advancing several items or gathering `tidy` evidence |
-| **Gate** | None of its own. It stops at every gate of the skills it runs, and carries on after you approve |
+| **Gate** | None of its own. It stops at every gate of the skills it runs, and carries on after you approve unless a [handoff](process.md#hand-off) trigger fired |
 
 ## new-item
 
@@ -131,7 +131,7 @@ Answers one architecture question with options, a weighted matrix and a sourced 
 
 ## deliver
 
-The Deliver phase: builds, verifies, publishes and closes. Resumable.
+The Deliver phase: builds, verifies, publishes and closes, then [hands off](process.md#hand-off). Resumable.
 
 | | |
 |---|---|

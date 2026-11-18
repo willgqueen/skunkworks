@@ -19,3 +19,4 @@ x
 ## Log
 <!-- c -->
 - 2026-10-23: created
+- 2026-10-30: handoff: stale spec

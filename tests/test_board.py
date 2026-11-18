@@ -52,8 +52,8 @@ class NextActionTable(unittest.TestCase):
         self.expect("009", "Run /deliver", "claude")
 
     def test_handoff_line_ignored(self):
-        self.expect("008", "Resume /deliver", "claude")
-        self.expect("009", "Run /deliver", "claude")
+        self.expect("007", "Merge, or resume /deliver", "you")
+        self.expect("012", "AC3 pending (needs a GPU)", "you")
 
     def test_waiting_on_you(self):
         self.expect("012", "AC3 pending (needs a GPU)", "you")
@@ -112,7 +112,7 @@ class NextActionTable(unittest.TestCase):
         self.assertNotIn("002", at_30)
         later = board.collect(FIXTURE, self.TODAY + board.datetime.timedelta(days=31), self.CRITERIA)[0]
         stale = {i["id"] for i in later if i["stale"]}
-        self.assertIn("002", stale)
+        self.assertIn("002", stale)  # its only recent line is a handoff line
         self.assertIn("043", stale)  # no log lines: falls back to created
         self.assertNotIn("004", stale)  # active, not proposed
         self.assertEqual({i for i, item in self.items.items() if item["stale"]}, {"043"})

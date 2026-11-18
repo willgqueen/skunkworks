@@ -160,11 +160,11 @@ Deliver merges only when **all** of these hold. Otherwise it stops and the user 
 
 ## Context
 
-- **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*.
+- **Stale item:** `proposed`, with no log line in the last 30 days *(provisional)*; `handoff:` lines don't count.
 - **Stale project.md:** last refreshed more than 30 days ago *(provisional)*, or the current work found it wrong.
 - **Use an Explore subagent:** the survey would take more than ~10 file reads *(provisional)*, or the code is spread across areas you can't locate up front.
 - **Size budgets** for what sessions load: `CLAUDE.md` at most **200 lines** *(provisional)*, each `SKILL.md` at most **500 lines** *(provisional)*, each skill description at most **1,536 characters** *(provisional)*, `docs/criteria.md` at most **20,000 characters** *(provisional)*. Sources: CLAUDE.md and SKILL.md from vendor guidance; descriptions are truncated past 1,536; criteria.md: its size when set plus room. Enforced by `scripts/lint_skills.py`.
-- **Hand off** to a fresh session ([procedure](process.md#hand-off)): at **item close**, always; or when the user corrects the same issue **2** times *(provisional)* (vendor guidance), a fix leaves `define.md`'s ACs or `deliver.md` out of date, or context fill reaches **50%** *(provisional)* (a starting guess; no published basis). Behavioural and fill triggers hand off at the next gate approval or item close, never mid-task; a behavioural trigger first re-reads `define.md` and `deliver.md`.
+- **Hand off** to a fresh session ([procedure](process.md#hand-off)): at **item close**, always; or when the user corrects the same issue **2** times *(provisional)* (vendor guidance; trigger `corrections`), a fix leaves `define.md`'s ACs or `deliver.md` out of date (`stale spec`), or context fill, read from the status line or reported by the user, reaches **50%** *(provisional)* (`fill`; a starting guess, no published basis). Behavioural and fill triggers hand off at the next gate hq carries on from, or at item close, never mid-task; a behavioural trigger first re-reads `define.md` and `deliver.md`.
 
 ## Testing
 
@@ -210,6 +210,7 @@ The provisional numbers above are guesses until they're tested against sustained
 - Decisions the user overrode or questions they found unnecessary (from the `develop.md` decisions, standalone records' recommendation taken in `architecture/decisions/`, and the item logs)
 - Explore subagent use, and project.md refreshes that turned out to be needed or not
 - Split proposals: how often a split was proposed, and how often you kept the work whole
+- `handoff:` log lines per trigger, and slips (corrections, stale specs) before and after them
 - Agent runs per skill, the model used, and, for agents whose default isn't opus, whether upgraded runs found more (review findings, failed verifications) than default runs
 
 **How:** run `/hq tidy`, which calibrates and consolidates in one pass. It proposes each change to a number, with its evidence, and lets the user approve. Record approved changes below, describing the evidence rather than citing item ids (the workspace isn't public). Definitions without a number can be recalibrated the same way when the evidence shows they misclassify work.

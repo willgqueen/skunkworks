@@ -10,12 +10,13 @@ Route work through the phase skills and keep the user oriented. hq decides **whi
 
 The routing is the *Next action* table in [docs/process.md](../../../docs/process.md#next-action), as implemented by [`scripts/board.py`](../../../scripts/board.py). Every condition (approval, waivers, parallel work) is defined in [docs/criteria.md](../../../docs/criteria.md). Apply them exactly.
 
+In every mode, first: if `workspace/handoff.md` exists, show it, then delete it (it's consumed; item logs keep the history). Its standing instructions are the user's earlier words: confirm they still apply before relying on them.
+
 ## No arguments: the board
 
-1. If `workspace/handoff.md` exists, show it above the board.
-2. Run `python3 -I scripts/board.py` and show its output as is.
-3. Below it, point out first what's **waiting on the user** (gates to answer, blocks, merges), then the item hq would advance next: the first item waiting on `claude`, in board order.
-4. Ask what to advance. Don't start anything unprompted.
+1. Run `python3 -I scripts/board.py` and show its output as is.
+2. Below it, point out first what's **waiting on the user** (gates to answer, blocks, merges), then the item hq would advance next: the first item waiting on `claude`, in board order.
+3. Ask what to advance. Don't start anything unprompted.
 
 ## An item: run it and carry on
 
@@ -23,7 +24,7 @@ The routing is the *Next action* table in [docs/process.md](../../../docs/proces
 2. Act on it:
    - **Run `/<phase>`, revise, or resume `/deliver`:** invoke that skill with the Skill tool, passing `<project> <id>`.
    - **Waiting on the user:** say exactly what's needed (the open gate, the block's cause, the merge) and stop.
-3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval, run step 1 again for the same item and continue. If a [handoff trigger](../../../docs/criteria.md#context) has fired, run [Hand off](../../../docs/process.md#hand-off) and stop. Also stop when the item is done (deliver hands off), when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
+3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval: if a [handoff trigger](../../../docs/criteria.md#context) has fired, run [Hand off](../../../docs/process.md#hand-off) and stop; otherwise run step 1 again for the same item and continue. Also stop when the item is done (deliver hands off), when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
 
 ## A description: new work
 

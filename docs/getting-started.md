@@ -28,6 +28,6 @@ Deliver shows one plan and asks for **one approval** for its commits, push, PR a
 
 ## 6. Pick up later
 
-Everything lives in files. In a new session, `/hq` shows where each item stands, and `/hq my-api 001` resumes it.
+Everything lives in files. In a new session, `/hq` shows where each item stands, and `/hq my-api 001` resumes it. At item close, and when a session degrades, Claude writes a handoff note and offers `/clear`; the next `/hq` shows it ([hand off](process.md#hand-off)).
 
 Next: [how-to.md](how-to.md) for everything else, [skills.md](skills.md) for each skill, [process.md](process.md) and [criteria.md](criteria.md) for the rules.

@@ -13,7 +13,7 @@ Claude Code always runs from the skunkworks root, so skills refer to the workspa
 ```
 workspace/
   inbox.md                    # raw ideas, not yet triaged
-  handoff.md                  # latest handoff note, overwritten each time; read by /hq
+  handoff.md                  # latest handoff note, overwritten each time; read and removed by /hq
   projects/
     <project>/                # one per repo or idea; slug matches the repo folder name
       project.md              # what it is, repo path(s), stack, learned conventions
@@ -74,7 +74,7 @@ Each phase writes one file, and the next phase reads it. [templates.md](template
 | `child <NNN> added: <title>` / `child <NNN> done` | new-item, deliver (in the parent) |
 | `waiting on you: <what>` / `waiting on items: <ids>` | deliver, at any stop where the next step isn't Claude's |
 | `host change approved: <what> at <where> via <how>` | deliver, when the user approves a [host change](criteria.md#building-blocks) |
-| `handoff: <trigger>` | hq, deliver, in each open item the note names |
+| `handoff: <trigger>` | hq, deliver, in each open item the note names; `<trigger>` is `item close`, `corrections`, `stale spec` or `fill` |
 | `ledger: <note>` | anyone: an optional note for the change ledger |
 | `done` | deliver |
 

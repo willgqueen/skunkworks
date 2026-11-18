@@ -20,4 +20,3 @@ x
 <!-- c -->
 - 2026-10-23: created
 - 2026-10-23: define waived: user said skip
-- 2026-10-23: handoff: item close

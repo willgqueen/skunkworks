@@ -77,7 +77,7 @@ In `item.md`, set `phase: <phase>`, `status: active` and `updated`, then add a l
 
 ### Hand off
 
-When a [handoff trigger](criteria.md#context) is met, write `workspace/handoff.md` from [templates/workspace/handoff.md](../templates/workspace/handoff.md), overwriting any earlier one, and log `- <date>: handoff: <trigger>` in each open item it names. Then offer `/clear` and resuming with `/hq`; Claude can't run `/clear` itself.
+When a [handoff trigger](criteria.md#context) is met, write `workspace/handoff.md` from [templates/workspace/handoff.md](../templates/workspace/handoff.md), overwriting any earlier one, and log `- <date>: handoff: <trigger>` in each open item it names. Then offer `/clear` and resuming with `/hq`, which shows the note and deletes it; Claude can't run `/clear` itself.
 
 ## Why this combination
 
