@@ -23,7 +23,7 @@ The routing is the *Next action* table in [docs/process.md](../../../docs/proces
 2. Act on it:
    - **Run `/<phase>`, revise, or resume `/deliver`:** invoke that skill with the Skill tool, passing `<project> <id>`.
    - **Waiting on the user:** say exactly what's needed (the open gate, the block's cause, the merge) and stop.
-3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval, run step 1 again for the same item and continue. Stop after [Hand off](../../../docs/process.md#hand-off) if a [handoff trigger](../../../docs/criteria.md#context) has fired, when the item is done (deliver hands off), when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
+3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval, run step 1 again for the same item and continue. If a [handoff trigger](../../../docs/criteria.md#context) has fired, run [Hand off](../../../docs/process.md#hand-off) and stop. Also stop when the item is done (deliver hands off), when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
 
 ## A description: new work
 
