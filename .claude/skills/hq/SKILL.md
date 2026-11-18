@@ -12,9 +12,10 @@ The routing is the *Next action* table in [docs/process.md](../../../docs/proces
 
 ## No arguments: the board
 
-1. Run `python3 -I scripts/board.py` and show its output as is.
-2. Below it, point out first what's **waiting on the user** (gates to answer, blocks, merges), then the item hq would advance next: the first item waiting on `claude`, in board order.
-3. Ask what to advance. Don't start anything unprompted.
+1. If `workspace/handoff.md` exists, show it above the board.
+2. Run `python3 -I scripts/board.py` and show its output as is.
+3. Below it, point out first what's **waiting on the user** (gates to answer, blocks, merges), then the item hq would advance next: the first item waiting on `claude`, in board order.
+4. Ask what to advance. Don't start anything unprompted.
 
 ## An item: run it and carry on
 
@@ -22,7 +23,7 @@ The routing is the *Next action* table in [docs/process.md](../../../docs/proces
 2. Act on it:
    - **Run `/<phase>`, revise, or resume `/deliver`:** invoke that skill with the Skill tool, passing `<project> <id>`.
    - **Waiting on the user:** say exactly what's needed (the open gate, the block's cause, the merge) and stop.
-3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval, run step 1 again for the same item and continue. Stop when the item is done, when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
+3. **Carry on:** when the user approves at a gate, after the phase skill has logged the approval, run step 1 again for the same item and continue. Stop after [Hand off](../../../docs/process.md#hand-off) if a [handoff trigger](../../../docs/criteria.md#context) has fired, when the item is done (deliver hands off), when the board says it's waiting on `you` or `items`, or when the skill's own report says the next step isn't Claude's, even if the board disagrees. Report which phase is next before starting it.
 
 ## A description: new work
 

@@ -123,6 +123,7 @@ If the merge rule doesn't allow it, report that the PR (or branch) is ready for 
 3. Set `status: done`, log `- <date>: done`, and move the item folder to `workspace/archive/<project>/`.
 4. If the item has a parent, log `- <date>: child <NNN> done` in the parent.
 5. Offer additions to project.md's *Conventions learned* from what this item taught.
+6. [Hand off](../../../docs/process.md#hand-off) (trigger: item close).
 
 ## 8. Investigations
 
