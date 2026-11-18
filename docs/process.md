@@ -53,7 +53,7 @@ Two overrides: an item whose `depends_on` items aren't done or dropped waits on 
 
 ## Phase skill steps
 
-Steps shared by `/discover`, `/define` and `/develop` (`/deliver` and `/architect` use *Resolve the item*); each skill links here and names its own steps. `<phase>` is the skill's phase.
+Steps shared by `/discover`, `/define` and `/develop` (`/deliver` and `/architect` use *Resolve the item*; `/hq` and `/deliver` use *Hand off*); each skill links here and names its own steps. `<phase>` is the skill's phase.
 
 ### Resolve the item
 
@@ -74,6 +74,10 @@ Each phase doc's *In plain terms* section, where its template puts it: a few sen
 ### Update the item
 
 In `item.md`, set `phase: <phase>`, `status: active` and `updated`, then add a log line: `- <date>: <phase> drafted` (or `<phase> revised`).
+
+### Hand off
+
+When a [handoff trigger](criteria.md#context) is met, write `workspace/handoff.md` from [templates/workspace/handoff.md](../templates/workspace/handoff.md), overwriting any earlier one, and log `- <date>: handoff: <trigger>` in each open item it names. Then offer `/clear` and resuming with `/hq`, which shows the note (a fresh session's `/hq` also deletes it); Claude can't run `/clear` itself.
 
 ## Why this combination
 

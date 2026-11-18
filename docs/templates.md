@@ -8,6 +8,7 @@ In [`templates/workspace/`](../templates/workspace/). These end up in the gitign
 
 | Template | Becomes | Created by | Holds |
 |---|---|---|---|
+| [handoff.md](../templates/workspace/handoff.md) | `handoff.md` | hq, deliver | Date, done this session, next actions, standing instructions, authorized actions not yet taken, decisions pending with the user |
 | [project.md](../templates/workspace/project.md) | `projects/<project>/project.md` | repo-context, new-item | What the project is, repos, stack, commands, layout, merge policy, conventions learned |
 | [overview.md](../templates/workspace/architecture/overview.md) | `projects/<project>/architecture/overview.md` | repo-context (creates; refreshes What it is), develop (creates if missing; matches approved designs), architect (creates if missing; updates for standalone decisions) | What the system is, C4 context and container diagrams, top quality attributes |
 | [decisions.md](../templates/workspace/architecture/decisions.md) | `projects/<project>/architecture/decisions.md` | repo-context, develop or architect (creates), develop (sets each item's rows), architect (adds standalone decisions' rows) | One row per significant decision: date, decision, choice, item |

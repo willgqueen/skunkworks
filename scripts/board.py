@@ -197,7 +197,7 @@ def collect(workspace, today=None, criteria_path=ROOT / "docs/criteria.md"):
         kids = [s for (proj, _), (s, parent) in statuses.items() if proj == project and parent == meta["id"].zfill(3)]
         if kids:
             action += f" · children: {sum(s in closed for s in kids)}/{len(kids)}"
-        last = max([d for d, _ in log] or [meta.get("created", "")])
+        last = max([d for d, text in log if not text.startswith("handoff:")] or [meta.get("created", "")])
         try:
             stale = bool(days) and meta["status"] == "proposed" and (today - datetime.date.fromisoformat(last)).days > days
         except ValueError:
