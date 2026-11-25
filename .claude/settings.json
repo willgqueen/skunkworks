@@ -4,6 +4,10 @@
       "../"
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "python3 -I \"${CLAUDE_PROJECT_DIR:-.}\"/scripts/statusline.py"
+  },
   "hooks": {
     "PreToolUse": [
       {
