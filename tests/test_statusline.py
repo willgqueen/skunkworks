@@ -1,4 +1,5 @@
 import pathlib
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -6,6 +7,8 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import statusline  # noqa: E402
+
+SCRIPT = ROOT / "scripts/statusline.py"
 
 
 class Render(unittest.TestCase):
@@ -21,7 +24,7 @@ class Render(unittest.TestCase):
         self.assertIn(statusline.NUDGE, line)
 
     def test_unknown(self):
-        self.assertEqual(statusline.render(None, 50), "context –")
+        self.assertEqual(statusline.render(None, 50), "context -")
 
     def test_no_threshold_no_nudge(self):
         self.assertEqual(statusline.render(99, None), "context 99%")
@@ -35,9 +38,32 @@ class UsedPercentage(unittest.TestCase):
     def test_unknown_input(self):
         for raw in ["", "not json", "[]", "null", "{}", '{"context_window":null}', '{"context_window":{}}',
                     '{"context_window":{"used_percentage":null}}', '{"context_window":{"used_percentage":"x"}}',
-                    '{"context_window":{"used_percentage":true}}', '{"context_window":{"used_percentage":NaN}}']:
+                    '{"context_window":{"used_percentage":true}}', '{"context_window":{"used_percentage":NaN}}',
+                    '{"context_window":{"used_percentage":Infinity}}', '{"context_window":{"used_percentage":-Infinity}}']:
             with self.subTest(raw=raw):
                 self.assertIsNone(statusline.used_percentage(raw))
+
+
+class Installed(unittest.TestCase):
+    def run_script(self, stdin):
+        result = subprocess.run([sys.executable, "-I", str(SCRIPT)], input=stdin, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return result.stdout
+
+    def test_below_threshold(self):
+        out = self.run_script('{"context_window":{"used_percentage":10}}')
+        self.assertIn("context 10%", out)
+        self.assertNotIn(statusline.NUDGE, out)
+
+    def test_above_threshold(self):
+        out = self.run_script('{"context_window":{"used_percentage":90}}')
+        self.assertIn("context 90%", out)
+        self.assertIn(statusline.NUDGE, out)
+
+    def test_unknown_input(self):
+        for raw in ["", "not json", '{"context_window":{"used_percentage":Infinity}}']:
+            with self.subTest(raw=raw):
+                self.assertEqual(self.run_script(raw).strip(), "context -")
 
 
 class Threshold(unittest.TestCase):

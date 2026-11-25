@@ -7,6 +7,7 @@ Usage (reads the status line JSON on stdin):
     python3 -I scripts/statusline.py
 """
 import json
+import math
 import pathlib
 import re
 import sys
@@ -14,7 +15,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CRITERIA = ROOT / "docs/criteria.md"
 FILL = re.compile(r"context fill\b[^*]*?reaches \*\*(\d+)%\*\*")
-NUDGE = "hand off at the next gate"
+NUDGE = "tell Claude to hand off at the next gate"
 
 
 def fill_threshold(criteria=CRITERIA):
@@ -32,17 +33,17 @@ def used_percentage(raw):
         value = json.loads(raw)["context_window"]["used_percentage"]
     except (ValueError, TypeError, KeyError):
         return None
-    if isinstance(value, bool) or not isinstance(value, (int, float)) or value != value:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
         return None
     return round(value)
 
 
 def render(percent, threshold):
     if percent is None:
-        return "context –"
+        return "context -"
     line = f"context {percent}%"
     if threshold is not None and percent >= threshold:
-        line += f" · \033[33m{NUDGE}\033[0m"
+        line += f" | \033[33m{NUDGE}\033[0m"
     return line
 
 
